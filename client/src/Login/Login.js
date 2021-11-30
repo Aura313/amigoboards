@@ -28,7 +28,7 @@ const newaccountStyle = { margin: "20px 0" };
 export function Login() {
   return (
     <Grid>
-      <Paper elevation={10} style={paperStyle}>
+      <Paper elevation={20} style={paperStyle}>
         <Grid align="center">
           <Avatar style={avatarStyle}>
             <LockOutlinedIcon></LockOutlinedIcon>
