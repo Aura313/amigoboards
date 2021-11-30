@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Avatar,
   Button,
-  Divider,
   Link,
   Paper,
   TextField,
@@ -14,18 +13,17 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 const paperStyle = {
   padding: 20,
-  height: "50vh",
-  width: 280,
-  margin: " 180px auto",
+  height: "70vh",
+  width: 300,
 };
 const avatarStyle = { backgroundColor: "#1bbd7e" };
 const spacingStyle = { margin: "10px 0" };
 const newaccountStyle = { margin: "20px 0" };
 
-export function Registration() {
+export function Registration({handleChange}) {
   return (
     <Grid>
-      <Paper elevation={20} style={paperStyle}>
+      <Paper  style={paperStyle}>
         <Grid align="center">
           <Avatar style={avatarStyle}>
             <LockOutlinedIcon></LockOutlinedIcon>
@@ -69,7 +67,7 @@ export function Registration() {
 
         <Typography style={newaccountStyle}>
           Already have an account yet?
-          <Link href="#"> SIGN IN</Link>
+          <Link href="#" onClick={()=>handleChange("event",0)} > SIGN IN</Link>
         </Typography>
       </Paper>
     </Grid>

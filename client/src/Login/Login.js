@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Avatar,
   Button,
-  Divider,
   Link,
   Paper,
   TextField,
@@ -13,22 +12,19 @@ import "./Login.css";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { GLogin } from "./GoogleLogin";
 
-const clientId =
-  "345624391031-5nohvvbpfesjk9jqa3spsocu0lt2fdj8.apps.googleusercontent.com";
 const paperStyle = {
-  padding: 20,
-  height: "50vh",
-  width: 280,
-  margin: " 180px auto",
-};
+    padding: 20,
+    height: "70vh",
+    width: 300,
+  };
 const avatarStyle = { backgroundColor: "#1bbd7e" };
 const spacingStyle = { margin: "10px 0" };
 const newaccountStyle = { margin: "20px 0" };
 
-export function Login() {
+export function Login({handleChange}) {
   return (
     <Grid>
-      <Paper elevation={20} style={paperStyle}>
+      <Paper  style={paperStyle}>
         <Grid align="center">
           <Avatar style={avatarStyle}>
             <LockOutlinedIcon></LockOutlinedIcon>
@@ -67,10 +63,13 @@ export function Login() {
         </Typography>
         <GLogin />
         <Typography style={newaccountStyle}>
-        Don't have an account yet?  
-         <Link href="#">    SIGN UP</Link>
+          Don't have an account yet?
+          <Link href="#" onClick={()=>handleChange("event",1)}
+          > SIGN UP</Link>
         </Typography>
       </Paper>
     </Grid>
   );
 }
+
+export default Login;
