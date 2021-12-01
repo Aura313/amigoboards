@@ -4,7 +4,8 @@
   "description": "BE modules for Project Management Application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "Tanya, Sravya, Vyshnavi, Roopa",
   "type": "module",
@@ -13,7 +14,8 @@
     "cookie-parser": "^1.4.6",
     "debug": "^4.3.3",
     "express": "^4.17.1",
-    "mongoose": "^6.0.13",
+    "mongoose": "^6.0.14",
     "morgan": "^1.10.0"
-  }
+  },
+  "keywords": []
 }
