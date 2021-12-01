@@ -61,7 +61,7 @@ export function Login({handleChange}) {
         <GLogin />
         <Typography className="newaccountStyle">
           Don't have an account yet?
-          <Link href="#" onClick={()=>handleChange("event",1)}
+          <Link to="#" onClick={()=>handleChange("event",1)}
           > SIGN UP</Link>
         </Typography>
       </Paper>

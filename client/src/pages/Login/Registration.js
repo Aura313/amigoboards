@@ -66,7 +66,7 @@ export function Registration({ handleChange }) {
 
         <Typography className="RegistrationnewaccountStyle">
           Already have an account yet?
-          <Link href="#" onClick={() => handleChange("event", 0)}>
+          <Link to="#" onClick={() => handleChange("event", 0)}>
             {" "}
             SIGN IN
           </Link>
