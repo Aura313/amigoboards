@@ -8,7 +8,6 @@ import Registration from "./Registration";
 import Login from "./Login";
 import "./LoginContainer.scss";
 
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -35,7 +34,6 @@ const SignInOutContainer = () => {
     setValue(newValue);
   };
   return (
-
     <Paper elevation={20} className="LoginContainerpaperstyle">
       <Tabs
         value={value}
@@ -48,9 +46,10 @@ const SignInOutContainer = () => {
         <Tab label="SIGN UP"></Tab>
       </Tabs>
       <TabPanel value={value} index={0}>
-    <Login handleChange={handleChange}/>      </TabPanel>
+        <Login handleChange={handleChange} />{" "}
+      </TabPanel>
       <TabPanel value={value} index={1}>
-        <Registration handleChange={handleChange}/>
+        <Registration handleChange={handleChange} />
       </TabPanel>
     </Paper>
   );

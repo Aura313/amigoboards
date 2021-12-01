@@ -11,12 +11,10 @@ import { Grid } from "@material-ui/core";
 import "./Registration.scss";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
-
-
-export function Registration({handleChange}) {
+export function Registration({ handleChange }) {
   return (
     <Grid>
-      <Paper  className="RegistrationpaperStyle">
+      <Paper className="RegistrationpaperStyle">
         <Grid align="center">
           <Avatar className="RegistrationavatarStyle">
             <LockOutlinedIcon></LockOutlinedIcon>
@@ -68,7 +66,10 @@ export function Registration({handleChange}) {
 
         <Typography className="RegistrationnewaccountStyle">
           Already have an account yet?
-          <Link href="#" onClick={()=>handleChange("event",0)} > SIGN IN</Link>
+          <Link href="#" onClick={() => handleChange("event", 0)}>
+            {" "}
+            SIGN IN
+          </Link>
         </Typography>
       </Paper>
     </Grid>
