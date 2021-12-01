@@ -31,6 +31,14 @@ export function Registration({handleChange}) {
           <h2> SIGN UP</h2>
         </Grid>
         <TextField
+          label="EmailID"
+          style={spacingStyle}
+          placeholder="Enter EmailID"
+          fullWidth
+          required
+          variant="outlined"
+        ></TextField>
+        <TextField
           label="Username"
           style={spacingStyle}
           placeholder="Enter Username"

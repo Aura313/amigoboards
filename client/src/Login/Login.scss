@@ -1,14 +1,16 @@
 .LoginpaperStyle {
     padding: 20;
-    height: "70vh";
+    height: 70vh;
     width: 300;
   };
 
  .LoginavatarStyle {
-      background-color: "#1bbd7e"; 
+      background-color: #1bbd7e !important; 
     }
 
 .LoginspacingStyle
-        { margin: "10px 0"; };
+        { margin: 10px 0 !important; };
+
+.newaccountStyle{ margin: 20px 0  !important};
 
     

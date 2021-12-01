@@ -20,7 +20,7 @@ const newaccountStyle = { margin: "20px 0" };
 export function Login({handleChange}) {
   return (
     <Grid>
-      <Paper  class={LoginpaperStyle}>
+      <Paper  className="LoginpaperStyle">
         <Grid align="center">
           <Avatar className="LoginavatarStyle">
             <LockOutlinedIcon></LockOutlinedIcon>
@@ -28,7 +28,7 @@ export function Login({handleChange}) {
           <h2> SIGN IN</h2>
         </Grid>
         <TextField
-         class={LoginspacingStyle}
+         className="LoginspacingStyle"
           label="Username"
          
           placeholder="Enter Username"
@@ -38,7 +38,7 @@ export function Login({handleChange}) {
         ></TextField>
         <TextField
           label="Password"
-          class={LoginspacingStyle}
+          className="LoginspacingStyle"
           fullWidth
           type="password"
           required
@@ -46,7 +46,7 @@ export function Login({handleChange}) {
         ></TextField>
 
         <Button
-          class={LoginspacingStyle}
+          className="LoginspacingStyle"
           type="submit"
           color="primary"
           fullWidth
@@ -55,11 +55,11 @@ export function Login({handleChange}) {
           SIGN IN
         </Button>
 
-        <Typography class={LoginspacingStyle} align="center">
+        <Typography className="LoginspacingStyle" align="center">
           or
         </Typography>
         <GLogin />
-        <Typography style={newaccountStyle}>
+        <Typography className="newaccountStyle">
           Don't have an account yet?
           <Link href="#" onClick={()=>handleChange("event",1)}
           > SIGN UP</Link>
