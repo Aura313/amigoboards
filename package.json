@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/neu-mis-info6150-fall2021/final-project-amigos/issues"
   },
-  "homepage": "https://github.com/neu-mis-info6150-fall2021/final-project-amigos#readme"
+  "homepage": "https://github.com/neu-mis-info6150-fall2021/final-project-amigos#readme",
+  "dependencies": {
+    "node-sass": "^6.0.1"
+  }
 }

@@ -58,5 +58,4 @@ const SignInOutContainer = () => {
     </Paper>
   );
 };
-
 export default SignInOutContainer;

@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
-import "./Login.css";
+import "./Login.scss";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 const paperStyle = {
