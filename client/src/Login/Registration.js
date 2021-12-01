@@ -8,31 +8,24 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
-import "./Login.scss";
+import "./Registration.scss";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
-const paperStyle = {
-  padding: 20,
-  height: "70vh",
-  width: 300,
-};
-const avatarStyle = { backgroundColor: "#1bbd7e" };
-const spacingStyle = { margin: "10px 0" };
-const newaccountStyle = { margin: "20px 0" };
+
 
 export function Registration({handleChange}) {
   return (
     <Grid>
-      <Paper  style={paperStyle}>
+      <Paper  className="RegistrationpaperStyle">
         <Grid align="center">
-          <Avatar style={avatarStyle}>
+          <Avatar className="RegistrationavatarStyle">
             <LockOutlinedIcon></LockOutlinedIcon>
           </Avatar>
           <h2> SIGN UP</h2>
         </Grid>
         <TextField
           label="EmailID"
-          style={spacingStyle}
+          className="RegistrationspacingStyle"
           placeholder="Enter EmailID"
           fullWidth
           required
@@ -40,7 +33,7 @@ export function Registration({handleChange}) {
         ></TextField>
         <TextField
           label="Username"
-          style={spacingStyle}
+          className="RegistrationspacingStyle"
           placeholder="Enter Username"
           fullWidth
           required
@@ -48,7 +41,7 @@ export function Registration({handleChange}) {
         ></TextField>
         <TextField
           label="Password"
-          style={spacingStyle}
+          className="RegistrationspacingStyle"
           fullWidth
           type="password"
           required
@@ -56,7 +49,7 @@ export function Registration({handleChange}) {
         ></TextField>
         <TextField
           label="Confirm Password"
-          style={spacingStyle}
+          className="RegistrationspacingStyle"
           fullWidth
           type="password"
           required
@@ -64,7 +57,7 @@ export function Registration({handleChange}) {
         ></TextField>
 
         <Button
-          style={spacingStyle}
+          className="RegistrationspacingStyle"
           type="submit"
           color="primary"
           fullWidth
@@ -73,7 +66,7 @@ export function Registration({handleChange}) {
           SIGN UP
         </Button>
 
-        <Typography style={newaccountStyle}>
+        <Typography className="RegistrationnewaccountStyle">
           Already have an account yet?
           <Link href="#" onClick={()=>handleChange("event",0)} > SIGN IN</Link>
         </Typography>

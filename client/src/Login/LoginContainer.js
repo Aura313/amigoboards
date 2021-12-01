@@ -6,11 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Registration from "./Registration";
 import Login from "./Login";
+import "./LoginContainer.scss";
 
-
-const paperstyle={
-    width:336,margin:"18px auto",height:'83vh',padding:3
-}
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -39,7 +36,7 @@ const SignInOutContainer = () => {
   };
   return (
 
-    <Paper elevation={20} style={paperstyle}>
+    <Paper elevation={20} className="LoginContainerpaperstyle">
       <Tabs
         value={value}
         indicatorColor="primary"

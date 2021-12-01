@@ -1,7 +1,7 @@
 .LoginpaperStyle {
-    padding: 20;
+    padding: 20px;
     height: 70vh;
-    width: 300;
+    width: 330px ;
   };
 
  .LoginavatarStyle {
@@ -9,8 +9,20 @@
     }
 
 .LoginspacingStyle
-        { margin: 10px 0 !important; };
+        {
+           margin: 5px 0 !important;
+          margin-left: 50px; };
 
-.newaccountStyle{ margin: 20px 0  !important};
+           .GLoginspacingStyle
+        {
+         
+          margin-left:20px !important;  };
+
+.newaccountStyle{ margin: 40px 0  !important;
+margin-left: 20px;
+text-align: center;
+};
+
+
 
     
