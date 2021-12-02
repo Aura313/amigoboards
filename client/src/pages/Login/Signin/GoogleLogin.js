@@ -1,13 +1,10 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
-import './LoginContainer.scss'
+import '../LoginContainer/LoginContainer.scss'
 
 const clientId = "345624391031-5nohvvbpfesjk9jqa3spsocu0lt2fdj8.apps.googleusercontent.com";
 
-export function GLogin() {
-
-  
-    
+export function GLogin() {    
     const onLoginSuccess = (res) => {
         console.log('Login Success:', res.profileObj);
     };

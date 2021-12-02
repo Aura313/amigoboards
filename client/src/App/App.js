@@ -2,7 +2,7 @@ import './App.scss';
 import { Projects } from '../pages/Projects/Projects';
 import { Navbar } from '../components/Navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
-import SignInOutContainer from "../pages/Login/LoginContainer";
+import SignInOutContainer from "../pages/Login/LoginContainer/LoginContainer";
 
 function App() {
   return (
