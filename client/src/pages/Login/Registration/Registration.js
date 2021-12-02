@@ -45,15 +45,6 @@ export function Registration({ handleChange }) {
           required
           variant="outlined"
         ></TextField>
-        <TextField
-          label="Confirm Password"
-          className="RegistrationspacingStyle"
-          fullWidth
-          type="password"
-          required
-          variant="outlined"
-        ></TextField>
-
         <Button
           className="RegistrationspacingStyle"
           type="submit"

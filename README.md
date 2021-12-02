@@ -16,3 +16,5 @@ TBA
 ## Team Details
 TBA
 
+## Command to Install Axios
+npm install axios
