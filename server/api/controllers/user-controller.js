@@ -1,5 +1,6 @@
 import { response } from "express";
 import * as userService from "../services/user-service.js";
+import { check, validationResult } from "express-validator";
 
 /**
  * Method to handle the errors
@@ -19,6 +20,14 @@ const errorhandler = (message, response) => {
 const setSuccessResponse = (data, response) => {
   response.status(200);
   response.json(data);
+};
+
+export const validateUser = () => {
+  return [
+    check("emailId").exists().isEmail(),
+    check("userName").exists().isAlphanumeric(),
+    check("password").exists().isLength({ min: 8 }),
+  ];
 };
 
 /**
@@ -42,13 +51,39 @@ export const index = async (request, response) => {
  * @param {*} response . response header from http
  */
 
-export const save = async (request, response) => {
+export const createUser = async (request, response) => {
   try {
-    const user = { ...request.body };
-    const newUser = await userService.create(user);
-    setSuccessResponse(newUser, response);
-  } catch (e) {
-    errorhandler(e.message, response);
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      response.status(400).json({
+        message: utilConstants.CLIENT_ERR,
+      });
+      return;
+    }
+    // Validate if user already exists
+    userService
+      .checkUniqueUser(request.body)
+      .then((user) => {
+        if (user.length) {
+          response.status(422);
+          response.json({
+            message: utilConstants.UNIQUE_EMAIL_USER_ERR,
+          });
+        } else {
+          // after validating
+          const newUser = Object.assign({}, request.body);
+          const resolve = () => {
+            response.status(201).json();
+          };
+          userService
+            .create(newUser)
+            .then(resolve)
+            .catch(renderErrorResponse(response));
+        }
+      })
+      .catch(renderErrorResponse(response));
+  } catch (err) {
+    renderErrorResponse(err);
   }
 };
 
