@@ -8,9 +8,9 @@ const router = express.Router();
  * Router and Controller Binding
  */
 
-router.route("/users").get(userController.index).post(userController.save);
+router.route("/").get(userController.index).post(userController.save);
 
-router.route("/users/:id").put(userController.update);
+router.route("/:id").put(userController.update);
 
 /*** SAMPLE POST METHOD JSON
  {
