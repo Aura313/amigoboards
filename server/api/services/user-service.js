@@ -16,7 +16,7 @@ export const loginUser = (userObj) => {
       ? { userName: userObj.userName }
       : { emailId: userObj.userName };
   const promise = User.findOne(criteria).exec();
-  return promise;
+  return promise; //test
 };
 
 export const update = (user) => {
