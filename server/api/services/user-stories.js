@@ -1,4 +1,4 @@
-import UserStory from "../model/user-stories.js";
+import UserStory from "../models/user-stories.js";
 
 
 export const get = (id) => {

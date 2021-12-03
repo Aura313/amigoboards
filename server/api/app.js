@@ -1,21 +1,20 @@
 import express from 'express';
 import mongoose from 'mongoose';
-// import route from './route/user-route.js';
+import routes from './routes/index.js';
 import cookieParser from 'cookie-parser';
-import route from './route/index.js';
-import model from './model/user-stories.js';
+import cors from 'cors';
 
+// initialize express app
+const app = express();
 
-
-
-const app=express();
 //Connection to the mongo DB through mongoose
 mongoose.connect('mongodb://localhost:27017/projectmanagement');
+app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.urlencoded({estended:false}))
 
-route(app);
+
+routes(app);
 
 export default app;
-

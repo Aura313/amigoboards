@@ -1,13 +1,13 @@
 import express from 'express';
-import * as userStoryController from "../controller/user-stories.js"
+import * as userStoryController from "../controllers/user-stories.js"
 
 const router = express.Router();
 
-router.route("/userStories")
+router.route("/")
     .get(userStoryController.index)
     .post(userStoryController.save);
 
-router.route('/userStories/:id')
+router.route('/:id')
     .get(userStoryController.get)
     .put(userStoryController.update)
     .delete(userStoryController.remove);

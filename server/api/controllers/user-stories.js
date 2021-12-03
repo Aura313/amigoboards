@@ -1,5 +1,5 @@
 import { response } from "express";
-import * as userStoryService from "../service/user-stories.js"
+import * as userStoryService from "../services/user-stories.js"
 
 const errorhandler = (message, response) => {
     response.status(500);
