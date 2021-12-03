@@ -1,6 +1,7 @@
 import { response } from "express";
 import * as userService from "../services/user-service.js";
 import { check, validationResult } from "express-validator";
+import  jwt from "jsonwebtoken";
 
 /**
  * Method to handle the errors
@@ -100,5 +101,67 @@ export const update = async (request, response) => {
     setSuccessResponse(updateduser, response);
   } catch (e) {
     errorhandler(e.message, response);
+  }
+};
+
+export const generateLoginToken = (user) => {
+  return jwt.sign(
+    {
+      userName: user.userName,
+      userId: user._id,
+    },
+    utilConstants.JWT_KEY,
+    {
+      expiresIn: "2h",
+    }
+  );
+};
+
+export const loginUser = (request, response) => {
+  try {
+    const resolve = (user) => {
+      if (!user) {
+        return response.status(401).json({
+          message: "Login Failed",
+        });
+      }
+      if (!request.body.socialAuth) {
+        bcrypt.compare(request.body.password, user.password, (err, result) => {
+          if (err) {
+            return response.status(401).json({
+              message: "Login Failed",
+            });
+          }
+          if (result) {
+            const jwtToken = generateLoginToken(user);
+            return response.status(200).json({
+              _id: user._id,
+              userName: user.userName,
+              emailId: user.emailId,
+              image: user.image,
+              token: jwtToken,
+            });
+          }
+          return response.status(401).json({
+            message: "Login Failed",
+          });
+        });
+      } else {
+        const jwtToken = generateLoginToken(user);
+        return response.status(200).json({
+          _id: user._id,
+          userName: user.userName,
+          emailId: user.emailId,
+          image: user.image,
+          token: jwtToken,
+        });
+      }
+    };
+    userService
+      .loginUser(request.body)
+      .then(resolve)
+      .catch(renderErrorResponse(response));
+  } catch (err) {
+    renderErrorResponse(err);
   }
 };
