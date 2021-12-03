@@ -1,7 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import route from './route/user-route.js';
+// import route from './route/user-route.js';
 import cookieParser from 'cookie-parser';
+import route from './route/index.js';
+import model from './model/user-stories.js';
+
+
 
 
 const app=express();
