@@ -1,5 +1,5 @@
 import { response } from "express";
-import * as userService from "../service/user-service.js";
+import * as userService from "../services/user-service.js";
 
 /**
  * Method to handle the errors

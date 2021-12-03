@@ -1,6 +1,6 @@
 import express from "express";
 
-import * as userController from "../controller/user-controller.js";
+import * as userController from "../controllers/user-controller.js";
 
 const router = express.Router();
 
@@ -8,9 +8,9 @@ const router = express.Router();
  * Router and Controller Binding
  */
 
-router.route("/users").get(userController.index).post(userController.save);
+router.route("/").get(userController.index).post(userController.save);
 
-router.route("/users/:id").put(userController.update);
+router.route("/:id").put(userController.update);
 
 /*** SAMPLE POST METHOD JSON
  {
@@ -21,6 +21,4 @@ router.route("/users/:id").put(userController.update);
 } 
  */
 
-export default (app) => {
-  app.use("/", router);
-};
+export default router;
