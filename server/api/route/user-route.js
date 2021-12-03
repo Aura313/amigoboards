@@ -21,6 +21,4 @@ router.route("/users/:id").put(userController.update);
 } 
  */
 
-export default (app) => {
-  app.use("/", router);
-};
+export default router;
