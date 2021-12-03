@@ -10,6 +10,7 @@ export class Navbar extends React.Component {
           <h3> TODOLIST </h3>
 
           <Link to='/projects'>Projects</Link>
+          <Link to='/members'>Members</Link>
         </div>
       </nav>
     );
