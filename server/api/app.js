@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import route from './route/index.js';
+import routes from './routes/index.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
@@ -15,6 +15,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-route(app);
+routes(app);
 
 export default app;

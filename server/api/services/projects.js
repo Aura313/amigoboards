@@ -1,4 +1,4 @@
-import Projects from '../model/projects.js';
+import Projects from '../models/projects.js';
 
 /**
  * Define Services for the application

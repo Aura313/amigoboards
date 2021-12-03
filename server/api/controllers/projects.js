@@ -1,4 +1,4 @@
-import * as projectService from '../service/projects.js';
+import * as projectService from '../services/projects.js';
 /**
  * Define Controllers for the application
  * @param {*} message
