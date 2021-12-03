@@ -1,4 +1,4 @@
-import {User} from "../model/user.js";
+import User from "../models/user.js";
 
 export const search = (params = {}) => {
   const promise = User.find(params).exec();
