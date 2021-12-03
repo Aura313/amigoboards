@@ -27,8 +27,9 @@ theme = createTheme(theme, {
 function App() {
   return (
     <ThemeProvider theme={theme}>
+      <Navbar />
       <div className='App'>
-        <Navbar />
+        
         <Routes>
           <Route path='/' element={<SignInOutContainer />} />
           <Route path='projects' element={<Projects />} />
