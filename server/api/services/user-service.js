@@ -11,7 +11,7 @@ export const create = (user) => {
 };
 
 export const loginUser = (userObj) => {
-  criteria =
+  const criteria =
     userObj.userName.indexOf("@") === -1
       ? { userName: userObj.userName }
       : { emailId: userObj.userName };

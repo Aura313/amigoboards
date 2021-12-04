@@ -111,7 +111,7 @@ export const generateLoginToken = (user) => {
       userName: user.userName,
       userId: user._id,
     },
-    utilConstants.JWT_KEY,
+    constants.JWT_KEY,
     {
       expiresIn: "2h",
     }
@@ -127,26 +127,25 @@ export const loginUser = (request, response) => {
         });
       }
       if (!request.body.socialAuth) {
-        bcrypt.compare(request.body.password, user.password, (err, result) => {
-          if (err) {
+        if(request.body.password!==user.password) {
+         
             return response.status(401).json({
               message: "Login Failed",
-            });
+             } );
           }
-          if (result) {
+          else{
             const jwtToken = generateLoginToken(user);
             return response.status(200).json({
               _id: user._id,
               userName: user.userName,
               emailId: user.emailId,
-              image: user.image,
               token: jwtToken,
             });
           }
           return response.status(401).json({
             message: "Login Failed",
           });
-        });
+        
       } else {
         const jwtToken = generateLoginToken(user);
         return response.status(200).json({

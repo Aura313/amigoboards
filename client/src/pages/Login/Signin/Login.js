@@ -11,12 +11,15 @@ import { Grid } from "@material-ui/core";
 import "./Login.scss";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { GLogin } from "./GoogleLogin";
+import AuthService from "../services/auth.service";
 
 export function Login({ handleChange }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameFlag, setUsernameFlag] = useState(true);
   const [passwordFlag, setPasswordFlag] = useState(true);
+  const[loginmessageFlag, setLoginMessageFlag]=useState(false);
+  const[loginmessage, setLoginMessage]=useState("");
  
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -50,6 +53,10 @@ export function Login({ handleChange }) {
     event.preventDefault();
         usernamerequired(username);
         passwordrequired(password);
+        if(passwordFlag&&usernameFlag)
+        {
+
+        }
   }
 
   return (
@@ -60,6 +67,8 @@ export function Login({ handleChange }) {
             <LockOutlinedIcon></LockOutlinedIcon>
           </Avatar>
           <h2> SIGN IN</h2>
+          {loginmessageFlag?<TextField label={loginmessage} ></TextField>:null}
+          
         </Grid>
         {usernameFlag ? (
           <TextField
