@@ -17,17 +17,21 @@ export function Login({ handleChange }) {
   const [password, setPassword] = useState("");
   const [usernameFlag, setUsernameFlag] = useState(true);
   const [passwordFlag, setPasswordFlag] = useState(true);
+ 
   const onChangeUsername = (e) => {
     const username = e.target.value;
     setUsername(username);
+    console.log(username);
   };
 
   const onChangePassword = (e) => {
     const password = e.target.value;
     setPassword(password);
+    console.log(password);
   };
 
   const usernamerequired = (value) => {
+
     if (!value) {
       setUsernameFlag(false);
     } else {
@@ -41,12 +45,12 @@ export function Login({ handleChange }) {
       setPasswordFlag(true);
     }
   };
-
-  const onButtonClick =()=>
+  const onClick=(event)=>
   {
-    usernamerequired();
-    passwordrequired();
-  };
+    event.preventDefault();
+        usernamerequired(username);
+        passwordrequired(password);
+  }
 
   return (
     <Grid>
@@ -65,7 +69,7 @@ export function Login({ handleChange }) {
             fullWidth
             variant="outlined"
             onChange={onChangeUsername}
-            validations={[usernamerequired]}
+            required
           ></TextField>
         ) : (
           <TextField
@@ -78,7 +82,7 @@ export function Login({ handleChange }) {
             fullWidth
             variant="outlined"
             onChange={onChangeUsername}
-            validations={[usernamerequired]}
+            required
           ></TextField>
         )}
         {passwordFlag ? (
@@ -89,7 +93,7 @@ export function Login({ handleChange }) {
             type="password"
             variant="outlined"
             onChange={onChangePassword}
-            validations={[passwordrequired]}
+            required
           ></TextField>
         ) : (
           <TextField
@@ -102,7 +106,7 @@ export function Login({ handleChange }) {
             variant="outlined"
             helperText="Password Required"
             onChange={onChangePassword}
-            validations={[passwordrequired]}
+            required
           ></TextField>
         )}
 
@@ -112,7 +116,7 @@ export function Login({ handleChange }) {
           color="primary"
           fullWidth
           variant="contained"
-          onSubmit={onButtonClick}
+          onClick={onClick}
         >
           SIGN IN
         </Button>
