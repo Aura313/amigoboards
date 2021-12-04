@@ -29,7 +29,7 @@ export const update = (user) => {
 export const checkUniqueUser =(user)=>
 {
   const promise = User.find({
-    $or: [{ userName: userObj.userName }, { emailId: userObj.emailId }],
+    $or: [{ userName: user.userName }, { emailId: user.emailId }],
   }).exec();
   return promise;
 }

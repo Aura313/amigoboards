@@ -1,4 +1,4 @@
-import React, { useState }  from "react";
+import React, { useState } from "react";
 import {
   Avatar,
   Button,
@@ -12,11 +12,11 @@ import "./Login.scss";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { GLogin } from "./GoogleLogin";
 
-
 export function Login({ handleChange }) {
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [usernameFlag, setUsernameFlag] = useState(true);
+  const [passwordFlag, setPasswordFlag] = useState(true);
   const onChangeUsername = (e) => {
     const username = e.target.value;
     setUsername(username);
@@ -25,6 +25,27 @@ export function Login({ handleChange }) {
   const onChangePassword = (e) => {
     const password = e.target.value;
     setPassword(password);
+  };
+
+  const usernamerequired = (value) => {
+    if (!value) {
+      setUsernameFlag(false);
+    } else {
+      setUsernameFlag(true);
+    }
+  };
+  const passwordrequired = (value) => {
+    if (!value) {
+      setPasswordFlag(false);
+    } else {
+      setPasswordFlag(true);
+    }
+  };
+
+  const onButtonClick =()=>
+  {
+    usernamerequired();
+    passwordrequired();
   };
 
   return (
@@ -36,26 +57,54 @@ export function Login({ handleChange }) {
           </Avatar>
           <h2> SIGN IN</h2>
         </Grid>
-        <TextField
-          className="LoginspacingStyle"
-          label="Username"
-          placeholder="Enter Username"
-          fullWidth
-          required
-          variant="outlined"
-          onChange={onChangeUsername}
-          
-        ></TextField>
-        <TextField
-          label="Password"
-          className="LoginspacingStyle"
-          fullWidth
-          type="password"
-          required
-          variant="outlined"
-          onChange={onChangePassword}
-          
-        ></TextField>
+        {usernameFlag ? (
+          <TextField
+            className="LoginspacingStyle"
+            label="Username"
+            placeholder="Enter Username"
+            fullWidth
+            variant="outlined"
+            onChange={onChangeUsername}
+            validations={[usernamerequired]}
+          ></TextField>
+        ) : (
+          <TextField
+            className="LoginspacingStyle"
+            error
+            id="filled-error-helper-text"
+            label="Username"
+            placeholder="Enter Username"
+            helperText="Username Required"
+            fullWidth
+            variant="outlined"
+            onChange={onChangeUsername}
+            validations={[usernamerequired]}
+          ></TextField>
+        )}
+        {passwordFlag ? (
+          <TextField
+            label="Password"
+            className="LoginspacingStyle"
+            fullWidth
+            type="password"
+            variant="outlined"
+            onChange={onChangePassword}
+            validations={[passwordrequired]}
+          ></TextField>
+        ) : (
+          <TextField
+            label="Password"
+            error
+            id="filled-error-helper-text"
+            className="LoginspacingStyle"
+            fullWidth
+            type="password"
+            variant="outlined"
+            helperText="Password Required"
+            onChange={onChangePassword}
+            validations={[passwordrequired]}
+          ></TextField>
+        )}
 
         <Button
           className="LoginspacingStyle"
@@ -63,6 +112,7 @@ export function Login({ handleChange }) {
           color="primary"
           fullWidth
           variant="contained"
+          onSubmit={onButtonClick}
         >
           SIGN IN
         </Button>
@@ -81,8 +131,6 @@ export function Login({ handleChange }) {
       </Paper>
     </Grid>
   );
-
-  
 }
 
 export default Login;

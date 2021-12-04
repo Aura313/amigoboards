@@ -25,6 +25,7 @@ const setSuccessResponse = (data, response) => {
 };
 
 export const validateUser = () => {
+ 
   return [
     check("emailId").exists().isEmail(),
     check("userName").exists().isAlphanumeric(),
@@ -55,8 +56,11 @@ export const index = async (request, response) => {
 
 export const createUser = (request, response) => {
   try {
+ 
     const errors = validationResult(request);
+    
     if (!errors.isEmpty()) {
+   
       response.status(400).json({
         message: constants.CLIENT_ERR,
       });
@@ -64,7 +68,7 @@ export const createUser = (request, response) => {
     }
     // Validate if user already exists
     userService.checkUniqueUser(request.body).then((user) => {
-      if (user.length) {
+        if (user.length) {
         response.status(422);
         response.json({
           message: constants.UNIQUE_EMAIL_USER_ERR,
@@ -75,6 +79,7 @@ export const createUser = (request, response) => {
         const resolve = () => {
           response.status(201).json();
         };
+       
         userService.create(newUser).then(resolve);
       }
     });
