@@ -11,30 +11,28 @@ import { Grid } from "@material-ui/core";
 import "./Login.scss";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { GLogin } from "./GoogleLogin";
-import AuthService from "../services/auth.service";
+import AuthService from "../../../Services/AuthenticationService";
+import AlertTitle from "@material-ui/lab/AlertTitle";
 
 export function Login({ handleChange }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameFlag, setUsernameFlag] = useState(true);
   const [passwordFlag, setPasswordFlag] = useState(true);
-  const[loginmessageFlag, setLoginMessageFlag]=useState(false);
-  const[loginmessage, setLoginMessage]=useState("");
- 
+  const [loginmessageFlag, setLoginMessageFlag] = useState(false);
+  const [loginmessage, setLoginMessage] = useState("");
+
   const onChangeUsername = (e) => {
     const username = e.target.value;
     setUsername(username);
-    console.log(username);
   };
 
   const onChangePassword = (e) => {
     const password = e.target.value;
     setPassword(password);
-    console.log(password);
   };
 
   const usernamerequired = (value) => {
-
     if (!value) {
       setUsernameFlag(false);
     } else {
@@ -48,16 +46,25 @@ export function Login({ handleChange }) {
       setPasswordFlag(true);
     }
   };
-  const onClick=(event)=>
-  {
+  const onClick = (event) => {
     event.preventDefault();
-        usernamerequired(username);
-        passwordrequired(password);
-        if(passwordFlag&&usernameFlag)
-        {
-
-        }
-  }
+    usernamerequired(username);
+    passwordrequired(password);
+    if (passwordFlag && usernameFlag) {
+     
+        AuthService.login(username, password)
+          .then((response) => {
+            setLoginMessage("");
+            setLoginMessageFlag(false);
+          },
+          (error)=>{
+           const message=error.message;
+           setLoginMessage("Login Failed");
+           setLoginMessageFlag(true);
+          });
+      
+    }
+  };
 
   return (
     <Grid>
@@ -67,8 +74,9 @@ export function Login({ handleChange }) {
             <LockOutlinedIcon></LockOutlinedIcon>
           </Avatar>
           <h2> SIGN IN</h2>
-          {loginmessageFlag?<TextField label={loginmessage} ></TextField>:null}
-          
+          {loginmessageFlag ? (
+            <AlertTitle className="alertTitleColor" >{"*"+loginmessage}</AlertTitle>
+          ) : null}
         </Grid>
         {usernameFlag ? (
           <TextField

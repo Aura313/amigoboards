@@ -1,16 +1,17 @@
 import React from "react";
 import { GoogleLogin } from "react-google-login";
 import "../LoginContainer/LoginContainer.scss";
+import config from  "../../../Configuration/Config.json";
 
-const clientId =
-  "345624391031-5nohvvbpfesjk9jqa3spsocu0lt2fdj8.apps.googleusercontent.com";
+const clientId =config.client_ID;
+
 
 export function GLogin() {
-  const onLoginSuccess = (res) => {
+  const onLoginSuccess = (e,res) => {
     console.log("Login Success:", res.profileObj);
   };
 
-  const onLoginFailure = (res) => {
+  const onLoginFailure = (e,res) => {
     console.log("Login Failed:", res);
   };
 
