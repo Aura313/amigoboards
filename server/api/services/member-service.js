@@ -1,4 +1,4 @@
-import Member from "../model/member.js";
+import Member from "../models/member.js";
 
 export const search = (params = {}) => {
   const promise = Member.find(params).exec();

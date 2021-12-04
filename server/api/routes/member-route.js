@@ -1,5 +1,5 @@
 import express from "express";
-import * as memberController from "../controller/member-controller.js";
+import * as memberController from "../controllers/member-controller.js";
 
 const router = express.Router();
 
@@ -7,8 +7,8 @@ const router = express.Router();
  * Router and Controller Binding
  */
 
-router.route("/members").get(memberController.index).post(memberController.save);
-router.route("/members/:id").put(memberController.update);
+router.route("/").get(memberController.index).post(memberController.save);
+router.route("/:id").put(memberController.update);
 
 /*** SAMPLE POST METHOD JSON
  {
@@ -18,7 +18,4 @@ router.route("/members/:id").put(memberController.update);
     "lastModifiedDate": "2021-11-12"
 } 
  */
-
-export default (app) => {
-  app.use("/", router);
-};
+export default router;

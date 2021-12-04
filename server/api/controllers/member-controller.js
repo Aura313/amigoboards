@@ -1,5 +1,5 @@
 import { response } from "express";
-import * as memberService from "../service/member-service.js";
+import * as memberService from "../services/member-service.js";
 
 /**
  * Method to handle the errors
