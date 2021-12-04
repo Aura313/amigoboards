@@ -23,41 +23,60 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
-  orange: {
-    backgroundColor: 'orange',
+  evenBg: {
+    backgroundColor: '#f08080',
     fontSize: 15,
+    textAlign: 'center',
+    fontWeight: 'bold'
   },
+  oddBg: {
+    backgroundColor: '#89B0AE',
+    fontSize: 15,
+    textAlign: 'center',
+    fontWeight: 'bold'
+  },
+  container: {
+    minHeight: 200
+  }
 });
 
-export default function AppCard() {
+export default function AppCard(props) {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+  const { projects} = props;
 
-  return (
-    <Paper elevation={3} className={classes.root}>
-      <Card>
+
+  const getInitials = function (string) {
+    let str = string.split(' '),
+        initials = str[0].substring(0, 1).toUpperCase();
+    
+    if (str.length > 1) {
+        initials += str[str.length - 1].substring(0, 1).toUpperCase();
+    }
+    return initials;
+};
+
+  return projects && (
+    projects.map((i, idx) =>  <Paper className={classes.container} elevation={3} key={`card-${idx}`} className={classes.root}>
+      <Card className={classes.container} >
         <CardContent>
           <CardHeader
             avatar={
-              <Avatar className={classes.orange} aria-label='WP'>
-                WP
+              <Avatar className={idx % 2 ? classes.evenBg : classes.oddBg} aria-label='WP'>
+                {getInitials(i.title)}
               </Avatar>
             }
-            title='WebDesign Project'
-            subheader='September 14, 2016'
+            title={i.title}
+            subheader={i.createdAt}
           />
 
           <Typography className={classes.pos} color='textSecondary'>
-            Owner: Tanya
+            Owner: {i.owner ? i.owner : 'N/A'}
           </Typography>
           <Typography variant='body2' component='p'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a
-            ante tempus, luctus nisi facilisis, congue sapien. Donec id sodales
-            felis. Pellentesque a maximus mauris, vel malesuada nunc. Donec
-            commodo dui eu pretium ultricies.
+            {i.description ? i.description : 'N/A'}
           </Typography>
         </CardContent>
       </Card>
-    </Paper>
+    </Paper>)
   );
 }
