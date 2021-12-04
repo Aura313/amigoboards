@@ -21,14 +21,14 @@ export const Projects = () => {
       });
       console.log('Err', err);
     });
-    dispatch(getProjects(response.data));
+    dispatch(getProjects(response && response.data || []));
   };
 
   useEffect(() => {
     fetchProjects();
   }, []);
 
-  const projects = appState && appState.allProjects.projects;
+  const projects = appState && appState.allProjects && appState.allProjects.projects || [];
 
   return (
     <div>
