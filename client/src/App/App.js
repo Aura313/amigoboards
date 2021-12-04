@@ -1,10 +1,11 @@
+import React from 'react';
 import './App.scss';
 import { Projects } from '../pages/Projects/Projects';
+import { ProjectDetails } from '../pages/Projects/ProjectDetails';
 import Navbar from '../components/Navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import React from 'react';
 
 let theme = createTheme({
   palette: {
@@ -24,10 +25,8 @@ theme = createTheme(theme, {
     },
   },
 });
+
 export class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <ThemeProvider theme={theme}>
@@ -35,7 +34,17 @@ export class App extends React.Component {
         <div className='App'>
           <Routes>
             <Route path='/' element={<SignInOutContainer />} />
-            <Route path='projects' element={<Projects />} />
+            <Route path='/projects' element={<Projects />} />
+            {/* 
+            <Route path='/projects/:slug/:id' 
+             render={(props) => {
+               console.log("kksksksks")
+              return ( <ProjectDetails {...props } /> )
+          }} /> */}
+            <Route
+              path='/projects/:slug/:id'
+              element={<ProjectDetails {...this.props} />}
+            />
           </Routes>
         </div>
       </ThemeProvider>
