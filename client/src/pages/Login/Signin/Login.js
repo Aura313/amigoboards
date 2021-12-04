@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }  from "react";
 import {
   Avatar,
   Button,
@@ -8,19 +8,28 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
-import './Login.scss';
+import "./Login.scss";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { GLogin } from "./GoogleLogin";
 
 
+export function Login({ handleChange }) {
 
-const spacingStyle = { margin: "10px 0" };
-const newaccountStyle = { margin: "20px 0" };
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const onChangeUsername = (e) => {
+    const username = e.target.value;
+    setUsername(username);
+  };
 
-export function Login({handleChange}) {
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
+
   return (
     <Grid>
-      <Paper  className="LoginpaperStyle">
+      <Paper className="LoginpaperStyle">
         <Grid align="center">
           <Avatar className="LoginavatarStyle">
             <LockOutlinedIcon></LockOutlinedIcon>
@@ -28,13 +37,14 @@ export function Login({handleChange}) {
           <h2> SIGN IN</h2>
         </Grid>
         <TextField
-         className="LoginspacingStyle"
+          className="LoginspacingStyle"
           label="Username"
-         
           placeholder="Enter Username"
           fullWidth
           required
           variant="outlined"
+          onChange={onChangeUsername}
+          
         ></TextField>
         <TextField
           label="Password"
@@ -43,6 +53,8 @@ export function Login({handleChange}) {
           type="password"
           required
           variant="outlined"
+          onChange={onChangePassword}
+          
         ></TextField>
 
         <Button
@@ -61,12 +73,16 @@ export function Login({handleChange}) {
         <GLogin />
         <Typography className="newaccountStyle">
           Don't have an account yet?
-          <Link to="#" onClick={()=>handleChange("event",1)}
-          > SIGN UP</Link>
+          <Link to="#" onClick={() => handleChange("event", 1)}>
+            {" "}
+            SIGN UP
+          </Link>
         </Typography>
       </Paper>
     </Grid>
   );
+
+  
 }
 
 export default Login;

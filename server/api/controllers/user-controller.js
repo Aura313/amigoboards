@@ -1,7 +1,8 @@
 import { response } from "express";
 import * as userService from "../services/user-service.js";
 import { check, validationResult } from "express-validator";
-import  jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import { constants } from "../utils/constants.js";
 
 /**
  * Method to handle the errors
@@ -52,39 +53,34 @@ export const index = async (request, response) => {
  * @param {*} response . response header from http
  */
 
-export const createUser = async (request, response) => {
+export const createUser = (request, response) => {
   try {
     const errors = validationResult(request);
     if (!errors.isEmpty()) {
       response.status(400).json({
-        message: utilConstants.CLIENT_ERR,
+        message: constants.CLIENT_ERR,
       });
       return;
     }
     // Validate if user already exists
-    userService
-      .checkUniqueUser(request.body)
-      .then((user) => {
-        if (user.length) {
-          response.status(422);
-          response.json({
-            message: utilConstants.UNIQUE_EMAIL_USER_ERR,
-          });
-        } else {
-          // after validating
-          const newUser = Object.assign({}, request.body);
-          const resolve = () => {
-            response.status(201).json();
-          };
-          userService
-            .create(newUser)
-            .then(resolve)
-            .catch(renderErrorResponse(response));
-        }
-      })
-      .catch(renderErrorResponse(response));
+    userService.checkUniqueUser(request.body).then((user) => {
+      if (user.length) {
+        response.status(422);
+        response.json({
+          message: constants.UNIQUE_EMAIL_USER_ERR,
+        });
+      } else {
+        // after validating
+        const newUser = Object.assign({}, request.body);
+        const resolve = () => {
+          response.status(201).json();
+        };
+        userService.create(newUser).then(resolve);
+      }
+    });
   } catch (err) {
-    renderErrorResponse(err);
+    response.status(500);
+    response.json(constants.INTERNAL_ERROR);
   }
 };
 
@@ -157,11 +153,9 @@ export const loginUser = (request, response) => {
         });
       }
     };
-    userService
-      .loginUser(request.body)
-      .then(resolve)
-      .catch(renderErrorResponse(response));
+    userService.loginUser(request.body).then(resolve);
   } catch (err) {
-    renderErrorResponse(err);
+    response.status(500);
+    response.json(constants.INTERNAL_ERROR);
   }
 };
