@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
 
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { UserStories } from '../pages/UserStories/UserStories';
 
 let theme = createTheme({
   palette: {
@@ -33,6 +34,7 @@ function App() {
         <Routes>
           <Route path='/' element={<SignInOutContainer />} />
           <Route path='projects' element={<Projects />} />
+          <Route path='userStories' element={<UserStories />} />
         </Routes>
       </div>
     </ThemeProvider>

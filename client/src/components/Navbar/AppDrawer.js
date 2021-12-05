@@ -37,7 +37,7 @@ export default function AppDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Projects', 'Boards'].map((text, index) => (
+        {['Projects', 'Boards', 'User Stories'].map((text, index) => (
           <ListItem component={RouterLink} to='/projects' button  key={text}>
             <ListItemIcon>
               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
