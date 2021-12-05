@@ -2,6 +2,14 @@ import axios from "axios";
 import Config from '../Configuration/Config.json';
 
 class AuthenticationService{
+
+ register = (userName, emailId, password) => {
+    return axios.post(Config.users_url+"/signup", {
+      userName,
+      emailId,
+      password,
+    });
+  };
      login=(userName,password)=>
     {
         return axios.post(Config.users_url+"/login" , {

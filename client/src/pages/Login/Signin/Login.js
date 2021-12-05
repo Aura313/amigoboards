@@ -93,9 +93,9 @@ export function Login({ handleChange }) {
             className="LoginspacingStyle"
             error
             id="filled-error-helper-text"
-            label="Username"
-            placeholder="Enter Username"
             helperText="Username Required"
+            label="Username"
+            placeholder="Enter Username"           
             fullWidth
             variant="outlined"
             onChange={onChangeUsername}
