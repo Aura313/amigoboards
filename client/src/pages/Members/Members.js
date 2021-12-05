@@ -22,7 +22,6 @@ export class Members extends React.Component {
   }
   render() {
     const { members } = this.state
-    console.log(members);
     return (
       <div>
         <ComboBox members={members} />

@@ -106,8 +106,8 @@ export default function ComboBox(props) {
                         </FormControl>
                     </DialogContent>
                     <DialogActions>
+                        <Button onClick={handleClose} color="primary">ADD</Button>
                         <Button onClick={handleClose} color="primary">Cancel</Button>
-                        <Button onClick={handleClose} color="secondary">Save</Button>
                     </DialogActions>
                 </Dialog>
             </div>
