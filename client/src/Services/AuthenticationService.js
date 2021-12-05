@@ -40,7 +40,7 @@ class AuthenticationService{
           return { 'x-access-token': user.accessToken };
         } else {
           return {};
-        }      
+        }  
 }}
 
 export default new AuthenticationService();

@@ -12,8 +12,7 @@ export function GLogin() {
   
   const navigate = useNavigate();
   const onLoginSuccess =  (resp) => {
-
-  
+console.log(resp); 
 navigate('/home');
   };
 
