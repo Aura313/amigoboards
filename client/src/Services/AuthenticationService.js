@@ -2,19 +2,28 @@ import axios from "axios";
 import Config from '../Configuration/Config.json';
 
 class AuthenticationService{
-    login(username,password)
+
+  
+ register = (userName, emailId, password) => {
+    return axios.post(Config.users_url+"/signup", {
+      userName,
+      emailId,
+      password,
+    });
+  };
+     login=(userName,password)=>
     {
-        return axios.post(Config.users_url , {
-            username,
-            password
-          })
-          .then(response => {
-            if (response.data.accessToken) {
-              localStorage.setItem("user", JSON.stringify(response.data));
-            }
-    
-            return response.data;
-          });
+      return axios.post(Config.users_url+"/login" , {
+        userName,
+        password
+      })
+      .then(response => {
+        if (response.data.accessToken) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+        }
+        return response.data;
+      });
+      ;
     }
 
     logout() {
