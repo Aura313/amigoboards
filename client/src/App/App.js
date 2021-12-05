@@ -5,7 +5,10 @@ import { ProjectDetails } from '../pages/Projects/ProjectDetails';
 import Navbar from '../components/Navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
+import Home from '../pages/Home/Homepage';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+
 
 let theme = createTheme({
   palette: {
@@ -34,6 +37,7 @@ export class App extends React.Component {
         <div className='App'>
           <Routes>
             <Route path='/' element={<SignInOutContainer />} />
+            <Route path='/home' element={<Home />} />
             <Route path='/projects' element={<Projects />} />
             {/* 
             <Route path='/projects/:slug/:id' 

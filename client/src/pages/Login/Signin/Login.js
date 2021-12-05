@@ -13,15 +13,17 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { GLogin } from "./GoogleLogin";
 import AuthService from "../../../Services/AuthenticationService";
 import AlertTitle from "@material-ui/lab/AlertTitle";
+import { useNavigate } from 'react-router-dom';
 
-export function Login({ handleChange }) {
+export function Login({ handleChange ,props }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameFlag, setUsernameFlag] = useState(true);
   const [passwordFlag, setPasswordFlag] = useState(true);
   const [loginmessageFlag, setLoginMessageFlag] = useState(false);
   const [loginmessage, setLoginMessage] = useState("");
-
+  const navigate = useNavigate();
+  
   const onChangeUsername = (e) => {
     const username = e.target.value;
     setUsername(username);
@@ -56,6 +58,7 @@ export function Login({ handleChange }) {
       .then((response) => {
         setLoginMessage("");
         setLoginMessageFlag(false);
+        navigate('/home');
       },
       (error)=>{
        const message=error.message;
