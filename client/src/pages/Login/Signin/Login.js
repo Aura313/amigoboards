@@ -59,11 +59,15 @@ export function Login({ handleChange ,props }) {
         setLoginMessage("");
         setLoginMessageFlag(false);
         navigate('/home');
+        setUsername("");
+        setPassword("");
       },
       (error)=>{
        const message=error.message;
        setLoginMessage("Invalid Credentials");
        setLoginMessageFlag(true);
+       setUsername("");
+       setPassword("");
       });
   
 }
@@ -83,6 +87,7 @@ export function Login({ handleChange ,props }) {
         </Grid>
         {usernameFlag ? (
           <TextField
+          value={username}
             className="LoginspacingStyle"
             label="Username"
             placeholder="Enter Username"
@@ -93,6 +98,7 @@ export function Login({ handleChange ,props }) {
           ></TextField>
         ) : (
           <TextField
+          value={username}
             className="LoginspacingStyle"
             error
             id="filled-error-helper-text"
@@ -107,6 +113,7 @@ export function Login({ handleChange ,props }) {
         )}
         {passwordFlag ? (
           <TextField
+          value={password}
             label="Password"
             className="LoginspacingStyle"
             fullWidth
@@ -117,6 +124,7 @@ export function Login({ handleChange ,props }) {
           ></TextField>
         ) : (
           <TextField
+          value={password}
             label="Password"
             error
             id="filled-error-helper-text"

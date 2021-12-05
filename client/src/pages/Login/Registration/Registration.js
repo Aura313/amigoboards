@@ -27,9 +27,6 @@ export function Registration({ handleChange }) {
   const [passwordMessage, setPasswordMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
   const [refresh, setRefresh] = useState(true);
-  const emailElement = React.useRef();
-  const usernameElement = React.useRef();
-  const passwordElement = React.useRef();
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -87,6 +84,9 @@ export function Registration({ handleChange }) {
         if (response.status === 200) {
           setRegisterMessage(response.data.message);
           setRegisterMessageFlag(true);
+          setUsername("");
+          setPassword("");
+          setEmail("");
         } else if (response.status === 201) {
           setRegisterMessage(response.data.message);
           setRegisterMessageFlag(true);
@@ -116,7 +116,7 @@ export function Registration({ handleChange }) {
         
         {emailFlag ? (
           <TextField
-          ref={emailElement}
+          value={email}
             label="EmailID"
             className="RegistrationspacingStyle"
             placeholder="Enter EmailID"
@@ -127,7 +127,7 @@ export function Registration({ handleChange }) {
           ></TextField>
         ) : (
           <TextField
-          ref={emailElement}
+          value={email}
             label="EmailID"
             className="RegistrationspacingStyle"
             placeholder="Enter EmailID"
@@ -143,7 +143,7 @@ export function Registration({ handleChange }) {
 
         {usernameFlag ? (
           <TextField
-          ref={usernameElement}
+          value={username}
             label="Username"
             className="RegistrationspacingStyle"
             placeholder="Enter Username"
@@ -154,7 +154,7 @@ export function Registration({ handleChange }) {
           ></TextField>
         ) : (
           <TextField
-          ref={usernameElement}
+          value={username}
             label="Username"
             className="RegistrationspacingStyle"
             placeholder="Enter Username"
@@ -169,7 +169,7 @@ export function Registration({ handleChange }) {
         )}
         {passwordFlag ? (
           <TextField
-          ref={passwordElement}
+          value={password}
             label="Password"
             className="RegistrationspacingStyle"
             fullWidth
@@ -180,7 +180,7 @@ export function Registration({ handleChange }) {
           ></TextField>
         ) : (
           <TextField
-          ref={passwordElement}
+            value={password}
             label="Password"
             className="RegistrationspacingStyle"
             fullWidth
