@@ -76,9 +76,9 @@ export function Registration({ handleChange }) {
   };
 
   const onClick = () => {
-    // emailCheck(email);
-    // usernameCheck(username);
-    // passwordCheck(password);
+    emailCheck(email);
+    usernameCheck(username);
+    passwordCheck(password);
 
     if (emailFlag && usernameFlag && passwordFlag) {
       AuthService.register(username, email, password).then((response) => {
