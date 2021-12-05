@@ -15,6 +15,8 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import AppDrawer from './AppDrawer';
 import { Link as RouterLink } from 'react-router-dom';
 import { navStyles } from './NavbarStyles';
+import AuthService from "../../Services/AuthenticationService";
+import { useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const classes = navStyles();
@@ -23,7 +25,7 @@ export default function Navbar() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+  const navigate = useNavigate();
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -40,7 +42,10 @@ export default function Navbar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
+ const handleLogout =(event) => {
+  AuthService.logout();
+  navigate('/');
+ }
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -54,6 +59,7 @@ export default function Navbar() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
 
