@@ -69,7 +69,7 @@ export const createUser = (request, response) => {
     // Validate if user already exists
     userService.checkUniqueUser(request.body).then((user) => {
         if (user.length) {
-        response.status(422);
+        response.status(201);
         response.json({
           message: constants.UNIQUE_EMAIL_USER_ERR,
         });
@@ -77,7 +77,7 @@ export const createUser = (request, response) => {
         // after validating
         const newUser = Object.assign({}, request.body);
         const resolve = () => {
-          response.status(201).json( {message: "User Registered"});
+          response.status(200).json( {message: "Registration Successful, Proceed to Login"});
         };
        
         userService.create(newUser).then(resolve);

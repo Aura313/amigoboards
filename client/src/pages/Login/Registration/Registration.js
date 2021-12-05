@@ -26,47 +26,25 @@ export function Registration({ handleChange }) {
   const [usernameMessage, setUsernameMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
+  const [refresh, setRefresh]=useState(true);
+
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
     setUsername(username);
+    usernameCheck(username);
   };
 
   const onChangePassword = (e) => {
     const password = e.target.value;
     setPassword(password);
+    passwordCheck(password);
   };
   const onChangeEmail = (e) => {
     const email = e.target.value;
     setEmail(email);
+    emailCheck(email);
   };
-  // const usernamerequired = (value) => {
-  //   if (!value) {
-  //     setUsernameFlag(false);
-  //     setUsernameMessage("UserName Required");
-  //   } else {
-  //     setUsernameFlag(true);
-  //     setUsernameMessage("");
-  //   }
-  // };
-  // const passwordrequired = (value) => {
-  //   if (!value) {
-  //     setPasswordFlag(false);
-  //     setPasswordMessage("Password Required");
-  //   } else {
-  //     setPasswordFlag(true);
-  //     setPasswordMessage("");
-  //   }
-  // };
-  // const emailrequired = (value) => {
-  //   if (!value) {
-  //     setEmailFlag(false);
-  //     setEmailMessage("Email Required");
-  //   } else {
-  //     setEmailFlag(true);
-  //     setEmailMessage("");
-  //   }
-  // };
   const usernameCheck = (value) => {
     if (username.length < 6) {
       setUsernameFlag(false);
@@ -98,22 +76,24 @@ export function Registration({ handleChange }) {
   };
 
   const onClick = () => {
-    emailCheck(email);
-    usernameCheck(username);
-    passwordCheck(password);
+    // emailCheck(email);
+    // usernameCheck(username);
+    // passwordCheck(password);
 
     if (emailFlag && usernameFlag && passwordFlag) {
       AuthService.register(username, email, password).then((response) => {
         
-        console.log(response);
-        // setRegisterMessage(response.status);
-        // setRegisterMessageFlag(true);
-        // setUsername("");
-        // setPassword("");
-        // setEmail("");
-        // setUsernameFlag(true);
-        // setPassword(true);
-        // setEmailFlag(true);
+        if(response.status===200)
+        {
+          setRegisterMessage(response.data.message);
+          setRegisterMessageFlag(true);
+        }
+        else if(response.status===201)
+        {
+          setRegisterMessage(response.data.message);
+          setRegisterMessageFlag(true);
+        }
+        
       });
      // console.log(registermessage);
     }

@@ -52,18 +52,18 @@ export function Login({ handleChange }) {
     passwordrequired(password);
     if (passwordFlag && usernameFlag) {
      
-        AuthService.login(username, password)
-          .then((response) => {
-            setLoginMessage("");
-            setLoginMessageFlag(false);
-          },
-          (error)=>{
-           const message=error.message;
-           setLoginMessage("Login Failed");
-           setLoginMessageFlag(true);
-          });
-      
-    }
+      AuthService.login(username, password)
+      .then((response) => {
+        setLoginMessage("");
+        setLoginMessageFlag(false);
+      },
+      (error)=>{
+       const message=error.message;
+       setLoginMessage("Invalid Credentials");
+       setLoginMessageFlag(true);
+      });
+  
+}
   };
 
   return (
