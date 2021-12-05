@@ -104,9 +104,18 @@ export function Registration({ handleChange }) {
 
     if (emailFlag && usernameFlag && passwordFlag) {
       AuthService.register(username, email, password).then((response) => {
-        setRegisterMessage(response.data);
-        setRegisterMessageFlag(false);
+        
+        console.log(response);
+        // setRegisterMessage(response.status);
+        // setRegisterMessageFlag(true);
+        // setUsername("");
+        // setPassword("");
+        // setEmail("");
+        // setUsernameFlag(true);
+        // setPassword(true);
+        // setEmailFlag(true);
       });
+     // console.log(registermessage);
     }
   };
 

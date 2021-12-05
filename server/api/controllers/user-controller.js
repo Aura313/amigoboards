@@ -77,7 +77,7 @@ export const createUser = (request, response) => {
         // after validating
         const newUser = Object.assign({}, request.body);
         const resolve = () => {
-          response.status(201).json();
+          response.status(201).json( {message: "User Registered"});
         };
        
         userService.create(newUser).then(resolve);
