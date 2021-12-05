@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Link as RouterLink} from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { drawerStyles } from './NavbarStyles';
 
 export default function AppDrawer() {
@@ -37,14 +37,16 @@ export default function AppDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Projects', 'Boards', 'User Stories'].map((text, index) => (
-          <ListItem component={RouterLink} to='/projects' button  key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {[{ title: 'Projects', path: '/projects' }, { title: 'User Stories', path: '/userStories' }, { title: 'Members', path: '/members' }].map(
+          (i, index) => (
+            <ListItem component={RouterLink} to={i.path} button key={i.title}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={i.title} />
+            </ListItem>
+          )
+        )}
       </List>
       <Divider />
     </div>

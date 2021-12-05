@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import AppCard from '../../components/Projects/AppCard';
 import Typography from '@material-ui/core/Typography';
 import './Projects.scss';
-import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProjects } from '../../store/Actions/projects.actions';
@@ -13,30 +12,33 @@ export const Projects = () => {
   const appState = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  const fetchProjects = async () => {
-    const response = await axios.get(Config.projects_url).catch((err) => {
-      dispatch({
-        type: ActionTypes.PROJECTS_ERROR,
-        payload: err,
-      });
-      console.log('Err', err);
-    });
-    dispatch(getProjects(response && response.data || []));
-  };
-
   useEffect(() => {
+    const fetchProjects = async () => {
+      const response = await axios.get(Config.projects_url).catch((err) => {
+        dispatch({
+          type: ActionTypes.PROJECTS_ERROR,
+          payload: err,
+        });
+        console.log('Err', err);
+      });
+      dispatch(getProjects((response && response.data) || []));
+    };
     fetchProjects();
   }, []);
 
-  const projects = appState && appState.allProjects && appState.allProjects.projects || [];
+  const projects =
+    (appState && appState.allProjects && appState.allProjects.projects) || [];
 
   return (
     <div>
-      <Paper className='paper' elevation={3}>
-        <Typography color='textSecondary'>Owner: Tanya</Typography>
-      </Paper>
+      <Typography variant='h5' sx={{ colr: 'red' }}>
+        Tanya
+      </Typography>
       <div className='container'>
-        <AppCard projects={projects} />
+        {projects &&
+          projects.map((project, idx) => (
+            <AppCard project={project} key={idx} idx={idx} />
+          ))}
       </div>
     </div>
   );
