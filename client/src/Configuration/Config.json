@@ -1,4 +1,5 @@
 {
-     "users_url" : "http://localhost:7000/users",
-     "client_ID":  "345624391031-5nohvvbpfesjk9jqa3spsocu0lt2fdj8.apps.googleusercontent.com"
+  "users_url": "http://localhost:4000/users",
+  "projects_url": "http://localhost:4000/projects",
+  "client_ID":  "345624391031-5nohvvbpfesjk9jqa3spsocu0lt2fdj8.apps.googleusercontent.com"
 }

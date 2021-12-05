@@ -1,9 +1,10 @@
+import React from 'react';
 import './App.scss';
 import { Projects } from '../pages/Projects/Projects';
+import { ProjectDetails } from '../pages/Projects/ProjectDetails';
 import Navbar from '../components/Navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
-
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
 let theme = createTheme({
@@ -24,19 +25,31 @@ theme = createTheme(theme, {
     },
   },
 });
-function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <Navbar />
-      <div className='App'>
-        
-        <Routes>
-          <Route path='/' element={<SignInOutContainer />} />
-          <Route path='projects' element={<Projects />} />
-        </Routes>
-      </div>
-    </ThemeProvider>
-  );
+
+export class App extends React.Component {
+  render() {
+    return (
+      <ThemeProvider theme={theme}>
+        <Navbar />
+        <div className='App'>
+          <Routes>
+            <Route path='/' element={<SignInOutContainer />} />
+            <Route path='/projects' element={<Projects />} />
+            {/* 
+            <Route path='/projects/:slug/:id' 
+             render={(props) => {
+               console.log("kksksksks")
+              return ( <ProjectDetails {...props } /> )
+          }} /> */}
+            <Route
+              path='/projects/:slug/:id'
+              element={<ProjectDetails {...this.props} />}
+            />
+          </Routes>
+        </div>
+      </ThemeProvider>
+    );
+  }
 }
 
 export default App;
