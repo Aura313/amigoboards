@@ -1,4 +1,4 @@
-import axios from '../middleware/axios';
+import axios from 'axios';
 import AuthService from '../Services/AuthenticationService';
 
 // Add a request interceptor
