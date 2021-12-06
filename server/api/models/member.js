@@ -18,6 +18,10 @@ const MemberSchema = new Mongoose.Schema({
     type: String,
     required: "Username is required",
   },
+
+  project: {
+    type: String,
+  }
 });
 
 MemberSchema.virtual("id", () => this._id.toHexString());

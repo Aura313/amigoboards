@@ -61,7 +61,7 @@ export const update = async (request, response) => {
   try {
     const id = request.params.id;
     const member = { ...request.body, id };
-    const updatedmember = await memberService.update(user);
+    const updatedmember = await memberService.update(member);
     setSuccessResponse(updatedmember, response);
   } catch (e) {
     errorhandler(e.message, response);
