@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Avatar,
   Button,
@@ -8,42 +8,135 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
-import './Login.scss';
+import "./Login.scss";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { GLogin } from "./GoogleLogin";
+import AuthService from "../../../Services/AuthenticationService";
+import AlertTitle from "@material-ui/lab/AlertTitle";
+import { useNavigate } from 'react-router-dom';
 
+export function Login({ handleChange ,props }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [usernameFlag, setUsernameFlag] = useState(true);
+  const [passwordFlag, setPasswordFlag] = useState(true);
+  const [loginmessageFlag, setLoginMessageFlag] = useState(false);
+  const [loginmessage, setLoginMessage] = useState("");
+  const navigate = useNavigate();
+  
+  const onChangeUsername = (e) => {
+    const username = e.target.value;
+    setUsername(username);
+  };
 
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
 
-const spacingStyle = { margin: "10px 0" };
-const newaccountStyle = { margin: "20px 0" };
+  const usernamerequired = (value) => {
+    if (!value) {
+      setUsernameFlag(false);
+    } else {
+      setUsernameFlag(true);
+    }
+  };
+  const passwordrequired = (value) => {
+    if (!value) {
+      setPasswordFlag(false);
+    } else {
+      setPasswordFlag(true);
+    }
+  };
+  const onClick = (event) => {
+    event.preventDefault();
+    usernamerequired(username);
+    passwordrequired(password);
+    if (passwordFlag && usernameFlag) {
+     
+      AuthService.login(username, password)
+      .then((response) => {
+        setLoginMessage("");
+        setLoginMessageFlag(false);
+        navigate('/home');
+        setUsername("");
+        setPassword("");
+      },
+      (error)=>{
+       const message=error.message;
+       setLoginMessage("Invalid Credentials");
+       setLoginMessageFlag(true);
+       setUsername("");
+       setPassword("");
+      });
+  
+}
+  };
 
-export function Login({handleChange}) {
   return (
     <Grid>
-      <Paper  className="LoginpaperStyle">
+      <Paper className="LoginpaperStyle">
         <Grid align="center">
           <Avatar className="LoginavatarStyle">
             <LockOutlinedIcon></LockOutlinedIcon>
           </Avatar>
           <h2> SIGN IN</h2>
+          {loginmessageFlag ? (
+            <AlertTitle className="alertTitleColor" >{"*"+loginmessage}</AlertTitle>
+          ) : null}
         </Grid>
-        <TextField
-         className="LoginspacingStyle"
-          label="Username"
-         
-          placeholder="Enter Username"
-          fullWidth
-          required
-          variant="outlined"
-        ></TextField>
-        <TextField
-          label="Password"
-          className="LoginspacingStyle"
-          fullWidth
-          type="password"
-          required
-          variant="outlined"
-        ></TextField>
+        {usernameFlag ? (
+          <TextField
+          value={username}
+            className="LoginspacingStyle"
+            label="Username"
+            placeholder="Enter Username"
+            fullWidth
+            variant="outlined"
+            onChange={onChangeUsername}
+            required
+          ></TextField>
+        ) : (
+          <TextField
+          value={username}
+            className="LoginspacingStyle"
+            error
+            id="filled-error-helper-text"
+            helperText="Username Required"
+            label="Username"
+            placeholder="Enter Username"           
+            fullWidth
+            variant="outlined"
+            onChange={onChangeUsername}
+            required
+          ></TextField>
+        )}
+        {passwordFlag ? (
+          <TextField
+          value={password}
+            label="Password"
+            className="LoginspacingStyle"
+            fullWidth
+            type="password"
+            variant="outlined"
+            onChange={onChangePassword}
+            required
+          ></TextField>
+        ) : (
+          <TextField
+          value={password}
+            label="Password"
+            error
+            id="filled-error-helper-text"
+            className="LoginspacingStyle"
+            fullWidth
+            type="password"
+            variant="outlined"
+            helperText="Password Required"
+            onChange={onChangePassword}
+            required
+          ></TextField>
+        )}
 
         <Button
           className="LoginspacingStyle"
@@ -51,6 +144,7 @@ export function Login({handleChange}) {
           color="primary"
           fullWidth
           variant="contained"
+          onClick={onClick}
         >
           SIGN IN
         </Button>
@@ -61,8 +155,10 @@ export function Login({handleChange}) {
         <GLogin />
         <Typography className="newaccountStyle">
           Don't have an account yet?
-          <Link to="#" onClick={()=>handleChange("event",1)}
-          > SIGN UP</Link>
+          <Link to="#" onClick={() => handleChange("event", 1)}>
+            {" "}
+            SIGN UP
+          </Link>
         </Typography>
       </Paper>
     </Grid>

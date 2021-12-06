@@ -1,11 +1,18 @@
+import React from 'react';
 import './App.scss';
 import { Projects } from '../pages/Projects/Projects';
+<<<<<<< HEAD
 import { Members } from '../pages/Members/Members';
+=======
+import { ProjectDetails } from '../pages/Projects/ProjectDetails';
+>>>>>>> dev
 import Navbar from '../components/Navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
+import Home from '../pages/Home/Homepage';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import React from 'react';
+
+
 
 let theme = createTheme({
   palette: {
@@ -25,10 +32,8 @@ theme = createTheme(theme, {
     },
   },
 });
+
 export class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <ThemeProvider theme={theme}>
@@ -36,7 +41,18 @@ export class App extends React.Component {
         <div className='App'>
           <Routes>
             <Route path='/' element={<SignInOutContainer />} />
-            <Route path='projects' element={<Projects />} />
+            <Route path='/home' element={<Home />} />
+            <Route path='/projects' element={<Projects />} />
+            {/* 
+            <Route path='/projects/:slug/:id' 
+             render={(props) => {
+               console.log("kksksksks")
+              return ( <ProjectDetails {...props } /> )
+          }} /> */}
+            <Route
+              path='/projects/:slug/:id'
+              element={<ProjectDetails {...this.props} />}
+            />
             <Route path='members' element={<Members />} />
           </Routes>
         </div>

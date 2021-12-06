@@ -2,19 +2,28 @@ import axios from "axios";
 import Config from '../Configuration/Config.json';
 
 class AuthenticationService{
-    login(username,password)
+
+  
+ register = (userName, emailId, password) => {
+    return axios.post(Config.users_url+"/signup", {
+      userName,
+      emailId,
+      password,
+    });
+  };
+     login=(userName,password)=>
     {
-        return axios.post(Config.users_url , {
-            username,
-            password
-          })
-          .then(response => {
-            if (response.data.accessToken) {
-              localStorage.setItem("user", JSON.stringify(response.data));
-            }
-    
-            return response.data;
-          });
+      return axios.post(Config.users_url+"/login" , {
+        userName,
+        password
+      })
+      .then(response => {
+        if (response.data.accessToken) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+        }
+        return response.data;
+      });
+      ;
     }
 
     logout() {
@@ -24,6 +33,14 @@ class AuthenticationService{
       getCurrentUser() {
         return JSON.parse(localStorage.getItem('user'));;
       }
-}
+  authHeader() {
+        const user = JSON.parse(localStorage.getItem('user'));
+      
+        if (user && user.accessToken) {
+          return { 'x-access-token': user.accessToken };
+        } else {
+          return {};
+        }  
+}}
 
 export default new AuthenticationService();
