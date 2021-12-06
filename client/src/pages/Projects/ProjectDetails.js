@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import { useParams } from 'react-router-dom';
 import ProjectForm from '../../components/Projects/Form';
 import { useNavigate } from 'react-router-dom';
+import './Projects.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import AuthService from '../../Services/AuthenticationService';
 import { getUser } from '../../store/Actions/user.actions';
@@ -69,20 +70,21 @@ export const ProjectDetails = () => {
   }, []);
   return (
     <div>
-      <Paper className='paper' elevation={3}>
+      <Paper className='paper backgroundColor' elevation={3}>
         <Typography color='textSecondary'>
           Owner: {project.ownerName}
         </Typography>
         {!editable ? (
           <div>
-            <Button onClick={handleEditProject}>
+            <Typography align="left" color='textSecondary' variant='h5'><b>Owner: {project.owner}</b>
+            <Button align="right" onClick={handleEditProject}>
               <EditIcon />
             </Button>
 
             <Button onClick={handleDeleteProject}>
               <DeleteIcon />
             </Button>
-
+            </Typography>
             <Typography component='p'>{project.title} </Typography>
             <Typography component='p'>{project.description} </Typography>
             <Members members={project.members} />

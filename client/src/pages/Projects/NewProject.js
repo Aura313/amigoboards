@@ -20,10 +20,10 @@ export const NewProject = () => {
   const setUserDetails = () => {
     console.log(AuthService.getCurrentUser(), 'AuthService.getCurrentuser();');
     dispatch(getUser(AuthService.getCurrentUser() || []));
-    
+
   };
 
-  
+
 
   useEffect(() => {
     setUserDetails();
@@ -36,11 +36,13 @@ export const NewProject = () => {
   } = appState;
 
   return (
-    <div>
-      <Paper className='paper' elevation={3}>
-        <Typography color='textSecondary'>Owner: {user.userName}</Typography>
-        <NewProjectForm owner={user._id} ownerName={user.userName}/>
-      </Paper>
-    </div>
+    <body className="backgroundColor">
+      <div >
+        <Paper className='paper' elevation={3}>
+          <Typography color='textSecondary'>Owner: {user.userName}</Typography>
+          <NewProjectForm owner={user._id} ownerName={user.userName} />
+        </Paper>
+      </div>
+    </body>
   );
 };

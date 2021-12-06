@@ -5,9 +5,11 @@ import Typography from '@material-ui/core/Typography';
 import './UserStories.scss';
 import Paper from '@material-ui/core/Paper';
 import axios from "axios";
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-
-
+import { AddBox, DeleteForeverIcon } from '@material-ui/icons/';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { Box, Chip, Container, Divider } from '@material-ui/core';
 
 export class UserStories extends React.Component {
     constructor(props) {
@@ -68,7 +70,7 @@ export class UserStories extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:7000/userStories')
+        axios.get('http://localhost:4000/userStories')
             .then(response => {
                 this.setState({
                     userStories: response.data
@@ -82,28 +84,28 @@ export class UserStories extends React.Component {
 
     render() {
         const { userStories } = this.state
-        
+
         return (
-            <body>
-                <Typography variant='h5' className="heading"><b>Work Items</b></Typography>
+            <body className="backgroundColor">
+                <div className="heading"><b>Work Items</b></div>
                 <span className="create" onClick={this.createNewForm.bind(this)}>
-                    <Typography variant='p'>+ New Work Item</Typography>
+                    <Typography variant='p'><Button startIcon={<AddBox/>} variant="outlined" color="primary">
+                     New Work Item
+                    </Button></Typography>
                 </span>
-                {this.state.searchBars ? (<div className="inputField" className="box">
-                    <label>Reporter:</label>
-                    <input className="textBox" type="text" name="reporter" value={this.state.reporter} onChange={this.createReporter.bind(this)}></input><br />
-                    <label> Description: </label>
-                    <input className="textBox" type="text" name="description" value={this.state.description} onChange={this.createDescription.bind(this)}></input><br />
-                    <label> Title:</label>
-                    <input className="textBox" type="text" name="title" value={this.state.title} onChange={this.createTitle.bind(this)}></input><br />
-                    <label>Assignee:</label>
-                    <input className="textBox" type="text" name="assignee" value={this.state.assignee} onChange={this.createAssignee.bind(this)}></input><br />
-                    <label>Status: <AppBox createStatus={this.createStatus.bind(this)} /></label>
-                    <label>Labels:</label>
-                    <input className="textBox" type="text" name="labels" value={this.state.labels} onChange={this.createLabels.bind(this)}></input><br />
-                    <button className="submit" onClick={this.createNewUserStory.bind(this)}> Submit </button>
+                {this.state.searchBars ? (<div className="container">
+                    <fieldset className="inputField">
+                        <form className="formBackground">
+                            <h4>Add New User Story</h4>
+                            <input placeholder="Reporter" className="textBox" type="text" name="reporter" value={this.state.reporter} onChange={this.createReporter.bind(this)}></input><br />
+                            <input placeholder="Description" className="textBox" type="text" name="description" value={this.state.description} onChange={this.createDescription.bind(this)}></input><br />
+                            <input placeholder="Title" className="textBox" type="text" name="title" value={this.state.title} onChange={this.createTitle.bind(this)}></input><br />
+                            <input placeholder="Assignee" className="textBox" type="text" name="assignee" value={this.state.assignee} onChange={this.createAssignee.bind(this)}></input><br />
+                            <input placeholder="Labels" className="textBox" type="text" name="labels" value={this.state.labels} onChange={this.createLabels.bind(this)}></input><br />
+                            <label> <AppBox createStatus={this.createStatus.bind(this)} /></label>
+                            <button className="submit" onClick={this.createNewUserStory.bind(this)}> Submit </button></form></fieldset>
                 </div>) : <div></div>}
-                <AppTable userStories={userStories} />
+                <Container><AppTable userStories={userStories} /></Container>
             </body>
         )
     }

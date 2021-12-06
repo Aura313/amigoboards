@@ -53,6 +53,7 @@ export const save = async (request, response) => {
       response
     );
   } catch (e) {
+    console.log(e.message)
     errorHandler(e.message, response);
   }
 };

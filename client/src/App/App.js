@@ -58,7 +58,7 @@ export class App extends React.Component {
     };
     item.completionStatus = false;
 
-    fetch("http://localhost:7000/userStories/", {
+    fetch("http://localhost:4000/userStories/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

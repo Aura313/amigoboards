@@ -40,7 +40,8 @@ const useStyles = makeStyles({
     fontWeight: 'bold',
   },
   container: {
-    minHeight: 200,
+    minHeight: 200 ,
+    minWidth: 400
   },
 });
 
