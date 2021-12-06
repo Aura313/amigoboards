@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
@@ -21,15 +22,32 @@ export default function NewProjectForm(props) {
   const classes = useStyles();
   const navigate = useNavigate();
   const params = useParams();
+  
 
   const [titleValue, setTitleValue] = useState('');
   const [descValue, setDescValue] = useState('');
+  const [ownerValue, setOwnerValue] = useState('');
   const [members, setMembers] = useState([]);
+  const [selectedMembers, setSelectedMembers] = useState([]);
+
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      await axios.get(Config.users_url).then((res) => {
+        console.log(res.data, 'slslsl');
+        setMembers(res.data);
+      });
+    };
+    fetchUsers();
+  }, []);
 
   useEffect(() => {
     setTitleValue(props.title ? props.title : '');
     setDescValue(props.description ? props.description : '');
     setMembers(props.members ? props.members : []);
+    setOwnerValue(props.owner ? props.owner : '');
+    setSelectedMembers(props.selectedMembers ? props.selectedMembers : '')
+    
   }, []);
 
   const handleTitleChange = (event) => {
@@ -41,15 +59,23 @@ export default function NewProjectForm(props) {
   };
 
   const handleMembers = (item) => {
-    setMembers(item);
+    setSelectedMembers(item);
   };
 
   const handleSubmitProject = async () => {
     let formData = {
       title: titleValue,
       description: descValue,
-      members: members,
-      owner: 'Tanya',
+      members: selectedMembers.map((i) => {
+        let obj = {
+          _id: i._id,
+          emailId: i.emailId,
+          userName: i.userName,
+        };
+        return obj;
+      }),
+      owner: props.updateMode ?  props.owner : ownerValue,
+      ownerName: props.ownerName
     };
 
     props.updateMode
@@ -75,7 +101,7 @@ export default function NewProjectForm(props) {
       <TextField
         required
         id='standard-required'
-        label='Required'
+        label='Title'
         defaultValue='Hello World'
         value={titleValue}
         onChange={handleTitleChange}
@@ -90,7 +116,7 @@ export default function NewProjectForm(props) {
         value={descValue}
         onChange={handleDescChange}
       />
-      <Dropdown handleMembers={handleMembers} />
+      <Dropdown handleMembers={handleMembers} members={members} selectedMembers={props.selectedMembers} />
 
       <Button variant='contained' color='primary' onClick={handleSubmitProject}>
         Submit

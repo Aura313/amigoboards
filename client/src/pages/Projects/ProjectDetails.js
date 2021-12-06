@@ -11,11 +11,14 @@ import Button from '@material-ui/core/Button';
 import { useParams } from 'react-router-dom';
 import ProjectForm from '../../components/Projects/Form';
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import AuthService from '../../Services/AuthenticationService';
+import { getUser } from '../../store/Actions/user.actions';
 export const ProjectDetails = () => {
   const [project, setProject] = useState({
     title: '',
     description: '',
+    members: [],
     owner: '',
   });
 
@@ -23,10 +26,23 @@ export const ProjectDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
 
+  const appState = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const setUserDetails = () => {
+    console.log(AuthService.getCurrentUser(), 'AuthService.getCurrentuser();');
+    dispatch(getUser(AuthService.getCurrentUser() || []));
+  };
+
+  useEffect(() => {
+    setUserDetails();
+  }, []);
+
+  const {
+    user: { user },
+  } = appState;
+
   const handleEditProject = () => {
-    console.log('edi');
     setEditable(true);
-    console.log('editable', editable);
   };
 
   const fetchProjectDetails = async () => {
@@ -48,11 +64,12 @@ export const ProjectDetails = () => {
   useEffect(() => {
     fetchProjectDetails();
   }, []);
-
   return (
     <div>
       <Paper className='paper' elevation={3}>
-        <Typography color='textSecondary'>Owner: {project.owner}</Typography>
+        <Typography color='textSecondary'>
+          Owner: {project.ownerName}
+        </Typography>
         {!editable ? (
           <div>
             <Button onClick={handleEditProject}>
@@ -74,6 +91,9 @@ export const ProjectDetails = () => {
             <ProjectForm
               title={project.title}
               description={project.description}
+              selectedMembers={project.members}
+              owner={project.owner}
+              ownerName={project.ownerName}
               updateMode={true}
               handleClose={handleClose}
             />
