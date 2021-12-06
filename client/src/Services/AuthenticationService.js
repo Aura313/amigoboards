@@ -18,7 +18,7 @@ class AuthenticationService {
       .then((response) => {
         if (response.data.token) {
           localStorage.setItem("user", JSON.stringify(response.data));
-         // console.log(localStorage);
+          // console.log(localStorage);
         }
         return response.data;
       });
@@ -30,15 +30,23 @@ class AuthenticationService {
 
   getCurrentUser = () => {
     return JSON.parse(localStorage.getItem("user"));
-  }
+  };
   authHeader() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.token) {
-      return { "Bearer ": user.token };
+      return { Authorization: "Bearer " + user.token };
     } else {
       return {};
     }
   }
+
+  getUsers = () => {
+    return axios
+      .get(Config.users_url, { headers: this.authHeader() })
+      .then((response) => {
+        return response.data;
+      });
+  };
 }
 
 export default new AuthenticationService();
