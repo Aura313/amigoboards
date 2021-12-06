@@ -1,4 +1,6 @@
 {
   "users_url": "http://localhost:4000/users",
-  "projects_url": "http://localhost:4000/projects"
+  "projects_url": "http://localhost:4000/projects",
+  "userStories_url": "http://localhost:7000/userStories"
+
 }

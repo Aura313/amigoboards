@@ -27,11 +27,14 @@ const UserStorySchema = new Mongoose.Schema({
     },
     "status": {
         type: String,
-        required: "Assignee is a required field"
+        required: "Status is a required field"
     },
     "labels": {
         type: String,
         required: "Labels is a required field"
+    },
+    "completionStatus": {
+        type: Boolean
     }
 },
     {

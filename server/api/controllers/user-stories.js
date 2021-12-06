@@ -34,8 +34,10 @@ export const save = async (request, response) => {
     try {
         const userStory = {...request.body};
         const newUserStory = await userStoryService.create(userStory);
+        console.log(userStory, newUserStory, "oeoeoeo");
         setSuccessResponse(newUserStory, response);
     } catch(e) {
+        console.log(e.message, "message");
         errorhandler(e.message, response);
     }
 };

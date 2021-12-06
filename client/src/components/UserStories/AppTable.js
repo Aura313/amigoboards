@@ -7,6 +7,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import axios from "axios";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import EditIcon from '@material-ui/icons/Edit';
+
+
 
 const useStyles = makeStyles({
     table: {
@@ -14,17 +19,19 @@ const useStyles = makeStyles({
     },
 });
 
-function createData(id, reporter, description, title, assignee, createdDate, lastModifiedDate, status, labels) {
-    return { id, reporter, description, title, assignee, createdDate, lastModifiedDate, status, labels };
-}
+// function createData(id, reporter, description, title, assignee, createdDate, lastModifiedDate, status, labels) {
+//     return { id, reporter, description, title, assignee, createdDate, lastModifiedDate, status, labels };
+// }
 
-const rows = [
-    createData(1, 'Tanya', 'To finish WebD Project', 'Project Management Application', 'Roopa, Shrawya, Vyshnavi', '11/29/2021', '12/3/2021', 'In Progress', 'abj'),
-    createData(2, 'Roopa', 'To implement UserStories', 'UserStories', 'Roopa', '11/29/2021', '12/3/2021', 'In Progress', 'abj'),
-];
 
-export default function AppTable() {
+
+
+
+export default function AppTable(props) {
     const classes = useStyles();
+    const rows = props.userStories.userStories || [];
+
+   
 
     return (
         <TableContainer component={Paper}>
@@ -43,9 +50,9 @@ export default function AppTable() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
+                    {rows.map((row,index) => (
                         <TableRow key={row.id}>
-                            <TableCell align="centre">{row.id}</TableCell>
+                            <TableCell align="centre">{index+1}</TableCell>
                             <TableCell align="centre">{row.reporter}</TableCell>
                             <TableCell align="centre">{row.description}</TableCell>
                             <TableCell align="centre">{row.title}</TableCell>
@@ -54,6 +61,8 @@ export default function AppTable() {
                             <TableCell align="centre">{row.lastModifiedDate}</TableCell>
                             <TableCell align="centre">{row.status}</TableCell>
                             <TableCell align="centre">{row.labels}</TableCell>
+                            <EditIcon align="right"></EditIcon>
+                            <DeleteForeverIcon align="right" ></DeleteForeverIcon>
                         </TableRow>
                     ))}
                 </TableBody>
