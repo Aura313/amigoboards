@@ -1,14 +1,18 @@
 import React from 'react';
 import './App.scss';
 import { Projects } from '../pages/Projects/Projects';
+import { Members } from '../pages/Members/Members';
 import { ProjectDetails } from '../pages/Projects/ProjectDetails';
 import Navbar from '../components/Navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
+import Home from '../pages/Home/Homepage';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { UserStories } from '../pages/UserStories/UserStories';
 import Config from '../Configuration/Config.json';
 import axios from "axios";
+
+
 
 
 let theme = createTheme({
@@ -43,23 +47,29 @@ export class App extends React.Component {
     this.setState((state, props) => ({
       userStories: [
         ...state.userStories,
-        { "reporter": "Add reporter", "description": "add description", "title": "add title", "assignee": "add assignee",
-        "status": "Add status" , "labels": "Add labels" }
+        {
+          "reporter": "Add reporter", "description": "add description", "title": "add title", "assignee": "add assignee",
+          "status": "Add status", "labels": "Add labels"
+        }
       ]
     }));
   }
 
   createitem(item) {
-    const newtask = { "reporter": item.reporter, "description": item.description, "title": item.title, "assignee": item.assignee, 
-    "status": item.status , "labels": item.labels   };
+    const newtask = {
+      "reporter": item.reporter, "description": item.description, "title": item.title, "assignee": item.assignee,
+      "status": item.status, "labels": item.labels
+    };
     item.completionStatus = false;
 
     fetch("http://localhost:7000/userStories/", {
       method: "POST",
-      headers: { "Content-Type": "application/json",
-      'Accept': 'application/json' },
+      headers: {
+        "Content-Type": "application/json",
+        'Accept': 'application/json'
+      },
       body: JSON.stringify(newtask)
-    }); 
+    });
     const toJson = (response) => response.json()
     const loadData = (config) => {
       fetch(config.userStories_url).then(toJson)
@@ -76,19 +86,20 @@ export class App extends React.Component {
         <div className='App'>
           <Routes>
             <Route path='/' element={<SignInOutContainer />} />
-            <Route path='projects' element={<Projects />} />
-            <Route path='userStories' element={
-            <UserStories 
-            createHandler={this.create.bind(this)}
-            createitem={this.createitem.bind(this)}/>} />
+            <Route path='/home' element={<Home />} />
             <Route path='/projects' element={<Projects />} />
             <Route
               path='/projects/:slug/:id'
               element={<ProjectDetails {...this.props} />}
             />
-          </Routes >
-        </div >
-      </ThemeProvider >
+            <Route path='/userStories' element={
+              <UserStories
+                createHandler={this.create.bind(this)}
+                createitem={this.createitem.bind(this)} />} />
+            <Route path='/members' element={<Members />} />
+          </Routes>
+        </div>
+      </ThemeProvider>
     );
   }
 }

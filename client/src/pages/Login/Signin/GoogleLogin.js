@@ -1,31 +1,37 @@
-import React from 'react';
-import { GoogleLogin } from 'react-google-login';
-import '../LoginContainer/LoginContainer.scss'
-
-const clientId = "345624391031-5nohvvbpfesjk9jqa3spsocu0lt2fdj8.apps.googleusercontent.com";
-
-export function GLogin() {    
-    const onLoginSuccess = (res) => {
-        console.log('Login Success:', res.profileObj);
-    };
-
-    const onLoginFailure = (res) => {
-        console.log('Login Failed:', res);
-    };
+import React from "react";
+import { GoogleLogin } from "react-google-login";
+import "../LoginContainer/LoginContainer.scss";
+import config from  "../../../Configuration/Config.json";
+import { useNavigate } from 'react-router-dom';
+const clientId =config.client_ID;
 
 
-    return (
-        <div>
-          
-                <GoogleLogin
-                    clientId={clientId}
-                    buttonText="   Sign In with your Google Account"
-                    onSuccess={onLoginSuccess}
-                    onFailure={onLoginFailure}
-                    cookiePolicy={'single_host_origin'}
-                    isSignedIn={true}
-                    className='GButton'
-                /> 
-        </div>
-    );
+export function GLogin() {
+
+  let buttonRef = React.useRef<HTMLButtonElement>(null)
+  
+  const navigate = useNavigate();
+  const onLoginSuccess =  (resp) => {
+console.log(resp); 
+navigate('/home');
+  };
+
+  const onLoginFailure = (e,res) => {
+    console.log("Login Failed:", res);
+  };
+
+  return (
+    <div>
+      <GoogleLogin
+        ref = {btn => buttonRef = btn}
+        clientId={clientId}
+        buttonText="   Sign In with your Google Account"
+        onSuccess={onLoginSuccess}
+        onFailure={onLoginFailure}
+        cookiePolicy={"single_host_origin"}
+        isSignedIn={false}
+        className="GButton"
+      />
+    </div>
+  );
 }
