@@ -12,12 +12,17 @@ import { useParams } from 'react-router-dom';
 import ProjectForm from '../../components/Projects/Form';
 import { useNavigate } from 'react-router-dom';
 import './Projects.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import AuthService from '../../Services/AuthenticationService';
+import { getUser } from '../../store/Actions/user.actions';
+import Members from '../../components/Projects/Members/Members';
 
 
 export const ProjectDetails = () => {
   const [project, setProject] = useState({
     title: '',
     description: '',
+    members: [],
     owner: '',
   });
 
@@ -25,10 +30,23 @@ export const ProjectDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
 
+  const appState = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const setUserDetails = () => {
+    console.log(AuthService.getCurrentUser(), 'AuthService.getCurrentuser();');
+    dispatch(getUser(AuthService.getCurrentUser() || []));
+  };
+
+  useEffect(() => {
+    setUserDetails();
+  }, []);
+
+  const {
+    user: { user },
+  } = appState;
+
   const handleEditProject = () => {
-    console.log('edi');
     setEditable(true);
-    console.log('editable', editable);
   };
 
   const fetchProjectDetails = async () => {
@@ -50,10 +68,12 @@ export const ProjectDetails = () => {
   useEffect(() => {
     fetchProjectDetails();
   }, []);
-
   return (
     <div>
       <Paper className='paper backgroundColor' elevation={3}>
+        <Typography color='textSecondary'>
+          Owner: {project.ownerName}
+        </Typography>
         {!editable ? (
           <div>
             <Typography align="left" color='textSecondary' variant='h5'><b>Owner: {project.owner}</b>
@@ -67,6 +87,8 @@ export const ProjectDetails = () => {
             </Typography>
             <Typography component='p'>{project.title} </Typography>
             <Typography component='p'>{project.description} </Typography>
+            <Members members={project.members} />
+            
           </div>
         ) : (
           <div>
@@ -76,6 +98,9 @@ export const ProjectDetails = () => {
             <ProjectForm
               title={project.title}
               description={project.description}
+              selectedMembers={project.members}
+              owner={project.owner}
+              ownerName={project.ownerName}
               updateMode={true}
               handleClose={handleClose}
             />

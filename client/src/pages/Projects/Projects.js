@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { AddBox, DeleteForeverIcon } from '@material-ui/icons/';
 
+import ComboBox from '../../components/Projects/Members/ComboBox';
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -30,10 +31,9 @@ export const Projects = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const handleNewProject = () => {
     navigate(`/projects/new-project`);
-  }
+  };
   useEffect(() => {
     setOpen(true);
     const fetchProjects = async () => {
@@ -62,11 +62,15 @@ export const Projects = () => {
         <CircularProgress color='inherit' />
       </Backdrop>
 
-      <div className="heading"><b>User Name</b></div>
+      <div className="heading"><b>{appState.user.user.userName}</b></div>
       <span className="create" onClick={handleNewProject}>
-        <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
-          New Project
-        </Button></Typography></span>
+        <Typography variant='p'>
+          <Button startIcon={<AddBox />} variant="outlined" color="primary">
+            New Project
+          </Button>
+        </Typography>
+      </span>
+      <ComboBox projects={projects || []} />
 
       <div className='container'>
         {projects &&

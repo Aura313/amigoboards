@@ -1,5 +1,6 @@
 import express from "express";
 import * as memberController from "../controllers/member-controller.js";
+import {tokencheck} from '../services/auth-service.js';
 
 const router = express.Router();
 
@@ -7,8 +8,8 @@ const router = express.Router();
  * Router and Controller Binding
  */
 
-router.route("/").get(memberController.index).post(memberController.save);
-router.route("/:id").put(memberController.update);
+router.route("/").get(tokencheck,memberController.index).post(tokencheck,memberController.save);
+router.route("/:id").put(tokencheck,memberController.update);
 
 /*** SAMPLE POST METHOD JSON
  {

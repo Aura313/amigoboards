@@ -19,7 +19,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
 import Config from '../../Configuration/Config.json';
-import AuthService from "../../Services/AuthenticationService";
+import AuthService from '../../Services/AuthenticationService';
 import { useNavigate } from 'react-router-dom';
 import './Navbar.scss';
 import { Divider } from '@material-ui/core';
@@ -69,7 +69,7 @@ export default function Navbar() {
   const handleLogout = (event) => {
     AuthService.logout();
     navigate('/');
-  }
+  };
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -165,6 +165,7 @@ export default function Navbar() {
                 value={value}
                 onChange={(event, newValue) => {
                   setValue(newValue);
+                  newValue &&  navigate(`/projects/${newValue.slug}/${newValue._id}`);
                 }}
                 renderInput={(params) => (
                   <TextField placeholder="Search" {...params} label='' margin='normal' />

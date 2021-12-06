@@ -25,7 +25,6 @@ const setSuccessResponse = (data, response) => {
 };
 
 export const validateUser = () => {
- 
   return [
     check("emailId").exists().isEmail(),
     check("userName").exists().isAlphanumeric(),
@@ -48,6 +47,17 @@ export const index = async (request, response) => {
   }
 };
 
+export const get = async (request, response) => {
+  try {
+    const id = request.params.id;
+
+    const item = await userService.get(id);
+    setSuccessResponse(item ? item : `No item found, please check the requested id.`, response);
+  } catch (e) {
+    errorhandler(e.message, response);
+  }
+};
+
 /**
  * Method called on http post
  * @param {*} request , request header from http
@@ -56,11 +66,9 @@ export const index = async (request, response) => {
 
 export const createUser = (request, response) => {
   try {
- 
     const errors = validationResult(request);
-    
+
     if (!errors.isEmpty()) {
-   
       response.status(400).json({
         message: constants.CLIENT_ERR,
       });
@@ -68,7 +76,7 @@ export const createUser = (request, response) => {
     }
     // Validate if user already exists
     userService.checkUniqueUser(request.body).then((user) => {
-        if (user.length) {
+      if (user.length) {
         response.status(201);
         response.json({
           message: constants.UNIQUE_EMAIL_USER_ERR,
@@ -77,9 +85,11 @@ export const createUser = (request, response) => {
         // after validating
         const newUser = Object.assign({}, request.body);
         const resolve = () => {
-          response.status(200).json( {message: "Registration Successful, Proceed to Login"});
+          response
+            .status(200)
+            .json({ message: "Registration Successful, Proceed to Login" });
         };
-       
+
         userService.create(newUser).then(resolve);
       }
     });
@@ -127,25 +137,22 @@ export const loginUser = (request, response) => {
         });
       }
       if (!request.body.socialAuth) {
-        if(request.body.password!==user.password) {
-         
-            return response.status(401).json({
-              message: "Login Failed",
-             } );
-          }
-          else{
-            const jwtToken = generateLoginToken(user);
-            return response.status(200).json({
-              _id: user._id,
-              userName: user.userName,
-              emailId: user.emailId,
-              token: jwtToken,
-            });
-          }
+        if (request.body.password !== user.password) {
           return response.status(401).json({
             message: "Login Failed",
           });
-        
+        } else {
+          const jwtToken = generateLoginToken(user);
+          return response.status(200).json({
+            _id: user._id,
+            userName: user.userName,
+            emailId: user.emailId,
+            token: jwtToken,
+          });
+        }
+        return response.status(401).json({
+          message: "Login Failed",
+        });
       } else {
         const jwtToken = generateLoginToken(user);
         return response.status(200).json({

@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.scss';
 import { Projects } from '../pages/Projects/Projects';
-import { Members } from '../pages/Members/Members';
 import { ProjectDetails } from '../pages/Projects/ProjectDetails';
 import { NewProject } from '../pages/Projects/NewProject';
 import Navbar from '../components/Navbar/Navbar';
@@ -10,10 +9,6 @@ import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
 import Home from '../pages/Home/Homepage';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { UserStories } from '../pages/UserStories/UserStories';
-import Config from '../Configuration/Config.json';
-import axios from "axios";
-
-
 
 
 let theme = createTheme({
@@ -98,7 +93,6 @@ export class App extends React.Component {
               <UserStories
                 createHandler={this.create.bind(this)}
                 createitem={this.createitem.bind(this)} />} />
-            <Route path='/members' element={<Members />} />
           </Routes>
         </div>
       </ThemeProvider>

@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import { Box, Chip, Container, Divider } from '@material-ui/core';
 import './Form.scss'
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
@@ -24,14 +25,31 @@ export default function NewProjectForm(props) {
   const navigate = useNavigate();
   const params = useParams();
 
+
   const [titleValue, setTitleValue] = useState('');
   const [descValue, setDescValue] = useState('');
+  const [ownerValue, setOwnerValue] = useState('');
   const [members, setMembers] = useState([]);
+  const [selectedMembers, setSelectedMembers] = useState([]);
+
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      await axios.get(Config.users_url).then((res) => {
+        console.log(res.data, 'slslsl');
+        setMembers(res.data);
+      });
+    };
+    fetchUsers();
+  }, []);
 
   useEffect(() => {
     setTitleValue(props.title ? props.title : '');
     setDescValue(props.description ? props.description : '');
     setMembers(props.members ? props.members : []);
+    setOwnerValue(props.owner ? props.owner : '');
+    setSelectedMembers(props.selectedMembers ? props.selectedMembers : '')
+
   }, []);
 
   const handleTitleChange = (event) => {
@@ -43,15 +61,23 @@ export default function NewProjectForm(props) {
   };
 
   const handleMembers = (item) => {
-    setMembers(item);
+    setSelectedMembers(item);
   };
 
   const handleSubmitProject = async () => {
     let formData = {
       title: titleValue,
       description: descValue,
-      members: [members],
-      owner: 'Tanya',
+      members: selectedMembers.map((i) => {
+        let obj = {
+          _id: i._id,
+          emailId: i.emailId,
+          userName: i.userName,
+        };
+        return obj;
+      }),
+      owner: props.updateMode ? props.owner : ownerValue,
+      ownerName: props.ownerName
     };
 
     props.updateMode
@@ -79,8 +105,8 @@ export default function NewProjectForm(props) {
           <h4>Please enter Project Details:</h4>
           <Divider />
           <TextField
-            placeholder='Enter Title'
             required
+            placeholder='Enter Title'
             id='standard-required'
             label='Title'
             defaultValue='Hello World'
@@ -101,6 +127,7 @@ export default function NewProjectForm(props) {
             variant="outlined"
           />
           <Divider />
+          <Dropdown handleMembers={handleMembers} members={members} selectedMembers={props.selectedMembers} />
 
           <Dropdown align="center" handleMembers={handleMembers} />
 
