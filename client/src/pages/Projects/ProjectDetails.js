@@ -11,6 +11,8 @@ import Button from '@material-ui/core/Button';
 import { useParams } from 'react-router-dom';
 import ProjectForm from '../../components/Projects/Form';
 import { useNavigate } from 'react-router-dom';
+import './Projects.scss';
+
 
 export const ProjectDetails = () => {
   const [project, setProject] = useState({
@@ -51,18 +53,18 @@ export const ProjectDetails = () => {
 
   return (
     <div>
-      <Paper className='paper' elevation={3}>
-        <Typography color='textSecondary'>Owner: {project.owner}</Typography>
+      <Paper className='paper backgroundColor' elevation={3}>
         {!editable ? (
           <div>
-            <Button onClick={handleEditProject}>
+            <Typography align="left" color='textSecondary' variant='h5'><b>Owner: {project.owner}</b>
+            <Button align="right" onClick={handleEditProject}>
               <EditIcon />
             </Button>
 
             <Button onClick={handleDeleteProject}>
               <DeleteIcon />
             </Button>
-
+            </Typography>
             <Typography component='p'>{project.title} </Typography>
             <Typography component='p'>{project.description} </Typography>
           </div>

@@ -21,6 +21,8 @@ import axios from 'axios';
 import Config from '../../Configuration/Config.json';
 import AuthService from "../../Services/AuthenticationService";
 import { useNavigate } from 'react-router-dom';
+import './Navbar.scss';
+import { Divider } from '@material-ui/core';
 
 export default function Navbar() {
   const classes = navStyles();
@@ -64,14 +66,17 @@ export default function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
- const handleLogout =(event) => {
-  AuthService.logout();
-  navigate('/');
- }
+  const handleLogout = (event) => {
+    AuthService.logout();
+    navigate('/');
+  }
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
+      // getContentAnchorEl={null}
+      // anchorOrigin={{ vertical: 'bottom',horizontal: 'left' }} 
+      // transformOrigin={{ vertical: 'top', horizontal: 'left' }}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={menuId}
       keepMounted
@@ -120,7 +125,7 @@ export default function Navbar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position='static'>
+      <AppBar position='fixed'>
         <Toolbar>
           <IconButton
             edge='start'
@@ -130,6 +135,7 @@ export default function Navbar() {
           >
             <AppDrawer />
           </IconButton>
+          <img className="logo" src="../.././Assets/Amigi Boards Logo.png"></img>
           <Typography
             component={RouterLink}
             to='/'
@@ -137,12 +143,13 @@ export default function Navbar() {
             variant='h6'
             noWrap
           >
-            PROJ-MAN
+            <h7> AMIGOS! </h7>
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
             {/* <InputBase
               placeholder='Search…'
               classes={{
@@ -160,7 +167,7 @@ export default function Navbar() {
                   setValue(newValue);
                 }}
                 renderInput={(params) => (
-                  <TextField {...params} label='' margin='normal' />
+                  <TextField placeholder="Search" {...params} label='' margin='normal' />
                 )}
               />
             </div>

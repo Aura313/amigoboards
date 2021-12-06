@@ -12,6 +12,9 @@ import { ActionTypes } from '../../store/types';
 import AddIcon from '@material-ui/icons/Add';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import { AddBox, DeleteForeverIcon } from '@material-ui/icons/';
+
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -54,21 +57,23 @@ export const Projects = () => {
     (appState && appState.allProjects && appState.allProjects.projects) || [];
 
   return (
-    <div>
+    <div className="backgroundColor">
       <Backdrop className={classes.backdrop} open={open}>
         <CircularProgress color='inherit' />
       </Backdrop>
-      <div className='container'>
-        <Typography variant='h5'>Username</Typography>
-        <div  className='wrapper' onClick={handleNewProject}>
-          <Typography component='p'>New Project</Typography>
-          <AddIcon />
-        </div>
-      </div>
+
+      <div className="heading"><b>User Name</b></div>
+      <span className="create" onClick={handleNewProject}>
+        <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
+          New Project
+        </Button></Typography></span>
+
       <div className='container'>
         {projects &&
           projects.map((project, idx) => (
-            <AppCard project={project} key={idx} idx={idx} />
+            <div className="card-right">
+              <AppCard project={project} key={idx} idx={idx} />
+            </div>
           ))}
       </div>
     </div>

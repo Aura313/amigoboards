@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-const options = ['In Progress', 'Completed'];
+const options = ['Not Yet Started','In Progress', 'Completed'];
 
 export default function AppBox(props) {
   const [value, setValue] = React.useState(options[0]);
@@ -26,8 +26,8 @@ export default function AppBox(props) {
         }}
         id="controllable-states-demo"
         options={options}
-        style={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Controllable" variant="outlined" />}
+        style={{ width: 200, paddingBottom: 25 , paddingLeft: 100}}
+        renderInput={(params) => <TextField {...params} label="Status" variant="outlined" />}
       />
     </div>
   );

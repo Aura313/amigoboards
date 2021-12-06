@@ -2,10 +2,12 @@
   display: flex;
   flex-flow: wrap;
   justify-content: space-around;
+  margin-right: 20px;
 }
 
 .paper {
-    margin: 20px 40px;
+    margin: 40px 40px;
+    padding: 20px 20px 20px 20px;
 }
 
 .wrapper {
@@ -21,4 +23,22 @@
     border: 1px solid #ccc;
     border-radius: 5px;
   }
+}
+
+.backgroundColor {
+  background-color: #9599E2;
+  background-image: linear-gradient(0deg, #9599E2 0%, #8BC6EC 27%, #ffffff 100%);
+  height: 100%;
+  background-attachment: fixed;
+}
+
+.create {
+  float: right;
+    font-size: 15px;
+    padding-bottom: 20px;
+    padding-right: 105px;
+}
+
+.card-right {
+  margin: 30px;
 }

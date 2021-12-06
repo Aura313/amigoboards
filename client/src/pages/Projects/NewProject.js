@@ -11,11 +11,12 @@ import { useParams } from 'react-router-dom';
 
 export const NewProject = () => {
   return (
-    <div>
+    <body className="backgroundColor"> 
+    <div >
       <Paper className='paper' elevation={3}>
         <Typography color='textSecondary'>Owner: qdhiw</Typography>
       </Paper>
       <NewProjectForm />
-    </div>
+    </div></body>
   );
 };

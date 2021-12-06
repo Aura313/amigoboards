@@ -1,7 +1,7 @@
 .heading {
-    text-align: left;
+    text-align: center;
     padding: 10px 10px 10px 10px;
-    // font-weight: bold;
+    font-size: 40px;
 }
 
 
@@ -9,9 +9,69 @@
     float: right;
     font-size: 15px;
     padding-bottom: 20px;
+    padding-right: 105px;
 }
 
-.textBox {
-    margin-left: 100px;
+.backgroundColor {
+    background-color: #9599E2;
+    background-image: linear-gradient(0deg, #9599E2 0%, #8BC6EC 27%, #ffffff 100%);
+    height: 100%;
+    background-attachment: fixed;
+  }
+
+  .textBox {
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      color: #2c3e50;
+      font-size: 13px;    
+      width: 200px;
+  }
+
+  .submit{
+	width: 100px;
+	background: #5399d3;
+	font-weight: bold;
+	color: white;
+	border: 0 none;
+	border-radius: 1px;
+	cursor: pointer;
+	padding: 10px 5px;
+	margin: 10px;
+}
+.submit:hover, .submit:focus {
+	box-shadow: 0 0 0 2px white, 0 0 0 3px #06053a;
 }
 
+  .formBackground {
+      width: 400px;
+	margin: 10px;
+    padding-top: 10px;
+	text-align: center;
+	position: relative;
+  }
+
+  .inputField {
+    background: white;
+	border: 0 none;
+	border-radius: 3px;
+	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+	// padding:;
+	box-sizing: border-box;
+	width: 20%;
+	margin: 0 10%;
+	position: relative;
+    margin-bottom: 30px;
+    justify-content: center;
+    display: flex;
+  }
+
+  .container {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-left: 115px;
+    margin-top: 10px;
+  }
