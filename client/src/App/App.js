@@ -8,6 +8,10 @@ import { Routes, Route } from 'react-router-dom';
 import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
 import Home from '../pages/Home/Homepage';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { UserStories } from '../pages/UserStories/UserStories';
+import Config from '../Configuration/Config.json';
+import axios from "axios";
+
 
 
 
@@ -31,6 +35,50 @@ theme = createTheme(theme, {
 });
 
 export class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      userStories: []
+    };
+  }
+
+  create() {
+    this.setState((state, props) => ({
+      userStories: [
+        ...state.userStories,
+        {
+          "reporter": "Add reporter", "description": "add description", "title": "add title", "assignee": "add assignee",
+          "status": "Add status", "labels": "Add labels"
+        }
+      ]
+    }));
+  }
+
+  createitem(item) {
+    const newtask = {
+      "reporter": item.reporter, "description": item.description, "title": item.title, "assignee": item.assignee,
+      "status": item.status, "labels": item.labels
+    };
+    item.completionStatus = false;
+
+    fetch("http://localhost:7000/userStories/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(newtask)
+    });
+    const toJson = (response) => response.json()
+    const loadData = (config) => {
+      fetch(config.userStories_url).then(toJson)
+        .then((userStories) => this.setState({ userStories: userStories.userStories }));
+    };
+
+    fetch('config/config.json').then(toJson).then(loadData);
+  }
+
   render() {
     return (
       <ThemeProvider theme={theme}>
@@ -40,17 +88,15 @@ export class App extends React.Component {
             <Route path='/' element={<SignInOutContainer />} />
             <Route path='/home' element={<Home />} />
             <Route path='/projects' element={<Projects />} />
-            {/* 
-            <Route path='/projects/:slug/:id' 
-             render={(props) => {
-               console.log("kksksksks")
-              return ( <ProjectDetails {...props } /> )
-          }} /> */}
             <Route
               path='/projects/:slug/:id'
               element={<ProjectDetails {...this.props} />}
             />
-            <Route path='members' element={<Members />} />
+            <Route path='/userStories' element={
+              <UserStories
+                createHandler={this.create.bind(this)}
+                createitem={this.createitem.bind(this)} />} />
+            <Route path='/members' element={<Members />} />
           </Routes>
         </div>
       </ThemeProvider>
