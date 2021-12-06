@@ -7,3 +7,18 @@
 .paper {
     margin: 20px 40px;
 }
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 5px;
+  margin: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #fff;
+  &:hover {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+}

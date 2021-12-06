@@ -1,5 +1,6 @@
 import Mongoose from 'mongoose';
 import slug from 'mongoose-slug-generator';
+import Users from './user.js';
 
 Mongoose.plugin(slug);
 
@@ -23,8 +24,10 @@ const ProjectsSchema = new Schema(
     description: {
       type: String,
     },
+    members: { type: Array, default: [] },
     slug: { type: String, slug: 'title' },
-    owner: { type: String, required: 'Owner is a required field!' },
+    owner: { type: Schema.Types.ObjectId, ref: Users },
+    // { type: String, required: 'Owner is a required field!' },
   },
   {
     timestamps: true,

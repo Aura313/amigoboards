@@ -3,6 +3,7 @@ import './App.scss';
 import { Projects } from '../pages/Projects/Projects';
 import { Members } from '../pages/Members/Members';
 import { ProjectDetails } from '../pages/Projects/ProjectDetails';
+import { NewProject } from '../pages/Projects/NewProject';
 import Navbar from '../components/Navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
@@ -92,6 +93,7 @@ export class App extends React.Component {
               path='/projects/:slug/:id'
               element={<ProjectDetails {...this.props} />}
             />
+            <Route path='/projects/new-project' element={<NewProject />} />
             <Route path='/userStories' element={
               <UserStories
                 createHandler={this.create.bind(this)}
