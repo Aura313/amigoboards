@@ -19,6 +19,8 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
 import Config from '../../Configuration/Config.json';
+import AuthService from "../../Services/AuthenticationService";
+import { useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const classes = navStyles();
@@ -44,7 +46,7 @@ export default function Navbar() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+  const navigate = useNavigate();
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -62,13 +64,10 @@ export default function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleSearch = async () => {
-    await axios.get(Config.projects_url).then((res) => {
-      console.log(res.data, 'jdiwihjdwihw');
-      setProjects(res.data);
-    });
-  };
-
+ const handleLogout =(event) => {
+  AuthService.logout();
+  navigate('/');
+ }
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -82,6 +81,7 @@ export default function Navbar() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
 

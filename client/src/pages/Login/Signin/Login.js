@@ -13,15 +13,17 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { GLogin } from "./GoogleLogin";
 import AuthService from "../../../Services/AuthenticationService";
 import AlertTitle from "@material-ui/lab/AlertTitle";
+import { useNavigate } from 'react-router-dom';
 
-export function Login({ handleChange }) {
+export function Login({ handleChange ,props }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameFlag, setUsernameFlag] = useState(true);
   const [passwordFlag, setPasswordFlag] = useState(true);
   const [loginmessageFlag, setLoginMessageFlag] = useState(false);
   const [loginmessage, setLoginMessage] = useState("");
-
+  const navigate = useNavigate();
+  
   const onChangeUsername = (e) => {
     const username = e.target.value;
     setUsername(username);
@@ -56,11 +58,16 @@ export function Login({ handleChange }) {
       .then((response) => {
         setLoginMessage("");
         setLoginMessageFlag(false);
+        navigate('/home');
+        setUsername("");
+        setPassword("");
       },
       (error)=>{
        const message=error.message;
        setLoginMessage("Invalid Credentials");
        setLoginMessageFlag(true);
+       setUsername("");
+       setPassword("");
       });
   
 }
@@ -80,6 +87,7 @@ export function Login({ handleChange }) {
         </Grid>
         {usernameFlag ? (
           <TextField
+          value={username}
             className="LoginspacingStyle"
             label="Username"
             placeholder="Enter Username"
@@ -90,6 +98,7 @@ export function Login({ handleChange }) {
           ></TextField>
         ) : (
           <TextField
+          value={username}
             className="LoginspacingStyle"
             error
             id="filled-error-helper-text"
@@ -104,6 +113,7 @@ export function Login({ handleChange }) {
         )}
         {passwordFlag ? (
           <TextField
+          value={password}
             label="Password"
             className="LoginspacingStyle"
             fullWidth
@@ -114,6 +124,7 @@ export function Login({ handleChange }) {
           ></TextField>
         ) : (
           <TextField
+          value={password}
             label="Password"
             error
             id="filled-error-helper-text"

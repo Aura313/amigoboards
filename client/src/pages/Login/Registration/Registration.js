@@ -26,8 +26,7 @@ export function Registration({ handleChange }) {
   const [usernameMessage, setUsernameMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
-  const [refresh, setRefresh]=useState(true);
-
+  const [refresh, setRefresh] = useState(true);
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -82,20 +81,21 @@ export function Registration({ handleChange }) {
 
     if (emailFlag && usernameFlag && passwordFlag) {
       AuthService.register(username, email, password).then((response) => {
-        
-        if(response.status===200)
-        {
+        if (response.status === 200) {
+          setRegisterMessage(response.data.message);
+          setRegisterMessageFlag(true);
+          setUsername("");
+          setPassword("");
+          setEmail("");
+        } else if (response.status === 201) {
           setRegisterMessage(response.data.message);
           setRegisterMessageFlag(true);
         }
-        else if(response.status===201)
-        {
-          setRegisterMessage(response.data.message);
-          setRegisterMessageFlag(true);
-        }
-        
+      //  emailElement.current.reset();
+      //   usernameElement.current.reset();
+      //   passwordElement.current.reset();
       });
-     // console.log(registermessage);
+      // console.log(registermessage);
     }
   };
 
@@ -113,8 +113,10 @@ export function Registration({ handleChange }) {
             </AlertTitle>
           ) : null}
         </Grid>
+        
         {emailFlag ? (
           <TextField
+          value={email}
             label="EmailID"
             className="RegistrationspacingStyle"
             placeholder="Enter EmailID"
@@ -125,6 +127,7 @@ export function Registration({ handleChange }) {
           ></TextField>
         ) : (
           <TextField
+          value={email}
             label="EmailID"
             className="RegistrationspacingStyle"
             placeholder="Enter EmailID"
@@ -140,6 +143,7 @@ export function Registration({ handleChange }) {
 
         {usernameFlag ? (
           <TextField
+          value={username}
             label="Username"
             className="RegistrationspacingStyle"
             placeholder="Enter Username"
@@ -150,6 +154,7 @@ export function Registration({ handleChange }) {
           ></TextField>
         ) : (
           <TextField
+          value={username}
             label="Username"
             className="RegistrationspacingStyle"
             placeholder="Enter Username"
@@ -164,6 +169,7 @@ export function Registration({ handleChange }) {
         )}
         {passwordFlag ? (
           <TextField
+          value={password}
             label="Password"
             className="RegistrationspacingStyle"
             fullWidth
@@ -174,6 +180,7 @@ export function Registration({ handleChange }) {
           ></TextField>
         ) : (
           <TextField
+            value={password}
             label="Password"
             className="RegistrationspacingStyle"
             fullWidth

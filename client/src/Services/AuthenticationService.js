@@ -33,6 +33,14 @@ class AuthenticationService{
       getCurrentUser() {
         return JSON.parse(localStorage.getItem('user'));;
       }
-}
+  authHeader() {
+        const user = JSON.parse(localStorage.getItem('user'));
+      
+        if (user && user.accessToken) {
+          return { 'x-access-token': user.accessToken };
+        } else {
+          return {};
+        }  
+}}
 
 export default new AuthenticationService();
