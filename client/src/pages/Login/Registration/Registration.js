@@ -91,9 +91,9 @@ export function Registration({ handleChange }) {
           setRegisterMessage(response.data.message);
           setRegisterMessageFlag(true);
         }
-      //  emailElement.current.reset();
-      //   usernameElement.current.reset();
-      //   passwordElement.current.reset();
+        //  emailElement.current.reset();
+        //   usernameElement.current.reset();
+        //   passwordElement.current.reset();
       });
       // console.log(registermessage);
     }
@@ -113,10 +113,10 @@ export function Registration({ handleChange }) {
             </AlertTitle>
           ) : null}
         </Grid>
-        
+
         {emailFlag ? (
           <TextField
-          value={email}
+            value={email}
             label="EmailID"
             className="RegistrationspacingStyle"
             placeholder="Enter EmailID"
@@ -127,7 +127,7 @@ export function Registration({ handleChange }) {
           ></TextField>
         ) : (
           <TextField
-          value={email}
+            value={email}
             label="EmailID"
             className="RegistrationspacingStyle"
             placeholder="Enter EmailID"
@@ -143,7 +143,7 @@ export function Registration({ handleChange }) {
 
         {usernameFlag ? (
           <TextField
-          value={username}
+            value={username}
             label="Username"
             className="RegistrationspacingStyle"
             placeholder="Enter Username"
@@ -154,7 +154,7 @@ export function Registration({ handleChange }) {
           ></TextField>
         ) : (
           <TextField
-          value={username}
+            value={username}
             label="Username"
             className="RegistrationspacingStyle"
             placeholder="Enter Username"
@@ -169,7 +169,7 @@ export function Registration({ handleChange }) {
         )}
         {passwordFlag ? (
           <TextField
-          value={password}
+            value={password}
             label="Password"
             className="RegistrationspacingStyle"
             fullWidth

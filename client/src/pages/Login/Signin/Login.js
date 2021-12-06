@@ -13,9 +13,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { GLogin } from "./GoogleLogin";
 import AuthService from "../../../Services/AuthenticationService";
 import AlertTitle from "@material-ui/lab/AlertTitle";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-export function Login({ handleChange ,props }) {
+export function Login({ handleChange, props }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameFlag, setUsernameFlag] = useState(true);
@@ -23,7 +23,7 @@ export function Login({ handleChange ,props }) {
   const [loginmessageFlag, setLoginMessageFlag] = useState(false);
   const [loginmessage, setLoginMessage] = useState("");
   const navigate = useNavigate();
-  
+
   const onChangeUsername = (e) => {
     const username = e.target.value;
     setUsername(username);
@@ -53,24 +53,25 @@ export function Login({ handleChange ,props }) {
     usernamerequired(username);
     passwordrequired(password);
     if (passwordFlag && usernameFlag) {
-     
-      AuthService.login(username, password)
-      .then((response) => {
-        setLoginMessage("");
-        setLoginMessageFlag(false);
-        navigate('/home');
-        setUsername("");
-        setPassword("");
-      },
-      (error)=>{
-       const message=error.message;
-       setLoginMessage("Invalid Credentials");
-       setLoginMessageFlag(true);
-       setUsername("");
-       setPassword("");
-      });
-  
-}
+      AuthService.login(username, password).then(
+        (response) => {
+          setLoginMessage("");
+          setLoginMessageFlag(false);
+          navigate("/home");
+          setUsername("");
+          setPassword("");
+         
+          console.log( AuthService.authHeader());
+        },
+        (error) => {
+          const message = error.message;
+          setLoginMessage("Invalid Credentials");
+          setLoginMessageFlag(true);
+          setUsername("");
+          setPassword("");
+        }
+      );
+    }
   };
 
   return (
@@ -82,12 +83,14 @@ export function Login({ handleChange ,props }) {
           </Avatar>
           <h2> SIGN IN</h2>
           {loginmessageFlag ? (
-            <AlertTitle className="alertTitleColor" >{"*"+loginmessage}</AlertTitle>
+            <AlertTitle className="alertTitleColor">
+              {"*" + loginmessage}
+            </AlertTitle>
           ) : null}
         </Grid>
         {usernameFlag ? (
           <TextField
-          value={username}
+            value={username}
             className="LoginspacingStyle"
             label="Username"
             placeholder="Enter Username"
@@ -98,13 +101,13 @@ export function Login({ handleChange ,props }) {
           ></TextField>
         ) : (
           <TextField
-          value={username}
+            value={username}
             className="LoginspacingStyle"
             error
             id="filled-error-helper-text"
             helperText="Username Required"
             label="Username"
-            placeholder="Enter Username"           
+            placeholder="Enter Username"
             fullWidth
             variant="outlined"
             onChange={onChangeUsername}
@@ -113,7 +116,7 @@ export function Login({ handleChange ,props }) {
         )}
         {passwordFlag ? (
           <TextField
-          value={password}
+            value={password}
             label="Password"
             className="LoginspacingStyle"
             fullWidth
@@ -124,7 +127,7 @@ export function Login({ handleChange ,props }) {
           ></TextField>
         ) : (
           <TextField
-          value={password}
+            value={password}
             label="Password"
             error
             id="filled-error-helper-text"
