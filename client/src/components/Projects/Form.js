@@ -4,18 +4,17 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Dropdown from './Dropdown';
 import Config from '../../Configuration/Config.json';
-import axios from 'axios';
+import axios from '../../middleware/axios';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Box, Chip, Container, Divider } from '@material-ui/core';
-import './Form.scss'
-
+import './Form.scss';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
-      width: '29.5ch'
+      width: '29.5ch',
     },
   },
 }));
@@ -25,13 +24,11 @@ export default function NewProjectForm(props) {
   const navigate = useNavigate();
   const params = useParams();
 
-
   const [titleValue, setTitleValue] = useState('');
   const [descValue, setDescValue] = useState('');
   const [ownerValue, setOwnerValue] = useState('');
   const [members, setMembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState([]);
-
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -48,8 +45,7 @@ export default function NewProjectForm(props) {
     setDescValue(props.description ? props.description : '');
     setMembers(props.members ? props.members : []);
     setOwnerValue(props.owner ? props.owner : '');
-    setSelectedMembers(props.selectedMembers ? props.selectedMembers : '')
-
+    setSelectedMembers(props.selectedMembers ? props.selectedMembers : '');
   }, []);
 
   const handleTitleChange = (event) => {
@@ -77,30 +73,30 @@ export default function NewProjectForm(props) {
         return obj;
       }),
       owner: props.updateMode ? props.owner : ownerValue,
-      ownerName: props.ownerName
+      ownerName: props.ownerName,
     };
 
     props.updateMode
       ? await axios
-        .put(`${Config.projects_url}/${params.slug}/${params.id}`, formData)
-        .then((res) => {
-          props.handleClose();
-        })
-        .catch((err) => console.log(err))
+          .put(`${Config.projects_url}/${params.slug}/${params.id}`, formData)
+          .then((res) => {
+            props.handleClose();
+          })
+          .catch((err) => console.log(err))
       : await axios
-        .post(Config.projects_url, formData)
-        .then((res) => {
-          let projectSlug = res.data.newItem.slug;
-          let projectId = res.data.newItem._id;
-          console.log(res.data.newItem, 'slksksk');
-          navigate(`/projects/${projectSlug}/${projectId}`);
-        })
-        .catch((err) => console.log(err));
+          .post(Config.projects_url, formData)
+          .then((res) => {
+            let projectSlug = res.data.newItem.slug;
+            let projectId = res.data.newItem._id;
+            console.log(res.data.newItem, 'slksksk');
+            navigate(`/projects/${projectSlug}/${projectId}`);
+          })
+          .catch((err) => console.log(err));
   };
 
   return (
-    <div className="centerAlign">
-      <div className="inputContainer">
+    <div className='centerAlign'>
+      <div className='inputContainer'>
         <form className={classes.root} noValidate autoComplete='off'>
           <h4>Please enter Project Details:</h4>
           <Divider />
@@ -112,7 +108,7 @@ export default function NewProjectForm(props) {
             defaultValue='Hello World'
             value={titleValue}
             onChange={handleTitleChange}
-            variant="outlined"
+            variant='outlined'
           />
           <Divider />
           <TextField
@@ -124,18 +120,26 @@ export default function NewProjectForm(props) {
             placeholder='Enter Description'
             value={descValue}
             onChange={handleDescChange}
-            variant="outlined"
+            variant='outlined'
           />
           <Divider />
-          <Dropdown handleMembers={handleMembers} members={members} selectedMembers={props.selectedMembers} />
+          <Dropdown
+            handleMembers={handleMembers}
+            members={members}
+            selectedMembers={props.selectedMembers}
+          />
 
-          <Dropdown align="center" handleMembers={handleMembers} />
-
-
+          <Dropdown align='center' handleMembers={handleMembers} />
         </form>
-        <div className='buttonAlign' ><Button variant='contained' color='primary' onClick={handleSubmitProject}>
-          Submit
-        </Button></div>
+        <div className='buttonAlign'>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={handleSubmitProject}
+          >
+            Submit
+          </Button>
+        </div>
       </div>
     </div>
   );
