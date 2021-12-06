@@ -2,6 +2,7 @@ import React from 'react';
 import './App.scss';
 import { Projects } from '../pages/Projects/Projects';
 import { ProjectDetails } from '../pages/Projects/ProjectDetails';
+import { NewProject } from '../pages/Projects/NewProject';
 import Navbar from '../components/Navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
@@ -41,10 +42,8 @@ export class App extends React.Component {
                console.log("kksksksks")
               return ( <ProjectDetails {...props } /> )
           }} /> */}
-            <Route
-              path='/projects/:slug/:id'
-              element={<ProjectDetails {...this.props} />}
-            />
+            <Route path='/projects/:slug/:id' element={<ProjectDetails />} />
+            <Route path='/projects/new-project' element={<NewProject />} />
           </Routes>
         </div>
       </ThemeProvider>
