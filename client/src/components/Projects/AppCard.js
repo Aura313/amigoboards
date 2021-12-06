@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import { Link as RouterLink } from 'react-router-dom';
-
+import Members from './Members/Members';
 
 const useStyles = makeStyles({
   root: {
@@ -97,6 +97,7 @@ export default function AppCard(props) {
           <Typography variant='body2' component='p'>
             {project.description ? project.description : 'N/A'}
           </Typography>
+          <Members members={project.members} />
         </CardContent>
       </Card>
     </Paper>

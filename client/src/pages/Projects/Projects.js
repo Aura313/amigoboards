@@ -12,6 +12,7 @@ import { ActionTypes } from '../../store/types';
 import AddIcon from '@material-ui/icons/Add';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import ComboBox from '../../components/Projects/Members/ComboBox';
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -27,10 +28,9 @@ export const Projects = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const handleNewProject = () => {
     navigate(`/projects/new-project`);
-  }
+  };
   useEffect(() => {
     setOpen(true);
     const fetchProjects = async () => {
@@ -60,10 +60,11 @@ export const Projects = () => {
       </Backdrop>
       <div className='container'>
         <Typography variant='h5'>{appState.user.user.userName}</Typography>
-        <div  className='wrapper' onClick={handleNewProject}>
+        <div className='wrapper' onClick={handleNewProject}>
           <Typography component='p'>New Project</Typography>
           <AddIcon />
         </div>
+        <ComboBox projects={projects ||[]} />
       </div>
       <div className='container'>
         {projects &&

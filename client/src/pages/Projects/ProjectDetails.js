@@ -14,6 +14,9 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import AuthService from '../../Services/AuthenticationService';
 import { getUser } from '../../store/Actions/user.actions';
+import Members from '../../components/Projects/Members/Members';
+
+
 export const ProjectDetails = () => {
   const [project, setProject] = useState({
     title: '',
@@ -82,6 +85,8 @@ export const ProjectDetails = () => {
 
             <Typography component='p'>{project.title} </Typography>
             <Typography component='p'>{project.description} </Typography>
+            <Members members={project.members} />
+            
           </div>
         ) : (
           <div>
