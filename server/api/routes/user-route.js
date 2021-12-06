@@ -14,7 +14,8 @@ router
 // Route for logging in the registered user
 router.route("/login").post(userController.loginUser);
 
-router.route("/").get(tokencheck, userController.index);
+router.route("/").get(tokencheck, userController.index)
+.get(userController.get);
 
 router.route("/:id").put(tokencheck, userController.update);
 

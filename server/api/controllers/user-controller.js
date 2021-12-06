@@ -47,6 +47,17 @@ export const index = async (request, response) => {
   }
 };
 
+export const get = async (request, response) => {
+  try {
+    const id = request.params.id;
+
+    const item = await userService.get(id);
+    setSuccessResponse(item ? item : `No item found, please check the requested id.`, response);
+  } catch (e) {
+    errorhandler(e.message, response);
+  }
+};
+
 /**
  * Method called on http post
  * @param {*} request , request header from http

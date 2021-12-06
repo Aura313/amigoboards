@@ -92,7 +92,7 @@ export default function AppCard(props) {
           />
 
           <Typography className={classes.pos} color='textSecondary'>
-            Owner: {project.owner ? project.owner : 'N/A'}
+            Owner: {project.ownerName ? project.ownerName : 'N/A'}
           </Typography>
           <Typography variant='body2' component='p'>
             {project.description ? project.description : 'N/A'}

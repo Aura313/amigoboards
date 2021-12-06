@@ -59,7 +59,7 @@ export const Projects = () => {
         <CircularProgress color='inherit' />
       </Backdrop>
       <div className='container'>
-        <Typography variant='h5'>Username</Typography>
+        <Typography variant='h5'>{appState.user.user.userName}</Typography>
         <div  className='wrapper' onClick={handleNewProject}>
           <Typography component='p'>New Project</Typography>
           <AddIcon />

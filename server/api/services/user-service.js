@@ -25,6 +25,10 @@ export const update = (user) => {
   return promise;
 };
 
+export const get = (id) => {
+  const promise = User.findById(id).exec();
+  return promise;
+};
 
 export const checkUniqueUser =(user)=>
 {
