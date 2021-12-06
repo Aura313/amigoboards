@@ -34,7 +34,8 @@ class AuthenticationService {
   authHeader() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.token) {
-      return { "Bearer ": user.token };
+      const str = "Bearer " + user.token;
+      return { str };
     } else {
       return {};
     }

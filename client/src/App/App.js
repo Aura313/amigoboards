@@ -9,7 +9,7 @@ import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
 import Home from '../pages/Home/Homepage';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { UserStories } from '../pages/UserStories/UserStories';
-
+import AuthService from '../Services/AuthenticationService';
 
 let theme = createTheme({
   palette: {
@@ -57,12 +57,12 @@ export class App extends React.Component {
       "status": item.status, "labels": item.labels
     };
     item.completionStatus = false;
-
     fetch("http://localhost:4000/userStories/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        "Authorization":AuthService.authHeader()
       },
       body: JSON.stringify(newtask)
     });
