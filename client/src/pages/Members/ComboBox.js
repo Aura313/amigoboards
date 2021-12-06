@@ -20,6 +20,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -40,13 +41,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ComboBox(props) {
-    
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
     const memberList = props.members || [];
-    console.log(memberList);
 
     const [open, setOpen] = React.useState(false);
+    const [users, setUsers] = React.useState({});
+    const [project, setProjects] = React.useState({});
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -55,11 +56,26 @@ export default function ComboBox(props) {
         setOpen(false);
     };
 
-    const [age, setAge] = React.useState('');
-
-    const handleChange = (event) => {
-        setAge(event.target.value);
+    const updateProject = () => {
+        let update = {
+            project: project.project
+        }
+        axios.put(`http://localhost:7000/members/${users._id}`,  update )
+            .then(response => {
+                this.setState({ project: response.data.project })
+            })
+            .catch(error => {
+                console.log(error)
+            })
     };
+
+    const handleUserNameChange = (event, value) => {
+        setUsers(value)
+    }
+
+    const handleProjectChange = (event, value) => {
+        setProjects(value)
+    }
 
     return (
         <div>
@@ -84,30 +100,22 @@ export default function ComboBox(props) {
                             options={memberList}
                             getOptionLabel={(option) => option.userName}
                             style={{ width: 300 }}
+                            onChange={handleUserNameChange}
                             renderInput={(params) => <TextField {...params} label="Search Members" variant="outlined" />}
                         />
                         <DialogContentText>Add to Team(s)</DialogContentText>
-                        <FormControl variant="outlined" className={classes.formControl}>
-                            <InputLabel id="demo-simple-select-outlined-label">Add Project</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={age}
-                                onChange={handleChange}
-                                label="Add Project"
-                            >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={10}>Web Design Final Project</MenuItem>
-                                <MenuItem value={20}>AED Project</MenuItem>
-                                <MenuItem value={30}>Project 3</MenuItem>
-                            </Select>
-                        </FormControl>
+                        <Autocomplete
+                            id="combo-box-demo"
+                            options={memberList}
+                            getOptionLabel={(option) => option.project}
+                            style={{ width: 300 }}
+                            onChange={handleProjectChange}
+                            renderInput={(params) => <TextField {...params} label="Add Project" variant="outlined" />}
+                        />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} color="primary">ADD</Button>
-                        <Button onClick={handleClose} color="primary">Cancel</Button>
+                        <Button onClick={updateProject} color="primary">ADD</Button>
+                        <Button onClick={handleClose} color="secondary">Cancel</Button>
                     </DialogActions>
                 </Dialog>
             </div>
