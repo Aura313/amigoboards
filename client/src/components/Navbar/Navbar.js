@@ -138,7 +138,7 @@ export default function Navbar() {
           <img className="logo" src="../.././Assets/Amigi Boards Logo.png"></img>
           <Typography
             component={RouterLink}
-            to='/'
+            to='/home'
             className={classes.title}
             variant='h6'
             noWrap
