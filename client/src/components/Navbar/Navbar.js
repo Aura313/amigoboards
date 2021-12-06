@@ -158,6 +158,7 @@ export default function Navbar() {
                 value={value}
                 onChange={(event, newValue) => {
                   setValue(newValue);
+                  newValue &&  navigate(`/projects/${newValue.slug}/${newValue._id}`);
                 }}
                 renderInput={(params) => (
                   <TextField {...params} label='' margin='normal' />
