@@ -17,7 +17,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { navStyles } from './NavbarStyles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import axios from 'axios';
+import axios from '../../middleware/axios';
 import Config from '../../Configuration/Config.json';
 import AuthService from '../../Services/AuthenticationService';
 import { useNavigate } from 'react-router-dom';
@@ -75,7 +75,7 @@ export default function Navbar() {
     <Menu
       anchorEl={anchorEl}
       // getContentAnchorEl={null}
-      // anchorOrigin={{ vertical: 'bottom',horizontal: 'left' }} 
+      // anchorOrigin={{ vertical: 'bottom',horizontal: 'left' }}
       // transformOrigin={{ vertical: 'top', horizontal: 'left' }}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={menuId}
@@ -135,7 +135,10 @@ export default function Navbar() {
           >
             <AppDrawer />
           </IconButton>
-          <img className="logo" src="../.././Assets/Amigi Boards Logo.png"></img>
+          <img
+            className='logo'
+            src='../.././Assets/Amigi Boards Logo.png'
+          ></img>
           <Typography
             component={RouterLink}
             to='/home'
@@ -149,7 +152,7 @@ export default function Navbar() {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <Divider sx={{ height: 28, m: 0.5 }} orientation='vertical' />
             {/* <InputBase
               placeholder='Search…'
               classes={{
@@ -165,21 +168,27 @@ export default function Navbar() {
                 value={value}
                 onChange={(event, newValue) => {
                   setValue(newValue);
-                  newValue &&  navigate(`/projects/${newValue.slug}/${newValue._id}`);
+                  newValue &&
+                    navigate(`/projects/${newValue.slug}/${newValue._id}`);
                 }}
                 renderInput={(params) => (
-                  <TextField placeholder="Search" {...params} label='' margin='normal' />
+                  <TextField
+                    placeholder='Search'
+                    {...params}
+                    label=''
+                    margin='normal'
+                  />
                 )}
               />
             </div>
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label='show 4 new mails' color='inherit'>
+            {/* <IconButton aria-label='show 4 new mails' color='inherit'>
               <Badge badgeContent={4} color='secondary'>
                 <MailIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton
               edge='end'
               aria-label='account of current user'

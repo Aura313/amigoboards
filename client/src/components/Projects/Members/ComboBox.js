@@ -13,7 +13,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Config from '../../../Configuration/Config.json';
 
-import axios from 'axios';
+import axios from '../../../middleware/axios';
 
 const useStyles = makeStyles((theme) => ({
   button: {
