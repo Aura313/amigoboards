@@ -3,7 +3,6 @@ import { constants } from "../utils/constants.js";
 
 export const tokencheck = (req, res, next) => {
   try {
-    console.log(req);
     const bearerToken = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(bearerToken, constants.JWT_KEY);
     req.userData = decoded;

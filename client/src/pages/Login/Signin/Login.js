@@ -60,8 +60,6 @@ export function Login({ handleChange, props }) {
           navigate("/home");
           setUsername("");
           setPassword("");
-         
-          console.log( AuthService.authHeader());
         },
         (error) => {
           const message = error.message;

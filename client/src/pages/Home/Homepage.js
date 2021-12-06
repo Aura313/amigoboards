@@ -1,39 +1,41 @@
-
-import Container from '@material-ui/core/Container';
-import './Homepage.scss';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import AuthService from '../../Services/AuthenticationService';
-import { getUser } from '../../store/Actions/user.actions';
+import Container from "@material-ui/core/Container";
+import "./Homepage.scss";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AuthService from "../../Services/AuthenticationService";
+import { getUser } from "../../store/Actions/user.actions";
 
 export function Homepage() {
-    const appState = useSelector((state) => state);
-    const dispatch = useDispatch();
-    const setUserDetails = () => {
-        console.log(AuthService.getCurrentUser(), 'AuthService.getCurrentuser();');
-        dispatch(getUser(AuthService.getCurrentUser() || []));
-    };
+  const appState = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const setUserDetails = () => {
+    console.log(AuthService.getCurrentUser(), "AuthService.getCurrentuser();");
+    dispatch(getUser(AuthService.getCurrentUser() || []));
+  };
 
-    console.log(appState.user.user.userName, 'djawjdwj');
+  console.log(appState.user.user.userName, "djawjdwj");
 
-    useEffect(() => {
-        setUserDetails();
-    }, []);
+  useEffect(() => {
+    setUserDetails();
+  }, []);
 
-    const {
-        user: {
-            user: { userName },
-        },
-    } = appState;
+  const {
+    user: {
+      user: { userName },
+    },
+  } = appState;
 
-    return (
-        <div className="bgHome">
-            <Container align="center">
-                <div className="mainStyle">Hola {userName}, it's us !</div>
-                <div className="fontStyle">One Stop for all your projects and team collaborations</div>
-                <img className="banner" src="Assets/Amigi Boards Logo.png"></img></Container>
+  return (
+    <div className="bgHome">
+      <Container align="center">
+        <div className="mainStyle">Hola {userName}, it's us !</div>
+        <div className="fontStyle">
+          One Stop for all your projects and team collaborations
         </div>
-    );
+        <img className="banner" src="Assets/Amigi Boards Logo.png"></img>
+      </Container>
+    </div>
+  );
 }
 
 export default Homepage;
