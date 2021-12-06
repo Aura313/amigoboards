@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.scss';
 import { Projects } from '../pages/Projects/Projects';
-import { Members } from '../pages/Members/Members';
 import { ProjectDetails } from '../pages/Projects/ProjectDetails';
 import { NewProject } from '../pages/Projects/NewProject';
 import Navbar from '../components/Navbar/Navbar';
@@ -94,7 +93,6 @@ export class App extends React.Component {
               <UserStories
                 createHandler={this.create.bind(this)}
                 createitem={this.createitem.bind(this)} />} />
-            <Route path='/members' element={<Members />} />
           </Routes>
         </div>
       </ThemeProvider>
