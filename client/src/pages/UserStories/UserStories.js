@@ -4,7 +4,7 @@ import AppBox from '../../components/UserStories/AppBox.js';
 import Typography from '@material-ui/core/Typography';
 import './UserStories.scss';
 import Paper from '@material-ui/core/Paper';
-import axios from "axios";
+import axios from "../../middleware/axios";
 import { AddBox, DeleteForeverIcon } from '@material-ui/icons/';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';

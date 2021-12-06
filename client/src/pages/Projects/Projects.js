@@ -4,7 +4,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import './Projects.scss';
-import axios from 'axios';
+import axios from '../../middleware/axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProjects } from '../../store/Actions/projects.actions';
 import Config from '../../Configuration/Config.json';

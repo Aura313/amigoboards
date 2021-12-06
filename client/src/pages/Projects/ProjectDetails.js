@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import './Projects.scss';
 import Paper from '@material-ui/core/Paper';
-import axios from 'axios';
+import axios from '../../middleware/axios';
 import EditIcon from '@material-ui/icons/Edit';
 import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';

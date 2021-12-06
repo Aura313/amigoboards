@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../middleware/axios";
 import Config from "../Configuration/Config.json";
 
 class AuthenticationService {
@@ -31,7 +31,8 @@ class AuthenticationService {
   getCurrentUser = () => {
     return JSON.parse(localStorage.getItem("user"));
   };
-  authHeader() {
+
+  authHeader = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.token) {
       return { Authorization: "Bearer " + user.token };
