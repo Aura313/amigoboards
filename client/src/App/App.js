@@ -1,11 +1,8 @@
 import React from 'react';
 import './App.scss';
 import { Projects } from '../pages/Projects/Projects';
-<<<<<<< HEAD
 import { Members } from '../pages/Members/Members';
-=======
 import { ProjectDetails } from '../pages/Projects/ProjectDetails';
->>>>>>> dev
 import Navbar from '../components/Navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
