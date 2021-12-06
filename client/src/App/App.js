@@ -10,10 +10,6 @@ import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
 import Home from '../pages/Home/Homepage';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { UserStories } from '../pages/UserStories/UserStories';
-import Config from '../Configuration/Config.json';
-import axios from "axios";
-
-
 
 
 let theme = createTheme({

@@ -28,7 +28,7 @@ class AuthenticationService {
     localStorage.removeItem("user");
   }
 
-  getCurrentUser() {
+  getCurrentUser = () => {
     return JSON.parse(localStorage.getItem("user"));
   }
   authHeader() {
