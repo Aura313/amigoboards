@@ -14,7 +14,6 @@ export const search = (params = {}) => {
 
 // Create a new project
 export const create = (item) => {
-  console.log(item, "dqwndqwj")
   const newItem = new Projects(item);
   return newItem.save();
 };

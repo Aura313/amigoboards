@@ -1,4 +1,4 @@
-import * as projectService from "../services/projects.js";
+import * as projectService from '../services/projects.js';
 /**
  * Define Controllers for the application
  * @param {*} message
@@ -105,25 +105,34 @@ export const get = async (request, response) => {
   }
 };
 
-//Get an existing project
+//Get an existing project by username
 export const getbyUserName = async (request, response) => {
   try {
-    const name = request.body.userName;
-    const project = await projectService.search();
-    const memberArray = [];
-    for (let i = 0; i < project.length; i++) {
-      for (let j = 0; j < project[i].members.length; j++) {
-        if (project[i].members[j].userName === name) {
-          memberArray.push(project[i]);
+    const userId = request.body.userId;
+    let projects = await projectService.search();
+    let memberArray = [];
+    let ownedArray = [];
+    for (let i = 0; i < projects.length; i++) {
+      for (let j = 0; j < projects[i].members.length; j++) {
+        if (projects[i].members[j]._id === userId) {
+          memberArray.push(projects[i]);
         }
       }
     }
-    const resultArray = {
-      owner: project.filter((item) => item.ownerName === name),
-      member: memberArray,
-    };
 
-    setSuccessResponse(resultArray, response);
+    projects.map((i) => {
+      if (i.owner == userId) {
+        ownedArray.push(i);
+      }
+    });
+
+    const resultArray = [...ownedArray, ...memberArray];
+
+    let uniqueProjects = [
+      ...new Map(resultArray.map((v) => [v._id, v])).values(),
+    ];
+
+    setSuccessResponse(uniqueProjects, response);
   } catch (e) {
     errorHandler(e.message, response);
   }
