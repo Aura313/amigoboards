@@ -5,11 +5,16 @@
 
 body {
   background-color: #f8f9fa;
-  padding-top: 50px;
+  padding-top: 80px;
   font-family: 'Open Sans', sans-serif;
-  background-color: #9599E2;
-    background-image: linear-gradient(0deg, #9599E2 0%, #8BC6EC 27%, #ffffff 100%);
-    background-attachment: fixed;
+  background-color: #9599e2;
+  background-image: linear-gradient(
+    0deg,
+    #9599e2 0%,
+    #8bc6ec 27%,
+    #ffffff 100%
+  );
+  background-attachment: fixed;
 }
 .App-logo {
   height: 40vmin;

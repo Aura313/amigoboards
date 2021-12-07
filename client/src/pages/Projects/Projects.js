@@ -14,6 +14,8 @@ import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { AddBox, DeleteForeverIcon } from '@material-ui/icons/';
+import AuthService from '../../Services/AuthenticationService';
+import { getUser } from '../../store/Actions/user.actions';
 
 import ComboBox from '../../components/Projects/Members/ComboBox';
 
@@ -28,8 +30,16 @@ export const Projects = () => {
   const classes = useStyles();
   const appState = useSelector((state) => state);
   const [open, setOpen] = useState(false);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const setUserDetails = () => {
+    dispatch(getUser(AuthService.getCurrentUser() || []));
+  };
+
+  useEffect(() => {
+    setUserDetails();
+  }, []);
+
 
   const handleNewProject = () => {
     navigate(`/projects/new-project`);
@@ -48,7 +58,7 @@ export const Projects = () => {
 
       setTimeout(() => {
         setOpen(false);
-      }, 2000);
+      }, 500);
     };
     fetchProjects();
   }, []);
@@ -57,26 +67,28 @@ export const Projects = () => {
     (appState && appState.allProjects && appState.allProjects.projects) || [];
 
   return (
-    <div className="backgroundColor">
+    <div >
       <Backdrop className={classes.backdrop} open={open}>
         <CircularProgress color='inherit' />
       </Backdrop>
 
-      <div className="heading"><b>{appState.user.user.userName}</b></div>
-      <span className="create" onClick={handleNewProject}>
+      <div className='heading'>
+        <b>{appState.user.user.userName}</b>
+      </div>
+      <span className='create' onClick={handleNewProject}>
         <Typography variant='p'>
-          <Button startIcon={<AddBox />} variant="outlined" color="primary">
+          <Button startIcon={<AddBox />} variant='outlined' color='primary'>
             New Project
           </Button>
         </Typography>
       </span>
       <ComboBox projects={projects || []} />
 
-      <div className='container'>
+      <div className='project-container'>
         {projects &&
           projects.map((project, idx) => (
-            <div className="card-right">
-              <AppCard project={project} key={idx} idx={idx} />
+            <div className='card-right' key={idx}>
+              <AppCard project={project} idx={idx} />
             </div>
           ))}
       </div>
