@@ -10,6 +10,7 @@ import Home from '../pages/Home/Homepage';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { UserStories } from '../pages/UserStories/UserStories';
 import NewUserStory from '../pages/UserStories/NewUserStory';
+import UserStoryDetails from '../pages/UserStories/UserStoryDetails';
 import axios from 'axios';
 import Config from '../Configuration/Config.json';
 
@@ -102,6 +103,7 @@ export class App extends React.Component {
             <Route path='/projects/new-project' element={<NewProject />} />
             <Route path='/workItems' element={<UserStories />} />
             <Route path='/workItems/new-workItem' element={<NewUserStory />} />
+            <Route path='/workItems/:id' element={<UserStoryDetails />} />
           </Routes>
         </div>
       </ThemeProvider>

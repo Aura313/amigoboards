@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
+import { Link as RouterLink } from 'react-router-dom';
 
 
 
@@ -56,7 +57,9 @@ export default function AppTable(props) {
                             <TableCell align="centre">{row.lastModifiedDate}</TableCell>
                             <TableCell align="centre">{row.status}</TableCell>
                             <TableCell align="centre">{row.labels}</TableCell>
+                            <Button component={RouterLink}  to={`/workItems/${row._id}`} >
                             <EditIcon align="right"></EditIcon>
+                            </Button>
                             <Button  onClick={() => deleteUserStory(row) } >
                             
                                 <DeleteForeverIcon align="right" ></DeleteForeverIcon>
