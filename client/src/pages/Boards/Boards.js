@@ -6,6 +6,8 @@ import DoingPaper from "./DoingPaper";
 import DonePaper from "./DonePaper";
 import axios from '../../middleware/axios';
 import Config from '../../Configuration/Config.json';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -13,46 +15,48 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: "wrap",
         "& > *": {
             margin: theme.spacing(3),
-            width: theme.spacing(50),
+            width: theme.spacing(30),
             height: theme.spacing(100)
         }
     }
 }));
 
-
-
 export default function SimplePaper() {
     const classes = useStyles();
     const [projects, setProjects] = useState([])
-    const [todos, setTodos] = useState([]);
+    const [statusItems, setStatusItems] = useState([]);
 
-    // const fetchStatusDetails = async () => {
-//     await axios
-//       .get(`${Config.userStories_url}/${params.id}`)
-//       .then((res) => console.log(res.data));
-//   };
+    const fetchStatusDetails = async (e, val) => {
+        await axios
+          .get(`${Config.userStories_url}/${val._id}`)
+          .then((res) => setStatusItems(res.data));
+    };
 
     useEffect(() => {
-        // setOpen(true);
         const fetchProjects = async () => {
-           await axios.get(Config.projects_url).then(response => setProjects(response.data))
+            await axios.get(Config.projects_url).then(response => setProjects(response.data))
         };
         fetchProjects();
-      }, []);
-    
-      console.log(projects, "projects")
+    }, []);
 
     return (
         <div className={classes.root}>
-            
+            <Autocomplete
+                id="combo-box-demo"
+                options={projects}
+                getOptionLabel={(option) => option.title}
+                style={{ width: 300 }}
+                onChange={fetchStatusDetails}
+                renderInput={(params) => <TextField {...params} label="Choose Project" variant="outlined" />}
+            />
             <Paper elevation={3}>
-                <TodoPaper />
+                <TodoPaper items={statusItems.todo ? statusItems.todo : []}/>
             </Paper>
             <Paper elevation={3} >
-                <DoingPaper />
+                <DoingPaper items={statusItems.inProgress ? statusItems.inProgress : []}/>
             </Paper>
             <Paper elevation={3} >
-                <DonePaper />
+                <DonePaper  items={statusItems.completed ? statusItems.completed : []}/>
             </Paper>
         </div>
     );

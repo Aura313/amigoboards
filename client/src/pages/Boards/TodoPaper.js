@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
+    minWidth: 75,
   },
   bullet: {
     display: 'inline-block',
@@ -23,23 +23,26 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard() {
+export default function SimpleCard(props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
+  const { items } = props
 
-  return (
-    <Card className={classes.root}>
+  return items && (
+
+    items.map((i, idx) => <Card className={classes.root} key={idx}>
       <CardContent>
         <Typography variant="h5" component="h2">
-          Roopa Subramaniam
+          {i.assignee}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          State: Todo
+          State: {i.status}
+        </Typography>
+        <Typography className={classes.pos} color="textSecondary">
+          Label: {i.labels}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
+    </Card>)
+
   );
 }
