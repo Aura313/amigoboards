@@ -3,13 +3,13 @@ import AppTable from '../../components/UserStories/AppTable.js';
 import AppBox from '../../components/UserStories/AppBox.js';
 import Typography from '@material-ui/core/Typography';
 import './UserStories.scss';
-import Paper from '@material-ui/core/Paper';
 import axios from "../../middleware/axios";
-import { AddBox, DeleteForeverIcon } from '@material-ui/icons/';
-import FormControl from '@material-ui/core/FormControl';
+import { AddBox } from '@material-ui/icons/';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Box, Chip, Container, Divider } from '@material-ui/core';
+import { Container } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import AuthService from '../../Services/AuthenticationService';
 
 export class UserStories extends React.Component {
     constructor(props) {
@@ -52,8 +52,9 @@ export class UserStories extends React.Component {
         this.setState({ status: z });
     }
 
-    createLabels(z) {
-        this.setState({ labels: z.target.value });
+    createLabels(e, z) {
+        //console.log(z.title,"hggv")
+        this.setState({ labels: z.title});
     }
 
     createNewForm() {
@@ -70,7 +71,9 @@ export class UserStories extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/userStories')
+        axios.get('http://localhost:4000/userStories', 
+        {headers: {
+            'Authorization':AuthService.authHeader()} })
             .then(response => {
                 this.setState({
                     userStories: response.data
@@ -101,13 +104,26 @@ export class UserStories extends React.Component {
                             <input placeholder="Description" className="textBox" type="text" name="description" value={this.state.description} onChange={this.createDescription.bind(this)}></input><br />
                             <input placeholder="Title" className="textBox" type="text" name="title" value={this.state.title} onChange={this.createTitle.bind(this)}></input><br />
                             <input placeholder="Assignee" className="textBox" type="text" name="assignee" value={this.state.assignee} onChange={this.createAssignee.bind(this)}></input><br />
-                            <input placeholder="Labels" className="textBox" type="text" name="labels" value={this.state.labels} onChange={this.createLabels.bind(this)}></input><br />
                             <label> <AppBox createStatus={this.createStatus.bind(this)} /></label>
+                            <Autocomplete
+                            id="combo-box-demo"
+                            options={labels}
+                            getOptionLabel={(option) => option.title}
+                            style={{ width: 300 }}
+                            onChange={this.createLabels.bind(this)}
+                            renderInput={(params) => <TextField {...params} label="Label" variant="outlined" />}
+                        />
                             <button className="submit" onClick={this.createNewUserStory.bind(this)}> Submit </button></form></fieldset>
                 </div>) : <div></div>}
                 <Container><AppTable userStories={userStories} /></Container>
             </body>
         )
     }
+
 }
 
+const labels = [
+    { title: 'Issue' },
+    { title: 'Task' },
+    { title: 'Epic' },
+];

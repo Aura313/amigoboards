@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
 import { Projects } from '../pages/Projects/Projects';
+import Boards from '../pages/Boards/Boards';
 import { ProjectDetails } from '../pages/Projects/ProjectDetails';
 import { NewProject } from '../pages/Projects/NewProject';
 import Navbar from '../components/Navbar/Navbar';
@@ -9,7 +10,7 @@ import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
 import Home from '../pages/Home/Homepage';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { UserStories } from '../pages/UserStories/UserStories';
-
+import axios from 'axios';
 
 let theme = createTheme({
   palette: {
@@ -58,21 +59,13 @@ export class App extends React.Component {
     };
     item.completionStatus = false;
 
-    fetch("http://localhost:4000/userStories/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(newtask)
-    });
-    const toJson = (response) => response.json()
-    const loadData = (config) => {
-      fetch(config.userStories_url).then(toJson)
-        .then((userStories) => this.setState({ userStories: userStories.userStories }));
-    };
-
-    fetch('config/config.json').then(toJson).then(loadData);
+    axios.post(`http://localhost:4000/userStories/`, newtask)
+      .then(response => {
+        this.setState({ userStories: response.userStories })
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   render() {
@@ -83,6 +76,7 @@ export class App extends React.Component {
           <Routes>
             <Route path='/' element={<SignInOutContainer />} />
             <Route path='/home' element={<Home />} />
+            <Route path='/boards' element={<Boards />} />
             <Route path='/projects' element={<Projects />} />
             <Route
               path='/projects/:slug/:id'
@@ -93,6 +87,7 @@ export class App extends React.Component {
               <UserStories
                 createHandler={this.create.bind(this)}
                 createitem={this.createitem.bind(this)} />} />
+                
           </Routes>
         </div>
       </ThemeProvider>

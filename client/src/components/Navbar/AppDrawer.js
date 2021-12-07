@@ -11,6 +11,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link as RouterLink } from 'react-router-dom';
 import { drawerStyles } from './NavbarStyles';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 
 export default function AppDrawer() {
   const classes = drawerStyles();
@@ -37,11 +38,11 @@ export default function AppDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {[{ title: 'Projects', path: '/projects' }, { title: 'User Stories', path: '/userStories' }, { title: 'Members', path: '/members' },{ title: 'Analytics', path: '/members' }].map(
+        {[{ title: 'Projects', path: '/projects' }, { title: 'User Stories', path: '/userStories' }, { title: 'Boards', path: '/boards' }].map(
           (i, index) => (
             <ListItem component={RouterLink} to={i.path} button key={i.title}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon /> }
               </ListItemIcon>
               <ListItemText primary={i.title} />
             </ListItem>

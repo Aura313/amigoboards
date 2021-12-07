@@ -10,9 +10,6 @@ export default function AppBox(props) {
 
   return (
     <div>
-      {/* <div>{`value: ${value !== null ? `'${value}'` : 'null'}`}</div>
-      <div>{`inputValue: '${inputValue}'`}</div> */}
-      <br />
       <Autocomplete
         value={value}
         onChange={(event, newValue) => {
