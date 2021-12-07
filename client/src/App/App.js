@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
 import { Projects } from '../pages/Projects/Projects';
+import Boards from '../pages/Boards/Boards';
 import { ProjectDetails } from '../pages/Projects/ProjectDetails';
 import { NewProject } from '../pages/Projects/NewProject';
 import Navbar from '../components/Navbar/Navbar';
@@ -95,6 +96,7 @@ export class App extends React.Component {
           <Routes>
             <Route path='/' element={<SignInOutContainer />} />
             <Route path='/home' element={<Home />} />
+            <Route path='/boards' element={<Boards />} />
             <Route path='/projects' element={<Projects />} />
             <Route
               path='/projects/:slug/:id'
