@@ -34,7 +34,6 @@ export default function Navbar() {
   useEffect(() => {
     const fetchProjects = async () => {
       await axios.get(Config.projects_url).then((res) => {
-        // console.log(res.data, 'jdaowjdowdj');
         setProjects(res.data);
       });
     };

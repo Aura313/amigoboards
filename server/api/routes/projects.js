@@ -7,7 +7,7 @@ const router = express.Router();
 // Define todos router to fetch all the projects
 router
   .route('/')
-  .get(tokencheck,projectsController.index)
+  .get(tokencheck,projectsController.get)
   .post(tokencheck,projectsController.save);
 
 // Define router to perform action on specific items
@@ -17,5 +17,9 @@ router
   .get(tokencheck,projectsController.get)
   .put(tokencheck,projectsController.update)
   .delete(tokencheck,projectsController.remove);
+
+  router
+  .route('/userName')
+  .post(tokencheck,projectsController.getbyUserName);
 
 export default router;
