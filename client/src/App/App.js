@@ -14,6 +14,8 @@ import NewUserStory from '../pages/UserStories/NewUserStory';
 import UserStoryDetails from '../pages/UserStories/UserStoryDetails';
 import axios from 'axios';
 import Config from '../Configuration/Config.json';
+import Footer from '../components/Footer/Footer'
+
 
 let theme = createTheme({
   palette: {
@@ -72,27 +74,11 @@ export class App extends React.Component {
       }).then((userStories) => this.setState({ userStories: userStories.userStories }));
   }
 
-  // deleteHandler(x) {
-  //   console.log('deleteHandler')
-  //   axios.delete(Config.userStories_url + x._id, {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(x),
-  //   })
-  //     .then((userStories) => this.setState({ userStories: userStories.userStories }))
-  //     .catch((error) => {
-  //       console.error('Error:', error);
-  //     });
-
-  // }
-
-
   render() {
     return (
       <ThemeProvider theme={theme}>
         <Navbar />
-        <div className='App'>
+        <div className='page-container'>
           <Routes>
             <Route path='/' element={<SignInOutContainer />} />
             <Route path='/home' element={<Home />} />
@@ -108,7 +94,8 @@ export class App extends React.Component {
             createitem={this.createitem.bind(this)} />} />
             <Route path='/workItems/:id' element={<UserStoryDetails />} />
           </Routes>
-        </div>
+          </div>
+          <Footer/>
       </ThemeProvider>
     );
   }
