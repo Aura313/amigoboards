@@ -23,7 +23,7 @@ export const get = async (request, response) => {
     // const completed3 = {
     //   completed: newArray.filter((item) => item.status === "Completed"),
     // };
-          const resultArray={todo1:newArray.filter((item) => item.status === "To do") ,inProgress: newArray.filter((item) => item.status === "In Progress"),completed: newArray.filter((item) => item.status === "Completed")}
+          const resultArray={todo:newArray.filter((item) => item.status === "To do") ,inProgress: newArray.filter((item) => item.status === "In Progress"),completed: newArray.filter((item) => item.status === "Completed")}
   
     console.log(resultArray);
 
