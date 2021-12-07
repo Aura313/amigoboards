@@ -83,11 +83,11 @@ export const remove = async (request, response) => {
 
 export const getstoriesbyName = async (request, response) => {
   try {
-    const name = request.body.userame;
+    const name = request.body.username;
     const userStory = await userStoryService.search();
     const newArray = [];
     for (let i = 0; i < userStory.length; i++) {
-      for (j = 0; j < userStory[i].assignee.length; j++) {
+      for (let j = 0; j < userStory[i].assignee.length; j++) {
         if (userStory[i].assignee[j] === name) {
           newArray.push(userStory[i]);
           break;

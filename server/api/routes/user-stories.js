@@ -16,6 +16,6 @@ router
 
   router
   .route("/username")
-  .put(tokencheck, userStoryController.getstoriesbyName)
+  .post(tokencheck, userStoryController.getstoriesbyName)
 
 export default router;
