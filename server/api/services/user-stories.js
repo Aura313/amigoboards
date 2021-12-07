@@ -1,10 +1,6 @@
 import UserStory from "../models/user-stories.js";
 
 
-export const get = (id) => {
-    const promise = UserStory.findById(id).exec();
-    return promise;
-}
 
 export const search = (params = {}) => {
     const promise = UserStory.find(params).exec();
