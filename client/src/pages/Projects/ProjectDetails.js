@@ -111,13 +111,13 @@ export const ProjectDetails = () => {
     owner: '',
   });
 
+  const [isOwner, setIsOwner] = useState(false);
+
   const classes = useStyles();
 
   const [editable, setEditable] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
-
-  const appState = useSelector((state) => state);
   const dispatch = useDispatch();
   const setUserDetails = () => {
     dispatch(getUser(AuthService.getCurrentUser() || []));
@@ -127,10 +127,6 @@ export const ProjectDetails = () => {
     setUserDetails();
   }, []);
 
-  const {
-    user: { user },
-  } = appState;
-
   const handleEditProject = () => {
     setEditable(true);
   };
@@ -138,7 +134,18 @@ export const ProjectDetails = () => {
   const fetchProjectDetails = async () => {
     await axios
       .get(`${Config.projects_url}/${params.slug}/${params.id}`)
-      .then((res) => setProject(res.data));
+      .then((res) => {
+        setProject(res.data);
+
+        console.log('Check', AuthService.getCurrentUser()._id, res.data.owner);
+        if (AuthService.getCurrentUser()._id == res.data.owner) {
+          console.log(1, AuthService.getCurrentUser()._id, res.data.owner);
+          setIsOwner(true);
+        } else {
+          console.log(2);
+          setIsOwner(false);
+        }
+      });
   };
   const handleClose = () => {
     setEditable(false);
@@ -164,6 +171,7 @@ export const ProjectDetails = () => {
   useEffect(() => {
     fetchProjectDetails();
   }, []);
+
   return (
     <div className={classes.parentCont}>
       <Paper className={classes.container} elevation={0}>
@@ -180,7 +188,7 @@ export const ProjectDetails = () => {
               <b>{project.title}</b>
             </Typography>
           </div>
-          {!editable && (
+          {isOwner && !editable && (
             <div className={classes.iconWrapper}>
               <Button align='right' onClick={handleEditProject}>
                 <EditIcon />
@@ -285,14 +293,14 @@ export const ProjectDetails = () => {
             aria-labelledby='alert-dialog-slide-title'
             aria-describedby='alert-dialog-slide-description'
           >
-            <DialogTitle className={classes.statsWrapper} >
-              Project Details: 
+            <DialogTitle className={classes.statsWrapper}>
+              Project Details:
               <Button onClick={handleClose}>
                 <CloseIcon />
               </Button>
             </DialogTitle>
             <DialogContent>
-            {/* <DialogContentText id="alert-dialog-slide-description">
+              {/* <DialogContentText id="alert-dialog-slide-description">
             Let Google help apps determine location. This means sending anonymous location data to
             Google, even when no apps are running.
           </DialogContentText> */}

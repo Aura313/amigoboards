@@ -40,20 +40,24 @@ export const Projects = () => {
     setUserDetails();
   }, []);
 
-
   const handleNewProject = () => {
     navigate(`/projects/new-project`);
   };
   useEffect(() => {
     setOpen(true);
+    
     const fetchProjects = async () => {
-      const response = await axios.get(Config.projects_url).catch((err) => {
-        dispatch({
-          type: ActionTypes.PROJECTS_ERROR,
-          payload: err,
+      const response = await axios
+        .post(`${Config.projects_url}/${AuthService.getCurrentUser().userName}`, {
+          userId: AuthService.getCurrentUser()._id,
+        })
+        .catch((err) => {
+          dispatch({
+            type: ActionTypes.PROJECTS_ERROR,
+            payload: err,
+          });
+          console.log('Err', err);
         });
-        console.log('Err', err);
-      });
       dispatch(getProjects((response && response.data) || []));
 
       setTimeout(() => {
@@ -67,7 +71,7 @@ export const Projects = () => {
     (appState && appState.allProjects && appState.allProjects.projects) || [];
 
   return (
-    <div >
+    <div>
       <Backdrop className={classes.backdrop} open={open}>
         <CircularProgress color='inherit' />
       </Backdrop>
@@ -82,7 +86,7 @@ export const Projects = () => {
           </Button>
         </Typography>
       </span>
-      <ComboBox projects={projects || []} />
+      <ComboBox />
 
       <div className='project-container'>
         {projects &&

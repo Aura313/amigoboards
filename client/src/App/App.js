@@ -32,11 +32,10 @@ theme = createTheme(theme, {
 });
 
 export class App extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      userStories: []
+      userStories: [],
     };
   }
 
@@ -45,27 +44,36 @@ export class App extends React.Component {
       userStories: [
         ...state.userStories,
         {
-          "reporter": "Add reporter", "description": "add description", "title": "add title", "assignee": "add assignee",
-          "status": "Add status", "labels": "Add labels"
-        }
-      ]
+          reporter: 'Add reporter',
+          description: 'add description',
+          title: 'add title',
+          assignee: 'add assignee',
+          status: 'Add status',
+          labels: 'Add labels',
+        },
+      ],
     }));
   }
 
   createitem(item) {
     const newtask = {
-      "reporter": item.reporter, "description": item.description, "title": item.title, "assignee": item.assignee,
-      "status": item.status, "labels": item.labels
+      reporter: item.reporter,
+      description: item.description,
+      title: item.title,
+      assignee: item.assignee,
+      status: item.status,
+      labels: item.labels,
     };
     item.completionStatus = false;
 
-    axios.post(`http://localhost:4000/userStories/`, newtask)
-      .then(response => {
-        this.setState({ userStories: response.userStories })
+    axios
+      .post(`http://localhost:4000/userStories/`, newtask)
+      .then((response) => {
+        this.setState({ userStories: response.userStories });
       })
-      .catch(error => {
-        console.log(error)
-      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -74,20 +82,30 @@ export class App extends React.Component {
         <Navbar />
         <div className='App'>
           <Routes>
-            <Route path='/' element={<SignInOutContainer />} />
-            <Route path='/home' element={<Home />} />
-            <Route path='/boards' element={<Boards />} />
-            <Route path='/projects' element={<Projects />} />
+            <Route exact path='/' element={<SignInOutContainer />} />
+            <Route exact path='/home' element={<Home />} />
+            <Route exact path='/boards' element={<Boards />} />
+            <Route exact path='/projects' element={<Projects />} />
             <Route
+              exact
               path='/projects/:slug/:id'
               element={<ProjectDetails {...this.props} />}
             />
-            <Route path='/projects/new-project' element={<NewProject />} />
-            <Route path='/userStories' element={
-              <UserStories
-                createHandler={this.create.bind(this)}
-                createitem={this.createitem.bind(this)} />} />
-                
+            <Route
+              exact
+              path='/projects/new-project'
+              element={<NewProject />}
+            />
+            <Route
+              exact
+              path='/userStories'
+              element={
+                <UserStories
+                  createHandler={this.create.bind(this)}
+                  createitem={this.createitem.bind(this)}
+                />
+              }
+            />
           </Routes>
         </div>
       </ThemeProvider>
