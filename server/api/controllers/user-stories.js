@@ -16,18 +16,16 @@ export const get = async (request, response) => {
     const id = request.params.id;
     const userStory = await userStoryService.search();
     const newArray = userStory.filter((item) => item.projectID === id);
-    // const todo1 = newArray.filter((item) => item.status === "To do") ;
-    // const inProgress2 = {
-    //   inProgress: newArray.filter((item) => item.status === "In Progress"),
-    // };
-    // const completed3 = {
-    //   completed: newArray.filter((item) => item.status === "Completed"),
-    // };
-          const resultArray={todo:newArray.filter((item) => item.status === "To do") ,inProgress: newArray.filter((item) => item.status === "In Progress"),completed: newArray.filter((item) => item.status === "Completed")}
-  
+
+    const resultArray = {
+      todo: newArray.filter((item) => item.status === "To do"),
+      inProgress: newArray.filter((item) => item.status === "In Progress"),
+      completed: newArray.filter((item) => item.status === "Completed"),
+    };
+
     console.log(resultArray);
 
-    setSuccessResponse(resultArray,response);
+    setSuccessResponse(resultArray, response);
   } catch (e) {
     errorhandler(e.message, response);
   }
