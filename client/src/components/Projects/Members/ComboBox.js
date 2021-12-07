@@ -40,7 +40,6 @@ export default function ComboBox(props) {
   useEffect(() => {
     const fetchUsers = async () => {
       await axios.get(Config.users_url).then((res) => {
-        console.log(res.data, 'slslsl');
         setMembers(res.data);
       });
     };
@@ -89,7 +88,6 @@ export default function ComboBox(props) {
   };
 
   const handleProjectChange = (event, value) => {
-    console.log(value, 'sksksksk');
     setCurrentProject(value);
   };
 

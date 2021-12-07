@@ -9,11 +9,8 @@ export function Homepage() {
   const appState = useSelector((state) => state);
   const dispatch = useDispatch();
   const setUserDetails = () => {
-    console.log(AuthService.getCurrentUser(), "AuthService.getCurrentuser();");
     dispatch(getUser(AuthService.getCurrentUser() || []));
   };
-
-  console.log(appState.user.user.userName, "djawjdwj");
 
   useEffect(() => {
     setUserDetails();
