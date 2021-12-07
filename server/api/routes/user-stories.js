@@ -14,4 +14,8 @@ router
   .put(tokencheck, userStoryController.update)
   .delete(tokencheck, userStoryController.remove);
 
+  router
+  .route("/username")
+  .put(tokencheck, userStoryController.getstoriesbyName)
+
 export default router;

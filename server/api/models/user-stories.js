@@ -22,7 +22,7 @@ const UserStorySchema = new Mongoose.Schema(
       required: "First Name is a required field",
     },
     assignee: {
-      type: String,
+       type: Array, default: [] ,
       required: "Assignee is a required field",
     },
     createdDate: {

@@ -3,12 +3,14 @@ import "./Homepage.scss";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AuthService from "../../Services/AuthenticationService";
+import AnalyticService from "../../Services/AnalyticsServices";
 import { getUser } from "../../store/Actions/user.actions";
 
 export function Homepage() {
   const appState = useSelector((state) => state);
   const dispatch = useDispatch();
   const setUserDetails = () => {
+     AnalyticService.getProjectId();
     console.log(AuthService.getCurrentUser(), "AuthService.getCurrentuser();");
     dispatch(getUser(AuthService.getCurrentUser() || []));
   };
