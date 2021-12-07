@@ -30,10 +30,8 @@ export default function UserStoryDetails() {
     // description: '',
     // title: '',
     // assignee: '',
-    createdDate: '',
-    lastModifiedDate: '',
-    status: "Not Yet Started",
-    labels: '',
+    // status: "Not Yet Started",
+    // labels: '',
 
   });
 
@@ -41,6 +39,7 @@ export default function UserStoryDetails() {
   const [descriptionVal, setDescriptionVal] = useState('');
   const [titleVal, setTitleVal] = useState('');
   const [assigneeVal, setAssigneeVal] = useState('')
+  const [statusVal, setStatusVal] = useState('')
   // const [title, setReporterVal] = useState('');
   // const [assignee, setReporterVal] = useState('');
   // const [status, setReporterVal] = useState('');
@@ -55,6 +54,7 @@ export default function UserStoryDetails() {
         setDescriptionVal(response.data.description)
         setTitleVal(response.data.title)
         setAssigneeVal(response.data.assignee)
+        setStatusVal(response.data.status)
       }
 
       );
@@ -75,6 +75,10 @@ export default function UserStoryDetails() {
   const handleAssigneeChange = (event) => {
     setAssigneeVal(event.target.value)
   }
+
+  const handleStatusChange = (event) => {
+   setStatusVal(event.target.value)
+}
 
   useEffect(() => {
     fetchWorkItems()
@@ -105,7 +109,7 @@ export default function UserStoryDetails() {
       <TextField id="filled-basic" label="Title" variant="filled" onChange={handleTitleChange} value={titleVal} />
       <TextField id="filled-basic" label="Assignee" variant="filled" onChange={handleAssigneeChange} value={assigneeVal} />
       {/* <TextField id="filled-basic" label="Labels" variant="filled" value={userStory.labels} /> */}
-      <AppBox label="Status" value={userStory.status} />
+      <AppBox label="Status" onChange={handleStatusChange} value={statusVal} />
       <Button size="small" onClick={editUserStory} variant="contained" color="primary">
         UPDATE
       </Button>

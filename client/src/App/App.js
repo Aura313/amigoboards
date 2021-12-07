@@ -55,22 +55,22 @@ export class App extends React.Component {
     }));
   }
 
-  // createitem(item) {
-  //   const newtask = {
-  //     "reporter": item.reporter, "description": item.description, "title": item.title, "assignee": item.assignee,
-  //     "status": item.status, "labels": item.labels
-  //   };
-  //   item.completionStatus = false;
+  createitem(item) {
+    const newtask = {
+      "reporter": item.reporter, "description": item.description, "title": item.title, "assignee": item.assignee,
+      "status": item.status, "labels": item.labels
+    };
+    item.completionStatus = false;
 
-  //   return axios
-  //     .post(Config.userStories_url, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         'Accept': 'application/json'
-  //       },
-  //       body: JSON.stringify(newtask)
-  //     }).then((userStories) => this.setState({ userStories: userStories.userStories }));
-  // }
+    return axios
+      .post(Config.userStories_url, {
+        headers: {
+          "Content-Type": "application/json",
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(newtask)
+      }).then((userStories) => this.setState({ userStories: userStories.userStories }));
+  }
 
   // deleteHandler(x) {
   //   console.log('deleteHandler')
@@ -103,8 +103,9 @@ export class App extends React.Component {
               element={<ProjectDetails {...this.props} />}
             />
             <Route path='/projects/new-project' element={<NewProject />} />
-            <Route path='/workItems' element={<UserStories />} />
-            <Route path='/workItems/new-workItem' element={<NewUserStory />} />
+            <Route path='/workItems' element={<UserStories
+            createHandler={this.create.bind(this)}
+            createitem={this.createitem.bind(this)} />} />
             <Route path='/workItems/:id' element={<UserStoryDetails />} />
           </Routes>
         </div>
