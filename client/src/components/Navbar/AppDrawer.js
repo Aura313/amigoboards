@@ -37,7 +37,7 @@ export default function AppDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {[{ title: 'Projects', path: '/projects' }, { title: 'User Stories', path: '/userStories' }, { title: 'Members', path: '/members' }].map(
+        {[{ title: 'Projects', path: '/projects' }, { title: 'Work Items', path: '/workItems' }, { title: 'Members', path: '/members' }].map(
           (i, index) => (
             <ListItem component={RouterLink} to={i.path} button key={i.title}>
               <ListItemIcon>

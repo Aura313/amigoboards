@@ -10,6 +10,10 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Box, Chip, Container, Divider } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
+import Config from '../../Configuration/Config.json'
+import { Link as RouterLink } from 'react-router-dom';
+
 
 export class UserStories extends React.Component {
     constructor(props) {
@@ -56,7 +60,9 @@ export class UserStories extends React.Component {
         this.setState({ labels: z.target.value });
     }
 
+
     createNewForm() {
+
         this.setState({ searchBars: this.state.searchBars ? false : true });
     }
 
@@ -69,8 +75,17 @@ export class UserStories extends React.Component {
         this.props.createitem(newItem);
     }
 
-    componentDidMount() {
-        axios.get('http://localhost:4000/userStories')
+    deleteHandler(x) {
+        axios.delete(`${Config.userStories_url}/${x._id}`)
+            .then((res) => this.fetchWorkItems())
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
+
+    fetchWorkItems() {
+        axios.get(Config.userStories_url)
             .then(response => {
                 this.setState({
                     userStories: response.data
@@ -82,6 +97,10 @@ export class UserStories extends React.Component {
             })
     }
 
+    componentDidMount() {
+        this.fetchWorkItems();
+    }
+
     render() {
         const { userStories } = this.state
 
@@ -89,8 +108,8 @@ export class UserStories extends React.Component {
             <body className="backgroundColor">
                 <div className="heading"><b>Work Items</b></div>
                 <span className="create" onClick={this.createNewForm.bind(this)}>
-                    <Typography variant='p'><Button startIcon={<AddBox/>} variant="outlined" color="primary">
-                     New Work Item
+                    <Typography variant='p' component={RouterLink} to='/workItems/new-workItem'><Button startIcon={<AddBox />} variant="outlined" color="primary">
+                        New Work Item
                     </Button></Typography>
                 </span>
                 {this.state.searchBars ? (<div className="container">
@@ -105,7 +124,7 @@ export class UserStories extends React.Component {
                             <label> <AppBox createStatus={this.createStatus.bind(this)} /></label>
                             <button className="submit" onClick={this.createNewUserStory.bind(this)}> Submit </button></form></fieldset>
                 </div>) : <div></div>}
-                <Container><AppTable userStories={userStories} /></Container>
+                <Container><AppTable userStories={userStories} deleteHandler={this.deleteHandler.bind(this)} /></Container>
             </body>
         )
     }

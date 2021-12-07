@@ -9,7 +9,9 @@ import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
 import Home from '../pages/Home/Homepage';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { UserStories } from '../pages/UserStories/UserStories';
-
+import NewUserStory from '../pages/UserStories/NewUserStory';
+import axios from 'axios';
+import Config from '../Configuration/Config.json';
 
 let theme = createTheme({
   palette: {
@@ -51,29 +53,38 @@ export class App extends React.Component {
     }));
   }
 
-  createitem(item) {
-    const newtask = {
-      "reporter": item.reporter, "description": item.description, "title": item.title, "assignee": item.assignee,
-      "status": item.status, "labels": item.labels
-    };
-    item.completionStatus = false;
+  // createitem(item) {
+  //   const newtask = {
+  //     "reporter": item.reporter, "description": item.description, "title": item.title, "assignee": item.assignee,
+  //     "status": item.status, "labels": item.labels
+  //   };
+  //   item.completionStatus = false;
 
-    fetch("http://localhost:4000/userStories/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(newtask)
-    });
-    const toJson = (response) => response.json()
-    const loadData = (config) => {
-      fetch(config.userStories_url).then(toJson)
-        .then((userStories) => this.setState({ userStories: userStories.userStories }));
-    };
+  //   return axios
+  //     .post(Config.userStories_url, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         'Accept': 'application/json'
+  //       },
+  //       body: JSON.stringify(newtask)
+  //     }).then((userStories) => this.setState({ userStories: userStories.userStories }));
+  // }
 
-    fetch('config/config.json').then(toJson).then(loadData);
-  }
+  // deleteHandler(x) {
+  //   console.log('deleteHandler')
+  //   axios.delete(Config.userStories_url + x._id, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(x),
+  //   })
+  //     .then((userStories) => this.setState({ userStories: userStories.userStories }))
+  //     .catch((error) => {
+  //       console.error('Error:', error);
+  //     });
+
+  // }
+
 
   render() {
     return (
@@ -89,10 +100,8 @@ export class App extends React.Component {
               element={<ProjectDetails {...this.props} />}
             />
             <Route path='/projects/new-project' element={<NewProject />} />
-            <Route path='/userStories' element={
-              <UserStories
-                createHandler={this.create.bind(this)}
-                createitem={this.createitem.bind(this)} />} />
+            <Route path='/workItems' element={<UserStories />} />
+            <Route path='/workItems/new-workItem' element={<NewUserStory />} />
           </Routes>
         </div>
       </ThemeProvider>
