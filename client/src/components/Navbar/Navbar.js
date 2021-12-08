@@ -154,13 +154,12 @@ export default function Navbar() {
           ></img>
           <Typography
             component={RouterLink}
-            to={isLoggedIn ? `/home` : `/`}
+            to={'/home'}
             className={classes.title}
-            onClick={() => window.location.reload()}
             variant='h6'
             noWrap
           >
-            <h7> AMIGOS! </h7>
+            <h5> AMIGOS! </h5>
           </Typography>
           <div className={classes.search}>
             {/* <Divider sx={{ height: 28, m: 0.5 }} orientation='vertical' /> */}
