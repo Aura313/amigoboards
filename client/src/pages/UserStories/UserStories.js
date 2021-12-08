@@ -121,6 +121,19 @@ export class UserStories extends React.Component {
         });
     };
 
+    fetchMyWorkItems() {
+        axios
+          .post(`${Config.userStories_url}/username`, {
+            username: AuthService.getCurrentUser().userName,
+          })
+          .then((res) => {
+              console.log(res.data, "sksk")
+            this.setState({
+              userStories: res.data,
+            });
+          });
+      }
+    
     componentDidMount() {
         this.fetchUsers();
         this.fetchWorkItems();
@@ -133,6 +146,26 @@ export class UserStories extends React.Component {
             
             <body className="backgroundColor">
                 <div className="heading"><b>Work Items</b></div>
+
+                <span onClick={this.fetchMyWorkItems.bind(this)}>
+                    {/* <Typography variant='p' component={RouterLink} to='/workItems/new-workItem'><Button startIcon={<AddBox />} variant="outlined" color="primary">
+                        New Work Item
+                    </Button></Typography> */}
+
+                    <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
+                       My Work Items
+                    </Button></Typography>
+                </span>
+
+                <span onClick={this.fetchWorkItems.bind(this)}>
+                    {/* <Typography variant='p' component={RouterLink} to='/workItems/new-workItem'><Button startIcon={<AddBox />} variant="outlined" color="primary">
+                        New Work Item
+                    </Button></Typography> */}
+
+                    <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
+                       All Work Items
+                    </Button></Typography>
+                </span>
                 <span className="create" onClick={this.createNewForm.bind(this)}>
                     {/* <Typography variant='p' component={RouterLink} to='/workItems/new-workItem'><Button startIcon={<AddBox />} variant="outlined" color="primary">
                         New Work Item

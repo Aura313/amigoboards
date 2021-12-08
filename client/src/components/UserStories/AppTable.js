@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 
 export default function AppTable(props) {
     const classes = useStyles();
-    const rows = props.userStories.userStories || [];
+    const rows = props.userStories.userStories || props.userStories || [];
 
     const deleteUserStory = (item) => {
         props.deleteHandler(item);
