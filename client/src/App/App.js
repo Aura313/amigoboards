@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
 import Home from '../pages/Home/Homepage';
+import UserAnalytics from '../pages/Analytics/UserAnalytics.js';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { UserStories } from '../pages/UserStories/UserStories';
 import NewUserStory from '../pages/UserStories/NewUserStory';
@@ -90,6 +91,7 @@ export class App extends React.Component {
               <Route exact path='/home' element={<Home />} />
               <Route exact path='/boards' element={<Boards />} />
               <Route exact path='/projects' element={<Projects />} />
+              <Route exact path='/userstats' element={<UserAnalytics />} />
               <Route
                 exact
                 path='/projects/:slug/:id'

@@ -12,6 +12,7 @@ import "./Login.scss";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { GLogin } from "./GoogleLogin";
 import AuthService from "../../../Services/AuthenticationService";
+import AnalyticService from "../../../Services/AnalyticsServices.js";
 import AlertTitle from "@material-ui/lab/AlertTitle";
 import { useNavigate } from "react-router-dom";
 
@@ -50,6 +51,8 @@ export function Login({ handleChange, props }) {
   };
   const onClick = (event) => {
     event.preventDefault();
+  
+    //AnalyticService.getuseranalysis();
     usernamerequired(username);
     passwordrequired(password);
     if (passwordFlag && usernameFlag) {
@@ -151,10 +154,10 @@ export function Login({ handleChange, props }) {
           SIGN IN
         </Button>
 
-        <Typography className="LoginspacingStyle" align="center">
-          or
+        {/* <Typography className="LoginspacingStyle" align="center">
+          
         </Typography>
-        <GLogin />
+        <GLogin /> */}
         <Typography className="newaccountStyle">
           Don't have an account yet?
           <Link to="#" onClick={() => handleChange("event", 1)}>

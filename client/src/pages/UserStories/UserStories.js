@@ -25,7 +25,7 @@ export class UserStories extends React.Component {
             assignee: {},
             createdDate: "",
             updatedAt: "",
-            status: "Not Yet Started",
+            status: "To do",
             labels: "",
             project: {},
             searchBars: false,
@@ -80,7 +80,7 @@ export class UserStories extends React.Component {
     createNewUserStory() {
         const newItem = {
             "reporter": this.state.reporter, "description": this.state.description, "title": this.state.title,
-            "assignee": [this.state.assignee], "status": this.state.status, "labels": this.state.labels, "projectName": this.state.project.title, "projectID": this.state.project.id
+            "assignee": this.state.assignee, "status": this.state.status, "labels": this.state.labels, "projectName": this.state.project.title, "projectID": this.state.project.id
         };
 
         console.log(newItem, "fwehfoheowehf")
@@ -128,9 +128,9 @@ export class UserStories extends React.Component {
     }
 
     render() {
-        console.log(this.state.project, "sksksk");
         const { userStories, users, projects } = this.state
         return (
+            
             <body className="backgroundColor">
                 <div className="heading"><b>Work Items</b></div>
                 <span className="create" onClick={this.createNewForm.bind(this)}>
@@ -149,8 +149,10 @@ export class UserStories extends React.Component {
                             <input placeholder="Reporter" className="textBox" type="text" name="reporter" value={this.state.reporter} onChange={this.createReporter.bind(this)}></input><br />
                             <input placeholder="Description" className="textBox" type="text" name="description" value={this.state.description} onChange={this.createDescription.bind(this)}></input><br />
                             <input placeholder="Title" className="textBox" type="text" name="title" value={this.state.title} onChange={this.createTitle.bind(this)}></input><br />
-                            <label> <AppBox createStatus={this.createStatus.bind(this)} /></label>
+                            <label> 
+                            <AppBox createStatus={this.createStatus.bind(this)} /></label>
                             <Autocomplete
+                                multiple
                                 id="combo-box-demo"
                                 options={users}
                                 getOptionLabel={(option) => option.userName}
@@ -196,4 +198,10 @@ const labels = [
     { title: 'Issue' },
     { title: 'Task' },
     { title: 'Epic' },
+];
+
+const status = [
+    { title: 'To do'},
+    { title: 'In Progress'},
+    { title: 'Completed'},
 ];

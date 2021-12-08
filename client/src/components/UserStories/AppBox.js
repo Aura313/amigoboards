@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-const options = ['Not Yet Started','In Progress', 'Completed'];
+const options = ['To do','In Progress', 'Completed'];
 
 export default function AppBox(props) {
   const [value, setValue] = React.useState(options[0]);

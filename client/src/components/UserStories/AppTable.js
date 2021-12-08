@@ -53,7 +53,9 @@ export default function AppTable(props) {
                             <TableCell align="centre">{row.reporter}</TableCell>
                             <TableCell align="centre">{row.description}</TableCell>
                             <TableCell align="centre">{row.title}</TableCell>
-                            <TableCell align="centre">{row.assignee.map((i, idx) => { return i.userName })}</TableCell>
+                            <TableCell align="centre">{row.assignee.map((i, idx) => {
+                                return `${i.userName} ,`
+                            })}</TableCell>
                             <TableCell align="centre">{row.createdDate}</TableCell>
                             <TableCell align="centre">{row.lastModifiedDate}</TableCell>
                             <TableCell align="centre">{row.status}</TableCell>

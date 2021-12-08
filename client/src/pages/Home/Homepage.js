@@ -3,7 +3,6 @@ import "./Homepage.scss";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AuthService from "../../Services/AuthenticationService";
-import AnalyticService from "../../Services/AnalyticsServices";
 import { getUser } from "../../store/Actions/user.actions";
 import HomeDetails from "./HomeDetails";
 import HomeCard from "./HomeCard"
