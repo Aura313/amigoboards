@@ -32,17 +32,17 @@ export default function UserStoryDetails() {
   const [descriptionVal, setDescriptionVal] = useState('');
   const [titleVal, setTitleVal] = useState('');
   const [assigneeVal, setAssigneeVal] = useState([])
-  const [statusVal, setStatusVal] = useState('')
+  // const [statusVal, setStatusVal] = useState('')
   const [createdDateVal, setCreatedDate] = useState('')
   const [updatedDateVal, setUpdatedDate] = useState('')
   const [users, setUsers] = React.useState({});
   const [currentProject, setCurrentProject] = React.useState({});
-
   const [initialAssignee, setInitialAssignee] = React.useState([]);
   const [initialProj, setInitialProj] = React.useState([]);
-
   const [projectName, setProjectName] = useState('')
   const [currentLabel, setLabels] = React.useState({});
+  const [currentStatus, setStatusVal] = React.useState({});
+
 
   const fetchWorkItems = async () => {
     axios.get(`${Config.userStories_url}/${params.id}`)
@@ -51,21 +51,18 @@ export default function UserStoryDetails() {
         setDescriptionVal(response.data.description)
         setTitleVal(response.data.title)
         setInitialAssignee(response.data.assignee)
-        setStatusVal(response.data.status)
+        // setStatusVal(response.data.status)
         setCreatedDate(response.data.createdAt)
         setUpdatedDate(response.data.updatedAt)
         setProjectName(response.data.projectName)
         setInitialProj(allProjects.filter(i => i._id === response.data.projectID))
         setLabels(response.data.labels)
+        setStatusVal(response.data.status)
       }
 
       );
   }
 
-  // const getFormattedDate = (dateTime)  => {
-  //   const formattedDate = new Date(dateTime);
-  //   return `${formattedDate.toDateString()} | ${formattedDate.toLocaleTimeString()} `;
-  // }
 
   useEffect(() => {
     const fetchAllProjects = async () => {
@@ -102,8 +99,8 @@ export default function UserStoryDetails() {
     setAssigneeVal(event.target.value)
   }
 
-  const handleStatusChange = (event) => {
-    setStatusVal(event.target.value)
+  const handleStatusChange = (event, value) => {
+    setStatusVal(value)
   }
 
   const handleUserNameChange = (value) => {
@@ -132,24 +129,15 @@ export default function UserStoryDetails() {
       assignee: users,
       labels: currentLabel,
       projectName: currentProject.title,
-      projectID: currentProject._id
-
+      projectID: currentProject._id,
+      statusses: currentStatus
     };
 
     await axios
       .put(`${Config.userStories_url}/${params.id}`, formData)
       .then((res) => {
-        // props.handleClose();
-        console.log(formData,"edit")
       });
   };
-
-
-  console.log(initialProj, allProjects, "initialProj")
-
-  // let x =
-  // console.log(x,"hioqwfhuowefuh")
-
 
   return (
     <div className='centerAlign'>
@@ -176,25 +164,27 @@ export default function UserStoryDetails() {
             variant='outlined'
             onChange={handleTitleChange}
             value={titleVal} />
-          {/* <TextField
-            placeholder='Enter Assignee'
-            id="filled-basic"
-            label="Assignee"
-            variant="outlined"
-            onChange={handleAssigneeChange}
-            value={assigneeVal} /> */}
-          {/* <TextField id="filled-basic" label="Labels" variant="filled" value={userStory.labels} /> */}
-          <AppBox label="Status" onChange={handleStatusChange} value={statusVal} />
+          {/* <AppBox label="Status" onChange={handleStatusChange} value={statusVal} /> */}
 
-          Current project : {projectName} 
-            <br/>
+          Current project : {projectName}
+          <br />
           To change the project , select from below list
+          {currentStatus ? <Autocomplete
+            id="combo-box-demo"
+            options={statusses}
+            getOptionLabel={(option) => option.title}
+            style={{ width: 300 }}
+            onChange={handleStatusChange}
+            defaultValue={{ title: currentStatus != '' ? currentStatus : 'N/A' }}
+            renderInput={(params) => <TextField {...params} label="Status" variant="outlined" />}
+          /> : null}
           <Autocomplete
             id="combo-box-demo"
             options={labels}
             getOptionLabel={(option) => option.title}
             style={{ width: 300 }}
             onChange={handleLabelChange}
+
             renderInput={(params) => <TextField {...params} label="Label" variant="outlined" />}
           />
 
@@ -213,33 +203,6 @@ export default function UserStoryDetails() {
             handleMembers={handleUserNameChange}
             members={memberList}
             selectedMembers={initialAssignee} />}
-          {/* <Autocomplete
-
-
-            multiple
-            id='combo-box-demo'
-            options={memberList}
-            getOptionLabel={(option) => option.userName}
-            style={{ width: 300 }}
-            filterSelectedOptions
-
-            defaultValue={initialAssignee}
-            onChange={handleUserNameChange}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label='Members'
-                variant='outlined'
-              />
-            )}
-          /> */}
-          {/* <Typography align='left' variant='overline' gutterBottom> 
-            Created At: <b>{setCreatedDate(createdDateVal)}</b>
-          </Typography>
-          &nbsp;
-          <Typography align='left' variant='overline' gutterBottom>
-            Last Modified At: <b>{setUpdatedAt(updatedDateVal)}</b>
-          </Typography> */}
           <Button
             className="buttonAlign"
             variant='contained'
@@ -257,5 +220,11 @@ const labels = [
   { title: 'Issue' },
   { title: 'Task' },
   { title: 'Epic' },
+];
+
+const statusses = [
+  { title: 'To do' },
+  { title: 'In Progress' },
+  { title: 'Completed' },
 ];
 
