@@ -29,6 +29,11 @@ export default function AppTable(props) {
         props.deleteHandler(item);
     }
 
+    const getFormattedDate = (dateTime) => {
+        const formattedDate = new Date(dateTime);
+        return `${formattedDate.toDateString()} | ${formattedDate.toLocaleTimeString()} `;
+      };
+
     return (
         <TableContainer component={Paper}>
             <Table classReporter={classes.table} aria-label="simple table">
@@ -56,8 +61,8 @@ export default function AppTable(props) {
                             <TableCell align="centre">{row.assignee.map((i, idx) => {
                                 return `${i.userName} ,`
                             })}</TableCell>
-                            <TableCell align="centre">{row.createdDate}</TableCell>
-                            <TableCell align="centre">{row.lastModifiedDate}</TableCell>
+                            <TableCell align="centre">{getFormattedDate(row.createdAt)}</TableCell>
+                            <TableCell align="centre">{getFormattedDate(row.updatedAt)}</TableCell>
                             <TableCell align="centre">{row.status}</TableCell>
                             <TableCell align="centre">{row.labels}</TableCell>
                             <TableCell align="centre">{row.projectName}</TableCell>
