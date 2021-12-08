@@ -12,12 +12,13 @@ import { useParams } from 'react-router-dom';
 import ProjectForm from '../../components/Projects/Form';
 import { useNavigate } from 'react-router-dom';
 import './Projects.scss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import AuthService from '../../Services/AuthenticationService';
 import { getUser } from '../../store/Actions/user.actions';
 import Members from '../../components/Projects/Members/Members';
 import AssignmentIndOutlinedIcon from '@material-ui/icons/AssignmentIndOutlined';
 import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
@@ -104,12 +105,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ProjectDetails = () => {
-  const [project, setProject] = useState({
-    title: '',
-    description: '',
-    members: [],
-    owner: '',
-  });
+  const [project, setProject] = useState({});
 
   const [isOwner, setIsOwner] = useState(false);
 
@@ -123,30 +119,30 @@ export const ProjectDetails = () => {
     dispatch(getUser(AuthService.getCurrentUser() || []));
   };
 
-  useEffect(() => {
-    setUserDetails();
-  }, []);
-
-  const handleEditProject = () => {
-    setEditable(true);
-  };
-
   const fetchProjectDetails = async () => {
     await axios
       .get(`${Config.projects_url}/${params.slug}/${params.id}`)
       .then((res) => {
         setProject(res.data);
-
-        console.log('Check', AuthService.getCurrentUser()._id, res.data.owner);
-        if (AuthService.getCurrentUser()._id == res.data.owner) {
-          console.log(1, AuthService.getCurrentUser()._id, res.data.owner);
+        if (AuthService.getCurrentUser()._id == res.data.item.owner) {
           setIsOwner(true);
         } else {
-          console.log(2);
           setIsOwner(false);
         }
       });
   };
+
+  useEffect(() => {
+    setUserDetails();
+  }, []);
+
+  useEffect(() => {
+    fetchProjectDetails();
+  }, []);
+  const handleEditProject = () => {
+    setEditable(true);
+  };
+
   const handleClose = () => {
     setEditable(false);
     fetchProjectDetails();
@@ -168,25 +164,32 @@ export const ProjectDetails = () => {
     return initials;
   };
 
-  useEffect(() => {
-    fetchProjectDetails();
-  }, []);
+  const getFormattedDate = (dateTime)  => {
+    const formattedDate = new Date(dateTime);
+    return `${formattedDate.toDateString()} | ${formattedDate.toLocaleTimeString()} `;
+  }
 
-  return (
+  const { item } = project;
+
+  const totalItems = project.todo + project.inProgress + project.completed || 0;
+
+  console.log(project, item, 'project');
+  return item ? (
     <div className={classes.parentCont}>
       <Paper className={classes.container} elevation={0}>
         <div className={classes.headWrapper}>
           <div className={classes.titleWrapper}>
             <Avatar
-              className={project._id % 2 ? classes.evenBg : classes.oddBg}
-              aria-label={getInitials(project.title)}
+              className={item._id % 2 ? classes.evenBg : classes.oddBg}
+              aria-label={getInitials(item.title)}
               variant='rounded'
             >
-              {getInitials(project.title)}
+              {getInitials(item.title)}
             </Avatar>
             <Typography align='left' variant='h4'>
-              <b>{project.title}</b>
+              <b>{item.title}</b>
             </Typography>
+            <br />
           </div>
           {isOwner && !editable && (
             <div className={classes.iconWrapper}>
@@ -200,20 +203,31 @@ export const ProjectDetails = () => {
             </div>
           )}
         </div>
+        <br />
+        <div className={classes.statsWrapper}>
+          <Typography align='left' variant='overline' gutterBottom> 
+            Created At: <b>{getFormattedDate(item.createdAt)}</b>
+          </Typography>
+          &nbsp;
+          <Typography align='left' variant='overline' gutterBottom>
+            Last Modified At: <b>{getFormattedDate(item.updatedAt)}</b>
+          </Typography>
+        </div>
       </Paper>
+
       <div className={classes.contentWrapper}>
         <Paper className={classes.descContainer} elevation={0}>
           <Typography align='left' variant='h6'>
             <b>
-              {project.description
+              {item.description
                 ? `About this Project`
                 : `This project has no description yet`}
             </b>
           </Typography>
           <br />
           <Typography align='left' variant='body'>
-            {project.description
-              ? project.description
+            {item.description
+              ? item.description
               : 'Describing the project makes it easier for other people to understand it.'}
           </Typography>
         </Paper>
@@ -228,7 +242,7 @@ export const ProjectDetails = () => {
               &nbsp;
               <div className={classes.statItem}>
                 <Typography align='left' variant='body1' color='textSecondary'>
-                  <b> 5</b>
+                  <b> {totalItems} </b>
                 </Typography>
 
                 <Typography align='left' variant='body2' color='textSecondary'>
@@ -238,15 +252,15 @@ export const ProjectDetails = () => {
             </div>
             <br />
             <div className={classes.iconWrapper}>
-              <AssignmentTurnedInOutlinedIcon />
+              <DescriptionOutlinedIcon />
               &nbsp;
               <div className={classes.statItem}>
                 <Typography align='left' variant='body1' color='textSecondary'>
-                  <b> 2</b>
+                  <b> {project.inProgress} </b>
                 </Typography>
 
                 <Typography align='left' variant='body2' color='textSecondary'>
-                  Work Items Completed
+                  Work Items In-progress
                 </Typography>
               </div>
             </div>
@@ -256,7 +270,7 @@ export const ProjectDetails = () => {
               &nbsp;
               <div className={classes.statItem}>
                 <Typography align='left' variant='body1' color='textSecondary'>
-                  <b> 2</b>
+                  <b> {project.completed} </b>
                 </Typography>
 
                 <Typography align='left' variant='body2' color='textSecondary'>
@@ -270,19 +284,15 @@ export const ProjectDetails = () => {
       <div className={classes.mWrapper}>
         <Paper className={classes.memberContainer} elevation={0}>
           <Typography className='mem-wrapper' align='left' variant='h6'>
-            <b>MEMBERS </b>{' '}
-            <span className='mem-len'>{project.members.length}</span>
+            <b>MEMBERS </b>
+            <span className='mem-len'>{item.members.length}</span>
           </Typography>
           <br />
-          <Members members={project.members} leftAlign={true} />
+          <Members members={item.members} leftAlign={true} />
         </Paper>
       </div>
       {editable && (
         <div>
-          {/* <Button onClick={handleClose}>
-            <CloseIcon />
-          </Button> */}
-
           <Dialog
             open={editable}
             fullWidth
@@ -300,31 +310,20 @@ export const ProjectDetails = () => {
               </Button>
             </DialogTitle>
             <DialogContent>
-              {/* <DialogContentText id="alert-dialog-slide-description">
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
-          </DialogContentText> */}
               <ProjectForm
-                title={project.title}
-                description={project.description}
-                selectedMembers={project.members}
-                owner={project.owner}
-                ownerName={project.ownerName}
+                title={item.title}
+                description={item.description}
+                selectedMembers={item.members}
+                owner={item.owner}
+                ownerName={item.ownerName}
                 updateMode={true}
                 handleClose={handleClose}
                 editable={editable}
               />
             </DialogContent>
           </Dialog>
-          {/* <Dialog  editable={editable}  handleClose={handleClose}/> */}
         </div>
       )}
-      {/* <Paper className={classes.container} elevation={0}>
-        qwfhqw
-      </Paper>
-      <Paper className={classes.container} elevation={0}>
-        qwfhqw
-      </Paper> */}
     </div>
-  );
+  ) : null;
 };
