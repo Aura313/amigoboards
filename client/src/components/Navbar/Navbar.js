@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -22,14 +22,25 @@ import Config from '../../Configuration/Config.json';
 import AuthService from '../../Services/AuthenticationService';
 import { useNavigate } from 'react-router-dom';
 import './Navbar.scss';
-import { Divider } from '@material-ui/core';
 
 export default function Navbar() {
   const classes = navStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [value, setValue] = React.useState(null);
-  const [projects, setProjects] = React.useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const [value, setValue] = useState(null);
+  const [projects, setProjects] = useState([]);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (AuthService.getCurrentUser()) {
+      console.log('loggedin');
+      setIsLoggedIn(true);
+    } else {
+      console.log('not logged in');
+      setIsLoggedIn(false);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -69,6 +80,7 @@ export default function Navbar() {
   const handleLogout = (event) => {
     AuthService.logout();
     navigate('/');
+    window.location.reload();
   };
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -127,32 +139,31 @@ export default function Navbar() {
     <div className={classes.grow}>
       <AppBar position='fixed'>
         <Toolbar>
-          <IconButton
-            edge='start'
-            className={classes.menuButton}
-            color='inherit'
-            aria-label='open drawer'
-          >
-            <AppDrawer />
-          </IconButton>
+          {isLoggedIn && (
+            <IconButton
+              edge='start'
+              className={classes.menuButton}
+              color='inherit'
+              aria-label='open drawer'
+            >
+              <AppDrawer />
+            </IconButton>
+          )}
           <img
             className='logo'
             src='../.././Assets/Amigi Boards Logo.png'
           ></img>
           <Typography
             component={RouterLink}
-            to='/home'
+            to={'/home'}
             className={classes.title}
             variant='h6'
             noWrap
           >
-            <h7> AMIGOS! </h7>
+            <h5> AMIGOS! </h5>
           </Typography>
           <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <Divider sx={{ height: 28, m: 0.5 }} orientation='vertical' />
+            {/* <Divider sx={{ height: 28, m: 0.5 }} orientation='vertical' /> */}
             {/* <InputBase
               placeholder='Search…'
               classes={{
@@ -161,56 +172,63 @@ export default function Navbar() {
               }}
               inputProps={{ 'aria-label': 'search' }}
             /> */}
-            <div style={{ width: 300 }}>
-              <Autocomplete
-                {...defaultProps}
-                id='controlled-demo'
-                value={value}
-                onChange={(event, newValue) => {
-                  setValue(newValue);
-                  newValue &&
-                    navigate(`/projects/${newValue.slug}/${newValue._id}`);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    placeholder='Search'
-                    {...params}
-                    label=''
-                    margin='normal'
-                  />
-                )}
-              />
-            </div>
+            {isLoggedIn && (
+              <div style={{ width: 300 }}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <Autocomplete
+                  {...defaultProps}
+                  classes={{ inputRoot: 'textStyles' }}
+                  id='controlled-demo'
+                  value={value}
+                  onChange={(event, newValue) => {
+                    setValue(newValue);
+                    newValue &&
+                      navigate(`/projects/${newValue.slug}/${newValue._id}`);
+                    window.location.reload();
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      placeholder='Search Projects...'
+                      {...params}
+                      label=''
+                      className={classes.textStyles}
+                      variant='outlined'
+                    />
+                  )}
+                />
+              </div>
+            )}
           </div>
           <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            {/* <IconButton aria-label='show 4 new mails' color='inherit'>
-              <Badge badgeContent={4} color='secondary'>
-                <MailIcon />
-              </Badge>
-            </IconButton> */}
-            <IconButton
-              edge='end'
-              aria-label='account of current user'
-              aria-controls={menuId}
-              aria-haspopup='true'
-              onClick={handleProfileMenuOpen}
-              color='inherit'
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label='show more'
-              aria-controls={mobileMenuId}
-              aria-haspopup='true'
-              onClick={handleMobileMenuOpen}
-              color='inherit'
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
+          {isLoggedIn && (
+            <div className={classes.sectionDesktop}>
+              <IconButton
+                edge='end'
+                aria-label='account of current user'
+                aria-controls={menuId}
+                aria-haspopup='true'
+                onClick={handleProfileMenuOpen}
+                color='inherit'
+              >
+                <AccountCircle />
+              </IconButton>
+            </div>
+          )}
+          {isLoggedIn && (
+            <div className={classes.sectionMobile}>
+              <IconButton
+                aria-label='show more'
+                aria-controls={mobileMenuId}
+                aria-haspopup='true'
+                onClick={handleMobileMenuOpen}
+                color='inherit'
+              >
+                <MoreIcon />
+              </IconButton>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

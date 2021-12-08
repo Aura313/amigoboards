@@ -63,6 +63,7 @@ export function Login({ handleChange, props }) {
           navigate("/home");
           setUsername("");
           setPassword("");
+          window.location.reload();
         },
         (error) => {
           const message = error.message;

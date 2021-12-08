@@ -4,8 +4,6 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import { makeStyles } from '@material-ui/core/styles';
-import { deepOrange } from '@material-ui/core/colors';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -15,27 +13,17 @@ import Config from '../../../Configuration/Config.json';
 
 import axios from '../../../middleware/axios';
 
-const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  root: {
-    minWidth: 275,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 7px',
-    transform: 'scale(0.8)',
-  },
-  orange: {
-    color: theme.palette.getContrastText(deepOrange[500]),
-    backgroundColor: deepOrange[500],
-  },
-}));
-
-export default function ComboBox(props) {
-  const classes = useStyles();
+export default function ComboBox() {
   const [memberList, setMembers] = useState([]);
+  const [allProjects, setAllProjects] = useState([]);
+  const fetchAllProjects = async () => {
+    await axios
+      .get(Config.projects_url)
+      .then((res) => setAllProjects(res.data));
+  };
+  useEffect(() => {
+    fetchAllProjects();
+  }, []);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -55,6 +43,7 @@ export default function ComboBox(props) {
   };
 
   const handleClose = () => {
+    window.location.reload();
     setOpen(false);
   };
 
@@ -80,6 +69,7 @@ export default function ComboBox(props) {
         `${Config.projects_url}/${currentProject.slug}/${currentProject.id}`,
         formData
       )
+      .then((res) => handleClose())
       .catch((err) => console.log(err));
   };
 
@@ -91,21 +81,17 @@ export default function ComboBox(props) {
     setCurrentProject(value);
   };
 
-  const { projects } = props;
-
   return (
     <div>
       <div>
         <Button
-          variant='contained'
-          color='default'
-          className={classes.button}
           startIcon={<GroupAddIcon />}
+          variant='outlined'
+          color='primary'
           onClick={handleClickOpen}
         >
           Invite
         </Button>
-
         <Dialog
           open={open}
           onClose={handleClose}
@@ -114,7 +100,7 @@ export default function ComboBox(props) {
           <DialogTitle id='dialog-title'>INVITE</DialogTitle>
           <DialogContent>
             <DialogContentText>Invite members to projects</DialogContentText>
-            <DialogContentText>Users</DialogContentText>
+            <DialogContentText>Select User</DialogContentText>
             <Autocomplete
               multiple
               id='combo-box-demo'
@@ -126,20 +112,21 @@ export default function ComboBox(props) {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label='Search Members'
+                  label='Select Users'
                   variant='outlined'
                 />
               )}
             />
-            <DialogContentText>Add to Team(s)</DialogContentText>
+            <br/>
+            <DialogContentText>Select Project</DialogContentText>
             <Autocomplete
               id='combo-box-demo'
-              options={projects}
+              options={allProjects}
               getOptionLabel={(option) => option.title}
               style={{ width: 300 }}
               onChange={handleProjectChange}
               renderInput={(params) => (
-                <TextField {...params} label='Add Project' variant='outlined' />
+                <TextField {...params} label='Select Projects' variant='outlined' />
               )}
             />
           </DialogContent>
