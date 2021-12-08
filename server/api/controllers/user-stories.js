@@ -88,7 +88,7 @@ export const getstoriesbyName = async (request, response) => {
     const newArray = [];
     for (let i = 0; i < userStory.length; i++) {
       for (let j = 0; j < userStory[i].assignee.length; j++) {
-        if (userStory[i].assignee[j] === name) {
+        if (userStory[i].assignee[j].userName === name) {
           newArray.push(userStory[i]);
           break;
         }
