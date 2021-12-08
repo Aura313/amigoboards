@@ -54,7 +54,7 @@ export default function SimpleCard(props) {
         <Card className={classes.root}>
             <CardContent>
                 <Typography variant="h5" component="h2" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    {item.assignee.map(i =>  i.userName)}
+                    {item.assignee.map(i =>  `${i.userName}, `)}
                     <div>
                         <Button component={RouterLink} to={`/workItems/${item._id}`} >
                             <EditIcon align="right"></EditIcon>
@@ -73,7 +73,7 @@ export default function SimpleCard(props) {
                     id="combo-box-demo"
                     options={List}
                     getOptionLabel={(option) => option.title}
-                    defaultValue={item.status}
+                    disableClearable={true}
                     onChange={updateStatusDetails}
                     style={{ width: 150, paddingBottom: 10, paddingTop: 10 }}
                     renderInput={(params) => <TextField {...params} label="Completed" variant="outlined" />}
