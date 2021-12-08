@@ -16,8 +16,7 @@ import Dropdown from '../../components/Projects/Dropdown'
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
-      margin: theme.spacing(1),
-      padding: '40px'
+      margin: theme.spacing(4),
     },
   },
 }));
@@ -141,13 +140,15 @@ export default function UserStoryDetails() {
     <div className='centerAlign'>
       <div className='inputContainer'>
         <form className={classes.root} noValidate autoComplete="off">
+          <div style={{}}>
           <TextField
             id="filled-basic"
             placeholder='Enter Reporter'
             variant='outlined'
+            style={{ width: '90%'}}
             onChange={handleReporteChange}
             label='Reporter'
-            value={repoterVal} />
+            value={repoterVal} /><br/><br/><br/>
           {/* {initialAssignee.length > 0 && <Dropdown align='center'
             handleMembers={handleUserNameChange}
             value={repoterVal}
@@ -157,20 +158,24 @@ export default function UserStoryDetails() {
             id="filled-basic"
             label="Description"
             variant='outlined'
+            style={{ width: '90%' }}
             onChange={handleDescriptionChange}
-            value={descriptionVal} />
+            value={descriptionVal} /><br/><br/><br/>
           <TextField
             placeholder='Enter Title'
             id="filled-basic"
             label="Title"
             variant='outlined'
+            style={{ width: '90%' }}
             onChange={handleTitleChange}
-            value={titleVal} />
+            value={titleVal} /><br/><br/><br/>
+            </div>
           {/* <AppBox label="Status" onChange={handleStatusChange} value={statusVal} /> */}
-
-          Current project : {projectName}
-          <br />
-          To change the project , select from below list
+          <div style={{ paddingLeft: '10px' }}>
+            Current project : <b>{projectName}</b>
+            <br />
+            To change the project,Select from below list
+          </div>
           {currentStatus ? <Autocomplete
             id="combo-box-demo"
             options={statusses}
@@ -205,13 +210,15 @@ export default function UserStoryDetails() {
             handleMembers={handleUserNameChange}
             members={memberList}
             selectedMembers={initialAssignee} />}
-          <Button
-            className="buttonAlign"
-            variant='contained'
-            color='primary'
-            onClick={editUserStory} >
-            Submit
-          </Button>
+          <div style = {{display:'flex',justifyContent:'center'}}>
+            <Button
+              className="buttonAlign"
+              variant='contained'
+              color='primary'
+              onClick={editUserStory} >
+              Submit
+            </Button>
+          </div>
         </form>
       </div>
     </div>
