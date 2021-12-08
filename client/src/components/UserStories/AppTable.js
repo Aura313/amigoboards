@@ -43,6 +43,7 @@ export default function AppTable(props) {
                         <TableCell align="centre"><b>Last Modified Date</b></TableCell>
                         <TableCell align="centre"><b>Status</b></TableCell>
                         <TableCell align="centre"><b>Labels</b></TableCell>
+                        <TableCell align="centre"><b>Project Name</b></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -52,16 +53,17 @@ export default function AppTable(props) {
                             <TableCell align="centre">{row.reporter}</TableCell>
                             <TableCell align="centre">{row.description}</TableCell>
                             <TableCell align="centre">{row.title}</TableCell>
-                            <TableCell align="centre">{row.assignee}</TableCell>
+                            <TableCell align="centre">{row.assignee.map((i, idx) => { return i.userName })}</TableCell>
                             <TableCell align="centre">{row.createdDate}</TableCell>
                             <TableCell align="centre">{row.lastModifiedDate}</TableCell>
                             <TableCell align="centre">{row.status}</TableCell>
                             <TableCell align="centre">{row.labels}</TableCell>
-                            <Button component={RouterLink}  to={`/workItems/${row._id}`} >
-                            <EditIcon align="right"></EditIcon>
+                            <TableCell align="centre">{row.projectName}</TableCell>
+                            <Button component={RouterLink} to={`/workItems/${row._id}`} >
+                                <EditIcon align="right"></EditIcon>
                             </Button>
-                            <Button  onClick={() => deleteUserStory(row) } >
-                            
+                            <Button onClick={() => deleteUserStory(row)} >
+
                                 <DeleteForeverIcon align="right" ></DeleteForeverIcon>
                             </Button>
                         </TableRow>

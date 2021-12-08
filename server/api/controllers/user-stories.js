@@ -40,6 +40,7 @@ export const save = async (request, response) => {
     const newUserStory = await userStoryService.create(userStory);
     setSuccessResponse(newUserStory, response);
   } catch (e) {
+    console.log(e.message, "pepepepp")
     errorhandler(e.message, response);
   }
 };
