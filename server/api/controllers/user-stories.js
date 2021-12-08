@@ -1,5 +1,5 @@
-import { response } from "express";
-import * as userStoryService from "../services/user-stories.js";
+import { response } from 'express';
+import * as userStoryService from '../services/user-stories.js';
 
 const errorhandler = (message, response) => {
   response.status(500);
@@ -15,7 +15,7 @@ export const get = async (request, response) => {
   try {
     const id = request.params.id;
     const userStory = await userStoryService.get(id);
- 
+
     setSuccessResponse(userStory, response);
   } catch (e) {
     errorhandler(e.message, response);
@@ -40,7 +40,7 @@ export const save = async (request, response) => {
     const newUserStory = await userStoryService.create(userStory);
     setSuccessResponse(newUserStory, response);
   } catch (e) {
-    console.log(e.message, "pepepepp")
+    console.log(e.message, 'pepepepp');
     errorhandler(e.message, response);
   }
 };
@@ -82,20 +82,17 @@ export const getstoriesbyName = async (request, response) => {
     const newArray = [];
     for (let i = 0; i < userStory.length; i++) {
       for (let j = 0; j < userStory[i].assignee.length; j++) {
-        if (userStory[i].assignee[j] === name) {
+        if (userStory[i].assignee[j].userName === name) {
           newArray.push(userStory[i]);
           break;
         }
       }
     }
-
-    console.log(newArray);
     setSuccessResponse(newArray, response);
   } catch (e) {
     errorhandler(e.message, response);
   }
 };
-
 
 export const getStatus = async (request, response) => {
   try {
@@ -104,14 +101,13 @@ export const getStatus = async (request, response) => {
     const newArray = userStory.filter((item) => item.projectID === id);
 
     const resultArray = {
-      todo: newArray.filter((item) => item.status === "To do"),
-      inProgress: newArray.filter((item) => item.status === "In Progress"),
-      completed: newArray.filter((item) => item.status === "Completed"),
+      todo: newArray.filter((item) => item.status === 'To do'),
+      inProgress: newArray.filter((item) => item.status === 'In Progress'),
+      completed: newArray.filter((item) => item.status === 'Completed'),
     };
-    
+
     setSuccessResponse(resultArray, response);
   } catch (e) {
     errorhandler(e.message, response);
   }
 };
-
