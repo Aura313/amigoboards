@@ -14,8 +14,8 @@ import NewUserStory from '../pages/UserStories/NewUserStory';
 import UserStoryDetails from '../pages/UserStories/UserStoryDetails';
 import axios from 'axios';
 import Config from '../Configuration/Config.json';
-import Footer from '../components/Footer/Footer'
-
+import Footer from '../components/Footer/Footer';
+import AuthencatedRoute from '../utils/AuthenticatedRoute';
 
 let theme = createTheme({
   palette: {
@@ -86,19 +86,27 @@ export class App extends React.Component {
         <div className='page-container'>
           <Routes>
             <Route exact path='/' element={<SignInOutContainer />} />
-            <Route exact path='/home' element={<Home />} />
-            <Route exact path='/boards' element={<Boards />} />
-            <Route exact path='/projects' element={<Projects />} />
-            <Route
-              exact
-              path='/projects/:slug/:id'
-              element={<ProjectDetails {...this.props} />}
-            />
-            <Route path='/projects/new-project' element={<NewProject />} />
-            <Route path='/workItems' element={<UserStories
-              createHandler={this.create.bind(this)}
-              createitem={this.createitem.bind(this)} />} />
-            <Route path='/workItems/:id' element={<UserStoryDetails />} />
+            <Route element={<AuthencatedRoute />}>
+              <Route exact path='/home' element={<Home />} />
+              <Route exact path='/boards' element={<Boards />} />
+              <Route exact path='/projects' element={<Projects />} />
+              <Route
+                exact
+                path='/projects/:slug/:id'
+                element={<ProjectDetails {...this.props} />}
+              />
+              <Route path='/projects/new-project' element={<NewProject />} />
+              <Route
+                path='/workItems'
+                element={
+                  <UserStories
+                    createHandler={this.create.bind(this)}
+                    createitem={this.createitem.bind(this)}
+                  />
+                }
+              />
+              <Route path='/workItems/:id' element={<UserStoryDetails />} />
+            </Route>
           </Routes>
         </div>
         <Footer />
