@@ -22,17 +22,17 @@ const UserStorySchema = new Mongoose.Schema(
       required: "First Name is a required field",
     },
     assignee: {
-       type: Array, default: [] ,
+      type: Array, default: [],
       required: "Assignee is a required field",
     },
-    createdDate: {
-      type: Date,
-      default: Date.now,
-    },
-    lastModifiedDate: {
-      type: Date,
-      default: Date.now,
-    },
+    // createdDate: {
+    //   type: Date,
+    //   default: Date.now,
+    // },
+    // lastModifiedDate: {
+    //   type: Date,
+    //   default: Date.now,
+    // },
 
     status: {
       type: String,
@@ -45,11 +45,15 @@ const UserStorySchema = new Mongoose.Schema(
     completionStatus: {
       type: Boolean,
     },
-    projectID: { type: String ,required: "ProjectID is Required",},
+    projectName: {
+      type: String,
+      required: "Project Name is a required field",
+    },
+    projectID: { type: String, required: "ProjectID is Required", },
   },
-  // {
-  //   timestamps: true,
-  // },
+  {
+    timestamps: true,
+  },
   {
     versionKey: false,
   }

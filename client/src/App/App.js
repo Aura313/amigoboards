@@ -68,17 +68,15 @@ export class App extends React.Component {
       assignee: item.assignee,
       status: item.status,
       labels: item.labels,
+      projectID: item.projectID,
+      projectName: item.projectName
     };
     item.completionStatus = false;
 
     return axios
-      .post(Config.userStories_url, {
-        headers: {
-          "Content-Type": "application/json",
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(newtask)
-      }).then((userStories) => this.setState({ userStories: userStories.userStories }));
+      .post(Config.userStories_url,
+        newtask
+      ).then((userStories) => this.setState({ userStories: userStories.userStories }));
   }
 
   render() {
@@ -98,12 +96,12 @@ export class App extends React.Component {
             />
             <Route path='/projects/new-project' element={<NewProject />} />
             <Route path='/workItems' element={<UserStories
-            createHandler={this.create.bind(this)}
-            createitem={this.createitem.bind(this)} />} />
+              createHandler={this.create.bind(this)}
+              createitem={this.createitem.bind(this)} />} />
             <Route path='/workItems/:id' element={<UserStoryDetails />} />
           </Routes>
-          </div>
-          <Footer/>
+        </div>
+        <Footer />
       </ThemeProvider>
     );
   }
