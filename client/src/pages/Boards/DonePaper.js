@@ -1,10 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles({
   root: {
@@ -34,9 +34,17 @@ export default function SimpleCard(props) {
         <Typography variant="h5" component="h2">
           {i.assignee}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
+        <Autocomplete
+                id="combo-box-demo"
+                options={List}
+                getOptionLabel={(option) => option.title}
+                style={{ width: 300 }}
+                //onChange={fetchStatusDetails}
+                renderInput={(params) => <TextField {...params} label="Completed" variant="outlined" />}
+            />
+        {/* <Typography className={classes.pos} color="textSecondary">
           State: {i.status}
-        </Typography>
+        </Typography> */}
         <Typography className={classes.pos} color="textSecondary">
           Label: {i.labels}
         </Typography>
@@ -44,3 +52,9 @@ export default function SimpleCard(props) {
     </Card>
   ));
 }
+
+const List = [
+    { title: 'To do' },
+    { title: 'In Progress' },
+    { title: 'Completed' },
+  ];

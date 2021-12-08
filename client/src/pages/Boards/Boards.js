@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: "wrap",
         "& > *": {
             margin: theme.spacing(3),
-            width: theme.spacing(30),
+            width: theme.spacing(45),
             height: theme.spacing(100)
         }
     }
