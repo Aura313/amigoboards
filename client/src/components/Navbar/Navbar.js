@@ -68,6 +68,7 @@ export default function Navbar() {
   };
 
   const handleMenuClose = () => {
+    navigate('/userstats');
     setAnchorEl(null);
     handleMobileMenuClose();
   };
@@ -96,7 +97,7 @@ export default function Navbar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {/* <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );

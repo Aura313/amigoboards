@@ -41,6 +41,7 @@ class AuthenticationService {
     }
   }
 
+  
   getUsers = () => {
     return axios
       .get(Config.users_url, { headers: this.authHeader() })
@@ -48,6 +49,8 @@ class AuthenticationService {
         return response.data;
       });
   };
+
+ 
 }
 
 export default new AuthenticationService();
