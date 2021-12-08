@@ -19,6 +19,7 @@
   "homepage": "https://github.com/neu-mis-info6150-fall2021/final-project-amigos#readme",
   "dependencies": {
     "highcharts": "^9.3.2",
-    "node-sass": "^6.0.1"
+    "node-sass": "^6.0.1",
+    "react-swipeable-views": "^0.14.0"
   }
 }
