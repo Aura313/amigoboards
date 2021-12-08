@@ -10,7 +10,12 @@ import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
 import Home from '../pages/Home/Homepage';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { UserStories } from '../pages/UserStories/UserStories';
+import NewUserStory from '../pages/UserStories/NewUserStory';
+import UserStoryDetails from '../pages/UserStories/UserStoryDetails';
 import axios from 'axios';
+import Config from '../Configuration/Config.json';
+import Footer from '../components/Footer/Footer'
+
 
 let theme = createTheme({
   palette: {
@@ -66,21 +71,21 @@ export class App extends React.Component {
     };
     item.completionStatus = false;
 
-    axios
-      .post(`http://localhost:4000/userStories/`, newtask)
-      .then((response) => {
-        this.setState({ userStories: response.userStories });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return axios
+      .post(Config.userStories_url, {
+        headers: {
+          "Content-Type": "application/json",
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(newtask)
+      }).then((userStories) => this.setState({ userStories: userStories.userStories }));
   }
 
   render() {
     return (
       <ThemeProvider theme={theme}>
         <Navbar />
-        <div className='App'>
+        <div className='page-container'>
           <Routes>
             <Route exact path='/' element={<SignInOutContainer />} />
             <Route exact path='/home' element={<Home />} />
@@ -91,23 +96,14 @@ export class App extends React.Component {
               path='/projects/:slug/:id'
               element={<ProjectDetails {...this.props} />}
             />
-            <Route
-              exact
-              path='/projects/new-project'
-              element={<NewProject />}
-            />
-            <Route
-              exact
-              path='/userStories'
-              element={
-                <UserStories
-                  createHandler={this.create.bind(this)}
-                  createitem={this.createitem.bind(this)}
-                />
-              }
-            />
+            <Route path='/projects/new-project' element={<NewProject />} />
+            <Route path='/workItems' element={<UserStories
+            createHandler={this.create.bind(this)}
+            createitem={this.createitem.bind(this)} />} />
+            <Route path='/workItems/:id' element={<UserStoryDetails />} />
           </Routes>
-        </div>
+          </div>
+          <Footer/>
       </ThemeProvider>
     );
   }
