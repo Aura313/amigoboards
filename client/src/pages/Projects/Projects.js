@@ -18,6 +18,7 @@ import AuthService from '../../Services/AuthenticationService';
 import { getUser } from '../../store/Actions/user.actions';
 
 import ComboBox from '../../components/Projects/Members/ComboBox';
+import { Divider } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -45,12 +46,15 @@ export const Projects = () => {
   };
   useEffect(() => {
     setOpen(true);
-    
+
     const fetchProjects = async () => {
       const response = await axios
-        .post(`${Config.projects_url}/${AuthService.getCurrentUser().userName}`, {
-          userId: AuthService.getCurrentUser()._id,
-        })
+        .post(
+          `${Config.projects_url}/${AuthService.getCurrentUser().userName}`,
+          {
+            userId: AuthService.getCurrentUser()._id,
+          }
+        )
         .catch((err) => {
           dispatch({
             type: ActionTypes.PROJECTS_ERROR,
@@ -76,17 +80,28 @@ export const Projects = () => {
         <CircularProgress color='inherit' />
       </Backdrop>
 
-      <div className='heading'>
-        <b>{appState.user.user.userName}</b>
+      <Typography className='proj-heading' variant='h4'>
+        Hi&nbsp;<b>{appState.user.user.userName},</b>
+      </Typography>
+      <Typography className='proj-heading' variant='subtitle1'>
+        Here are the list of all projects you're a part of.Explore AMIGOSBoards
+        and enjoy a hassle free project management experience. Add and Invite
+        members to collaborate with! Happy Working!
+      </Typography>
+      <Divider />
+      <br />
+
+      <div className='create'>
+        <ComboBox />
+        <Button
+          startIcon={<AddBox />}
+          onClick={handleNewProject}
+          variant='outlined'
+          color='primary'
+        >
+          New Project
+        </Button>
       </div>
-      <span className='create' onClick={handleNewProject}>
-        <Typography variant='p'>
-          <Button startIcon={<AddBox />} variant='outlined' color='primary'>
-            New Project
-          </Button>
-        </Typography>
-      </span>
-      <ComboBox />
 
       <div className='project-container'>
         {projects &&
