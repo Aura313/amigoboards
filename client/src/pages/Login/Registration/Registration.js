@@ -55,7 +55,7 @@ export function Registration({ handleChange }) {
   };
 
   const passwordCheck = (value) => {
-    if (password.length < 6) {
+    if (password.length < 9) {
       setPasswordFlag(false);
       setPasswordMessage("Password should be atleast 6 Characters");
     } else {

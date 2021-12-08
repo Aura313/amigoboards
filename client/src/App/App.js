@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import SignInOutContainer from '../pages/Login/LoginContainer/LoginContainer';
 import Home from '../pages/Home/Homepage';
+import {UserAnalytics} from '../pages/Analytics/UserAnalytics.js';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { UserStories } from '../pages/UserStories/UserStories';
 import axios from 'axios';
@@ -76,6 +77,7 @@ export class App extends React.Component {
           <Routes>
             <Route path='/' element={<SignInOutContainer />} />
             <Route path='/home' element={<Home />} />
+            <Route path='/userstats' element={<UserAnalytics />} />
             <Route path='/boards' element={<Boards />} />
             <Route path='/projects' element={<Projects />} />
             <Route

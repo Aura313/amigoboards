@@ -48,6 +48,8 @@ class AuthenticationService {
         return response.data;
       });
   };
+
+ 
 }
 
 export default new AuthenticationService();
