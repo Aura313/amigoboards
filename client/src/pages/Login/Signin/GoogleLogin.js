@@ -11,6 +11,7 @@ export function GLogin() {
   const navigate = useNavigate();
   const onLoginSuccess = (resp) => {
     console.log(resp);
+    window.location.reload();
     navigate("/home");
   };
 

@@ -31,7 +31,7 @@ export const navStyles = makeStyles((theme) => ({
     },
   },
   searchIcon: {
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(0, 0.5),
     height: '100%',
     position: 'absolute',
     pointerEvents: 'none',
