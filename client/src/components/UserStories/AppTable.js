@@ -51,6 +51,8 @@ export default function AppTable(props) {
                         <TableCell align="centre"><b>Status</b></TableCell>
                         <TableCell align="centre"><b>Labels</b></TableCell>
                         <TableCell align="centre"><b>Project Name</b></TableCell>
+                        <TableCell align="centre"><b>Edit / Delete</b></TableCell>
+
                     </TableRow>
                 </TableHead>
                 <TableBody>

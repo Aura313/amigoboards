@@ -154,13 +154,12 @@ export class UserStories extends React.Component {
         return (
 
             <body className="backgroundColor">
-                <Typography className='proj-heading' variant='h4'>
+                <Typography className='heading' variant='h4'>
                     <b>Work Items</b>
                 </Typography>
-                <Typography className='proj-heading' variant='subtitle1'>
-                    Please find below complete list of WorkItems:    
-                 </Typography>
-                <Button align="right" onClick={this.fetchWorkItems.bind(this)}><RefreshIcon/></Button>
+                <Typography className='heading' variant='subtitle1'>
+                Here are the list of all userStories of AMIGOSBoards! Filter down to check your User Stories or create new ones..  </Typography>
+                <Button justify= "space-between"align="center" onClick={this.fetchWorkItems.bind(this)}><RefreshIcon/></Button>
                         <br/>
                 <Card className="cardSize">
                     <CardContent>
@@ -168,28 +167,28 @@ export class UserStories extends React.Component {
                             <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
                                 My Work Items
                             </Button> <i>&nbsp;&nbsp;&nbsp;Click to get your WorkItems</i></Typography></span><br/>
-                        {/* <span onClick={this.fetchWorkItems.bind(this)}> */}
                             
-                        <span onClick={this.createNewForm.bind(this)}>
+                        <br/><span onClick={this.createNewForm.bind(this)}>
                             <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
                                 New Work Item
-                            </Button><i>&nbsp;&nbsp;&nbsp;Click to create a new WorkItems</i></Typography>
+                            </Button><i>&nbsp;&nbsp;&nbsp;Click to create a new WorkItem</i></Typography>
                         </span>
                     </CardContent>
-                </Card>
+                </Card><br/>
                 <Divider /><br/>
 
                 {this.state.searchBars ? (<div className="container">
                     <fieldset className="inputField">
                         <form className="formBackground">
-                            <h4>Add New User Story</h4>
+                            <h4>Add a New Work Item</h4>
                             {/* <input placeholder="Reporter" className="textBox" type="text" name="reporter" value={this.state.reporter} onChange={this.createReporter.bind(this)}></input><br /> */}
                             <Autocomplete
                                 id="combo-box-demo"
                                 options={users}
                                 getOptionLabel={(option) => option.userName}
-                                style={{ width: 300 }}
+                                style={{ width: 200 }}
                                 onChange={this.createReporter.bind(this)}
+                                style={{ width: 200, paddingBottom: 10 , paddingLeft: 100 }}
                                 renderInput={(params) => <TextField {...params} label="Reporter" variant="outlined" />}
                             />
 
@@ -202,24 +201,30 @@ export class UserStories extends React.Component {
                                 id="combo-box-demo"
                                 options={users}
                                 getOptionLabel={(option) => option.userName}
-                                style={{ width: 300 }}
+                                style={{ width: 200 }}
                                 onChange={this.createAssignee.bind(this)}
+                                style={{ width: 200, paddingBottom: 10 , paddingLeft: 100 }}
+
                                 renderInput={(params) => <TextField {...params} label="Member" variant="outlined" />}
                             />
                             <Autocomplete
                                 id="combo-box-demo"
                                 options={projects}
                                 getOptionLabel={(option) => option.title}
-                                style={{ width: 300 }}
+                                style={{ width: 200 }}
                                 onChange={this.createProject.bind(this)}
+                                style={{ width: 200, paddingBottom: 10 , paddingLeft: 100 }}
+
                                 renderInput={(params) => <TextField {...params} label="Project" variant="outlined" />}
                             />
                             <Autocomplete
                                 id="combo-box-demo"
                                 options={labels}
                                 getOptionLabel={(option) => option.title}
-                                style={{ width: 300 }}
+                                style={{ width: 200 }}
                                 onChange={this.createLabels.bind(this)}
+                                style={{ width: 200, paddingBottom: 10 , paddingLeft: 100 }}
+
                                 renderInput={(params) => <TextField {...params} label="Label" variant="outlined" />}
                             />
                             <Button
@@ -235,7 +240,7 @@ export class UserStories extends React.Component {
                         </form></fieldset>
                 </div>) : <div></div>}
                 <Container><AppTable userStories={userStories} deleteHandler={this.deleteHandler.bind(this)} /></Container>
-                <Typography className='proj-heading' variant='subtitle1'>
+                <Typography className='heading' variant='subtitle1'>
                 </Typography>
                 <Divider />
             </body>
