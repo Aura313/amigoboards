@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -15,7 +15,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 
 export default function AppDrawer() {
   const classes = drawerStyles();
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     left: false,
   });
 
@@ -38,16 +38,29 @@ export default function AppDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {[{ title: 'Projects', path: '/projects' }, { title: 'Work Items', path: '/workItems' },  { title: 'Boards', path: '/boards' }].map(
-          (i, index) => (
-            <ListItem component={RouterLink} to={i.path} button key={i.title}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon /> }
-              </ListItemIcon>
-              <ListItemText primary={i.title} />
-            </ListItem>
-          )
-        )}
+        <ListItem component={RouterLink} to={'/home'} button>
+          <ListItemIcon>
+            <MailIcon />
+          </ListItemIcon>
+          <ListItemText primary={'Home'} />
+        </ListItem>
+        <br />
+
+        <Divider />
+        <br />
+        {[
+          { title: 'Projects', path: '/projects' },
+          { title: 'Work Items', path: '/workItems' },
+          { title: 'Boards', path: '/boards' },
+        ].map((i, index) => (
+          <ListItem component={RouterLink} to={i.path} button key={i.title}>
+            <ListItemIcon>
+              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+            </ListItemIcon>
+            <ListItemText primary={i.title} />
+            {index === 0 && <Divider />}
+          </ListItem>
+        ))}
       </List>
       <Divider />
     </div>
