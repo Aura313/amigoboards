@@ -33,9 +33,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ComboBox(props) {
+export default function ComboBox() {
   const classes = useStyles();
   const [memberList, setMembers] = useState([]);
+  const [allProjects, setAllProjects] = useState([]);
+
+  useEffect(() => {
+    const fetchAllProjects = async () => {
+      const response = await axios
+        .get(Config.projects_url)
+        .then((res) => setAllProjects(res.data));
+    };
+    fetchAllProjects();
+  }, []);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -91,21 +101,17 @@ export default function ComboBox(props) {
     setCurrentProject(value);
   };
 
-  const { projects } = props;
-
   return (
     <div>
       <div>
         <Button
-          variant='contained'
-          color='default'
-          className={classes.button}
           startIcon={<GroupAddIcon />}
+          variant='outlined'
+          color='primary'
           onClick={handleClickOpen}
         >
           Invite
         </Button>
-
         <Dialog
           open={open}
           onClose={handleClose}
@@ -134,7 +140,7 @@ export default function ComboBox(props) {
             <DialogContentText>Add to Team(s)</DialogContentText>
             <Autocomplete
               id='combo-box-demo'
-              options={projects}
+              options={allProjects}
               getOptionLabel={(option) => option.title}
               style={{ width: 300 }}
               onChange={handleProjectChange}

@@ -169,6 +169,7 @@ export default function Navbar() {
                   setValue(newValue);
                   newValue &&
                     navigate(`/projects/${newValue.slug}/${newValue._id}`);
+                    window.location.reload();
                 }}
                 renderInput={(params) => (
                   <TextField
