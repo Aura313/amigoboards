@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
             margin: theme.spacing(1),
             width: theme.spacing(50),
             height: theme.spacing(100),
-            backgroundColor: grey[300]
+            backgroundColor: "#f4f4f4"
         }
     },
     iconStyle: {
@@ -64,7 +64,7 @@ export default function SimplePaper() {
 
     return (
         <div>
-            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <div style={{ display: "flex", justifyContent: "space-evenly", paddingTop:30,paddingBottom:30 }}>
                 <Autocomplete
                     id="combo-box-demo"
                     options={projects}
@@ -76,7 +76,7 @@ export default function SimplePaper() {
                 <div className={classes.iconStyle}>
                     <DeveloperBoardIcon></DeveloperBoardIcon>
                     <Typography style={{display:"flex"}} color="textPrimary">
-                        Title: {currentProject.title}
+                        PROJECT : {currentProject.title}
                     </Typography>
                 </div>
             </div>
