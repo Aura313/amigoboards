@@ -26,7 +26,7 @@ export default function AppBox(props) {
         }}
         id="controllable-states-demo"
         options={options}
-        style={{ width: 200, paddingBottom: 25 , paddingLeft: 100}}
+        style={{ width: 200, paddingBottom: 10 , paddingLeft: 100 }}
         renderInput={(params) => <TextField {...params} label="Status" variant="outlined" />}
       />
     </div>

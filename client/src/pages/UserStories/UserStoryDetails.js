@@ -10,6 +10,7 @@ import './UserStories.scss';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Typography from '@material-ui/core/Typography';
 import Dropdown from '../../components/Projects/Dropdown'
+import { Link as RouterLink } from 'react-router-dom';
 
 
 
@@ -141,35 +142,36 @@ export default function UserStoryDetails() {
       <div className='inputContainer'>
         <form className={classes.root} noValidate autoComplete="off">
           <div style={{}}>
-          <TextField
-            id="filled-basic"
-            placeholder='Enter Reporter'
-            variant='outlined'
-            style={{ width: '90%'}}
-            onChange={handleReporteChange}
-            label='Reporter'
-            value={repoterVal} /><br/><br/><br/>
-          {/* {initialAssignee.length > 0 && <Dropdown align='center'
+            <TextField
+              id="filled-basic"
+              placeholder='Enter Reporter'
+              variant='outlined'
+              style={{ width: '90%' }}
+              onChange={handleReporteChange}
+              label='Reporter'
+              disabled={true}
+              value={repoterVal} /><br /><br /><br />
+            {/* {initialAssignee.length > 0 && <Dropdown align='center'
             handleMembers={handleUserNameChange}
             value={repoterVal}
-            selectedMembers={initialAssignee} />} */}
-          <TextField
-            placeholder='Enter Description'
-            id="filled-basic"
-            label="Description"
-            variant='outlined'
-            style={{ width: '90%' }}
-            onChange={handleDescriptionChange}
-            value={descriptionVal} /><br/><br/><br/>
-          <TextField
-            placeholder='Enter Title'
-            id="filled-basic"
-            label="Title"
-            variant='outlined'
-            style={{ width: '90%' }}
-            onChange={handleTitleChange}
-            value={titleVal} /><br/><br/><br/>
-            </div>
+            disabled=  { true }/>} <br/><br/><br/> */}
+            <TextField
+              placeholder='Enter Description'
+              id="filled-basic"
+              label="Description"
+              variant='outlined'
+              style={{ width: '90%' }}
+              onChange={handleDescriptionChange}
+              value={descriptionVal} /><br /><br /><br />
+            <TextField
+              placeholder='Enter Title'
+              id="filled-basic"
+              label="Title"
+              variant='outlined'
+              style={{ width: '90%' }}
+              onChange={handleTitleChange}
+              value={titleVal} /><br /><br /><br />
+          </div>
           {/* <AppBox label="Status" onChange={handleStatusChange} value={statusVal} /> */}
           <div style={{ paddingLeft: '10px' }}>
             Current project : <b>{projectName}</b>
@@ -210,11 +212,12 @@ export default function UserStoryDetails() {
             handleMembers={handleUserNameChange}
             members={memberList}
             selectedMembers={initialAssignee} />}
-          <div style = {{display:'flex',justifyContent:'center'}}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <Button
               className="buttonAlign"
               variant='contained'
               color='primary'
+              component= {RouterLink} to= {`/workItems`}
               onClick={editUserStory} >
               Submit
             </Button>
