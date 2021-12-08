@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
-
+// STYLES
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
@@ -34,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Members(props) {
   const classes = useStyles();
 
+
+  // Get initials of the username
   const getInitials = (string) => {
     let str = string.split(' '),
       initials = str[0].substring(0, 1).toUpperCase();
@@ -45,7 +47,7 @@ export default function Members(props) {
   };
 
   const { members } = props;
-
+  // Display list of members in a project initials of the username
   return (
     <div>
       {!props.leftAlign ? (

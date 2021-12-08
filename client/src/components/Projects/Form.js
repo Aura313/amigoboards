@@ -7,7 +7,7 @@ import Config from '../../Configuration/Config.json';
 import axios from '../../middleware/axios';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { Box, Chip, Container, Divider } from '@material-ui/core';
+import { Divider } from '@material-ui/core';
 import './Form.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,10 +19,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// New Project Form to create a new Project
+
 export default function NewProjectForm(props) {
   const classes = useStyles();
   const navigate = useNavigate();
   const params = useParams();
+
+
+  /* initial state using useState Hooks*/ 
 
   const [titleValue, setTitleValue] = useState('');
   const [descValue, setDescValue] = useState('');
@@ -33,13 +38,14 @@ export default function NewProjectForm(props) {
   useEffect(() => {
     const fetchUsers = async () => {
       await axios.get(Config.users_url).then((res) => {
-        console.log(res.data, 'slslsl');
         setMembers(res.data);
       });
     };
     fetchUsers();
   }, []);
 
+
+  // set inital state from the props if available
   useEffect(() => {
     setTitleValue(props.title ? props.title : '');
     setDescValue(props.description ? props.description : '');
@@ -48,6 +54,8 @@ export default function NewProjectForm(props) {
     setSelectedMembers(props.selectedMembers ? props.selectedMembers : '');
   }, []);
 
+
+  // Action functions
   const handleTitleChange = (event) => {
     setTitleValue(event.target.value);
   };
@@ -61,6 +69,8 @@ export default function NewProjectForm(props) {
   };
 
   const handleSubmitProject = async () => {
+
+    // formdata for payload
     let formData = {
       title: titleValue,
       description: descValue,
@@ -75,6 +85,9 @@ export default function NewProjectForm(props) {
       owner: props.updateMode ? props.owner : ownerValue,
       ownerName: props.ownerName,
     };
+
+
+    // Resuable component, check if update or create to identify the request method
 
     props.updateMode
       ? await axios

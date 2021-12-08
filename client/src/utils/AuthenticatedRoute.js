@@ -4,7 +4,7 @@ import { Navigate, useLocation, Outlet } from 'react-router-dom';
 
 function AuthencatedRoute() {
   let location = useLocation();
-
+// CHeck if the user is logged in, if not redirect to /
   if (!AuthService.getCurrentUser()) {
     return <Navigate to='/' state={{ from: location }} />;
   }

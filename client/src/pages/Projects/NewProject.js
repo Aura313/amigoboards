@@ -3,10 +3,6 @@ import Typography from '@material-ui/core/Typography';
 import './Projects.scss';
 import Paper from '@material-ui/core/Paper';
 import NewProjectForm from '../../components/Projects/Form';
-
-import Config from '../../Configuration/Config.json';
-
-import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';

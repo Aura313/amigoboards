@@ -9,11 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProjects } from '../../store/Actions/projects.actions';
 import Config from '../../Configuration/Config.json';
 import { ActionTypes } from '../../store/types';
-import AddIcon from '@material-ui/icons/Add';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { AddBox, DeleteForeverIcon } from '@material-ui/icons/';
+import { AddBox } from '@material-ui/icons/';
 import AuthService from '../../Services/AuthenticationService';
 import { getUser } from '../../store/Actions/user.actions';
 
@@ -27,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+// List of all projects
 export const Projects = () => {
   const classes = useStyles();
   const appState = useSelector((state) => state);

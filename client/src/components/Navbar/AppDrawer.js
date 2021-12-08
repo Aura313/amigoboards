@@ -11,7 +11,6 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link as RouterLink } from 'react-router-dom';
 import { drawerStyles } from './NavbarStyles';
-import DashboardIcon from '@material-ui/icons/Dashboard';
 
 export default function AppDrawer() {
   const classes = drawerStyles();
@@ -67,7 +66,7 @@ export default function AppDrawer() {
   );
 
   let anchor = 'left';
-
+// App Drawer on hamburger click
   return (
     <div>
       <React.Fragment key={anchor}>

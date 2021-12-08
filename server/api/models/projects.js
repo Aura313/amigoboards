@@ -22,7 +22,6 @@ const ProjectsSchema = new Schema(
     slug: { type: String, slug: 'title' },
     owner: { type: Schema.Types.ObjectId, ref: Users },
     ownerName: { type: String, required: 'Owner is a required field!' },
-    // { type: String, required: 'Owner is a required field!' },
   },
   {
     timestamps: true,

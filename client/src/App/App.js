@@ -11,7 +11,6 @@ import Home from '../pages/Home/Homepage';
 import UserAnalytics from '../pages/Analytics/UserAnalytics.js';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { UserStories } from '../pages/UserStories/UserStories';
-import NewUserStory from '../pages/UserStories/NewUserStory';
 import UserStoryDetails from '../pages/UserStories/UserStoryDetails';
 import axios from 'axios';
 import Config from '../Configuration/Config.json';
@@ -83,10 +82,12 @@ export class App extends React.Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
+        {/* App Navbar | Auth based content */}
         <Navbar />
         <div className='page-container'>
           <Routes>
             <Route exact path='/' element={<SignInOutContainer />} />
+            {/* Authenticate routes to restrict access when the user is logged out */}
             <Route element={<AuthencatedRoute />}>
               <Route exact path='/home' element={<Home />} />
               <Route exact path='/boards' element={<Boards />} />
@@ -111,6 +112,7 @@ export class App extends React.Component {
             </Route>
           </Routes>
         </div>
+        {/* App Footer */}
         <Footer />
       </ThemeProvider>
     );

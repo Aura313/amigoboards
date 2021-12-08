@@ -45,10 +45,11 @@ const useStyles = makeStyles({
   },
 });
 
+// List of Projects - Appcard
+
 export default function AppCard(props) {
   const classes = useStyles();
   const [elevationValue, setElevationVale] = useState(0);
-  // const history = useHistory();
 
   const { project, idx } = props;
 

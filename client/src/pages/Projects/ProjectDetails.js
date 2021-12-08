@@ -112,6 +112,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+// Project Details page
 export const ProjectDetails = () => {
   const [project, setProject] = useState({});
 
@@ -171,7 +173,7 @@ export const ProjectDetails = () => {
     }
     return initials;
   };
-
+// format date into a viewable format
   const getFormattedDate = (dateTime) => {
     const formattedDate = new Date(dateTime);
     return `${formattedDate.toDateString()} | ${formattedDate.toLocaleTimeString()} `;
@@ -181,7 +183,6 @@ export const ProjectDetails = () => {
 
   const totalItems = project.todo + project.inProgress + project.completed || 0;
 
-  console.log(project, item, 'project');
   return item ? (
     <div className={classes.parentCont}>
       <Paper className={classes.container} elevation={0}>
@@ -310,6 +311,7 @@ export const ProjectDetails = () => {
       </div>
       {editable && (
         <div>
+          {/* Edit Project Dialog */}
           <Dialog
             open={editable}
             fullWidth
