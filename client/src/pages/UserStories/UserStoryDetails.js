@@ -42,6 +42,7 @@ export default function UserStoryDetails() {
   const [initialProj, setInitialProj] = React.useState([]);
 
   const [projectName, setProjectName] = useState('')
+  const [currentLabel, setLabels] = React.useState({});
 
   const fetchWorkItems = async () => {
     axios.get(`${Config.userStories_url}/${params.id}`)
@@ -54,8 +55,8 @@ export default function UserStoryDetails() {
         setCreatedDate(response.data.createdAt)
         setUpdatedDate(response.data.updatedAt)
         setProjectName(response.data.projectName)
-
         setInitialProj(allProjects.filter(i => i._id === response.data.projectID))
+        setLabels(response.data.labels)
       }
 
       );
@@ -85,7 +86,6 @@ export default function UserStoryDetails() {
   }, []);
 
 
-
   const handleReporteChange = (event) => {
     setReporterVal(event.target.value)
   };
@@ -106,8 +106,8 @@ export default function UserStoryDetails() {
     setStatusVal(event.target.value)
   }
 
-  const handleUserNameChange = (event, value) => {
-    console.log(value, "jdwjod")
+  const handleUserNameChange = (value) => {
+    console.log(value, "handleUserNameChange")
     setUsers(value);
   };
 
@@ -115,23 +115,32 @@ export default function UserStoryDetails() {
     setCurrentProject(value);
   };
 
+  const handleLabelChange = (event, value) => {
+    setLabels(value);
+  };
+
   useEffect(() => {
     fetchWorkItems()
   }, [])
 
   const editUserStory = async () => {
-    console.log(assigneeVal, "assigneeVal")
+    console.log(users, "assigneeVal")
     let formData = {
       reporter: repoterVal,
       description: descriptionVal,
       title: titleVal,
-      assignee: users
+      assignee: users,
+      labels: currentLabel,
+      projectName: currentProject.title,
+      projectID: currentProject._id
+
     };
 
     await axios
       .put(`${Config.userStories_url}/${params.id}`, formData)
       .then((res) => {
         // props.handleClose();
+        console.log(formData,"edit")
       });
   };
 
@@ -180,6 +189,15 @@ export default function UserStoryDetails() {
           Current project : {projectName} 
             <br/>
           To change the project , select from below list
+          <Autocomplete
+            id="combo-box-demo"
+            options={labels}
+            getOptionLabel={(option) => option.title}
+            style={{ width: 300 }}
+            onChange={handleLabelChange}
+            renderInput={(params) => <TextField {...params} label="Label" variant="outlined" />}
+          />
+
           <Autocomplete
             id='combo-box-demo'
             options={allProjects}
@@ -234,4 +252,10 @@ export default function UserStoryDetails() {
     </div>
   );
 }
+
+const labels = [
+  { title: 'Issue' },
+  { title: 'Task' },
+  { title: 'Epic' },
+];
 

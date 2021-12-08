@@ -151,6 +151,7 @@ export class UserStories extends React.Component {
                             <input placeholder="Title" className="textBox" type="text" name="title" value={this.state.title} onChange={this.createTitle.bind(this)}></input><br />
                             <label> <AppBox createStatus={this.createStatus.bind(this)} /></label>
                             <Autocomplete
+                                multiple
                                 id="combo-box-demo"
                                 options={users}
                                 getOptionLabel={(option) => option.userName}
