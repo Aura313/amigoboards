@@ -98,6 +98,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  click: {
+    cursor: 'pointer',
+  },
   large: {
     width: theme.spacing(7),
     height: theme.spacing(7),
@@ -164,10 +167,10 @@ export const ProjectDetails = () => {
     return initials;
   };
 
-  const getFormattedDate = (dateTime)  => {
+  const getFormattedDate = (dateTime) => {
     const formattedDate = new Date(dateTime);
     return `${formattedDate.toDateString()} | ${formattedDate.toLocaleTimeString()} `;
-  }
+  };
 
   const { item } = project;
 
@@ -205,7 +208,7 @@ export const ProjectDetails = () => {
         </div>
         <br />
         <div className={classes.statsWrapper}>
-          <Typography align='left' variant='overline' gutterBottom> 
+          <Typography align='left' variant='overline' gutterBottom>
             Created At: <b>{getFormattedDate(item.createdAt)}</b>
           </Typography>
           &nbsp;
@@ -280,6 +283,15 @@ export const ProjectDetails = () => {
             </div>
           </div>
         </Paper>
+      </div>
+      <div>
+        <Typography align='left' variant='overline' gutterBottom>
+          To manage your Work Items,
+          <b className={classes.click} onClick={() => navigate('/workItems')}>
+            click here
+          </b>
+          !
+        </Typography>
       </div>
       <div className={classes.mWrapper}>
         <Paper className={classes.memberContainer} elevation={0}>
