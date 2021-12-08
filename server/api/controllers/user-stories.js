@@ -75,6 +75,12 @@ export const remove = async (request, response) => {
   }
 };
 
+/**
+ * To get user specific workitems
+ * @param {*} request 
+ * @param {*} response 
+ */
+
 export const getstoriesbyName = async (request, response) => {
   try {
     const name = request.body.username;
@@ -82,7 +88,7 @@ export const getstoriesbyName = async (request, response) => {
     const newArray = [];
     for (let i = 0; i < userStory.length; i++) {
       for (let j = 0; j < userStory[i].assignee.length; j++) {
-        if (userStory[i].assignee[j].userName === name) {
+        if (userStory[i].assignee[j] === name) {
           newArray.push(userStory[i]);
           break;
         }
