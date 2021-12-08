@@ -70,6 +70,7 @@ export default function SimplePaper() {
                     options={projects}
                     getOptionLabel={(option) => option.title}
                     style={{ width: 300 }}
+                    disableClearable={true}
                     onChange={handleProjectChange}
                     renderInput={(params) => <TextField {...params} label="Choose Project" variant="outlined" />}
                 />

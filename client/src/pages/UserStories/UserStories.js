@@ -14,6 +14,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import AuthService from '../../Services/AuthenticationService';
 
+
 export class UserStories extends React.Component {
     constructor(props) {
         super(props);
@@ -33,6 +34,8 @@ export class UserStories extends React.Component {
             projects: []
         }
     }
+
+
 
     createUserStory() {
         this.props.createHandler();
@@ -121,6 +124,19 @@ export class UserStories extends React.Component {
         });
     };
 
+    fetchMyWorkItems() {
+        axios
+          .post(`${Config.userStories_url}/username`, {
+            username: AuthService.getCurrentUser().userName,
+          })
+          .then((res) => {
+              console.log(res.data, "sksk")
+            this.setState({
+              userStories: res.data,
+            });
+          });
+      }
+    
     componentDidMount() {
         this.fetchUsers();
         this.fetchWorkItems();
@@ -130,14 +146,35 @@ export class UserStories extends React.Component {
     render() {
         const { userStories, users, projects } = this.state
         return (
-            
+
             <body className="backgroundColor">
+                <Typography className='proj-heading' variant='subtitle1'>
+                    Below is a collection of all the Work Items for your reference -
+                </Typography>
+                <Divider />
                 <div className="heading"><b>Work Items</b></div>
-                <span className="create" onClick={this.createNewForm.bind(this)}>
+
+                <span onClick={this.fetchMyWorkItems.bind(this)}>
                     {/* <Typography variant='p' component={RouterLink} to='/workItems/new-workItem'><Button startIcon={<AddBox />} variant="outlined" color="primary">
                         New Work Item
                     </Button></Typography> */}
 
+                    <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
+                       My Work Items
+                    </Button></Typography>
+                </span>
+
+                <span onClick={this.fetchWorkItems.bind(this)}>
+                    {/* <Typography variant='p' component={RouterLink} to='/workItems/new-workItem'><Button startIcon={<AddBox />} variant="outlined" color="primary">
+                        New Work Item
+                    </Button></Typography> */}
+
+                    <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
+                       All Work Items
+                    </Button></Typography>
+                </span>
+                <span className="create" onClick={this.createNewForm.bind(this)}>
+                    
                     <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
                         New Work Item
                     </Button></Typography>
@@ -149,8 +186,8 @@ export class UserStories extends React.Component {
                             <input placeholder="Reporter" className="textBox" type="text" name="reporter" value={this.state.reporter} onChange={this.createReporter.bind(this)}></input><br />
                             <input placeholder="Description" className="textBox" type="text" name="description" value={this.state.description} onChange={this.createDescription.bind(this)}></input><br />
                             <input placeholder="Title" className="textBox" type="text" name="title" value={this.state.title} onChange={this.createTitle.bind(this)}></input><br />
-                            <label> 
-                            <AppBox createStatus={this.createStatus.bind(this)} /></label>
+                            <label>
+                                <AppBox createStatus={this.createStatus.bind(this)} /></label>
                             <Autocomplete
                                 multiple
                                 id="combo-box-demo"
@@ -188,6 +225,10 @@ export class UserStories extends React.Component {
                         </form></fieldset>
                 </div>) : <div></div>}
                 <Container><AppTable userStories={userStories} deleteHandler={this.deleteHandler.bind(this)} /></Container>
+                <Typography className='proj-heading' variant='subtitle1'>
+                    To find list of your Work Items, please click here -
+                 </Typography>
+                 <Divider />
             </body>
         )
     }

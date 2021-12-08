@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Dropdown from '../../components/Projects/Dropdown'
 
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
@@ -33,8 +34,8 @@ export default function UserStoryDetails() {
   const [titleVal, setTitleVal] = useState('');
   const [assigneeVal, setAssigneeVal] = useState([])
   // const [statusVal, setStatusVal] = useState('')
-  const [createdDateVal, setCreatedDate] = useState('')
-  const [updatedDateVal, setUpdatedDate] = useState('')
+  // const [createdDateVal, setCreatedDate] = useState('')
+  // const [updatedDateVal, setUpdatedDate] = useState('')
   const [users, setUsers] = React.useState({});
   const [currentProject, setCurrentProject] = React.useState({});
   const [initialAssignee, setInitialAssignee] = React.useState([]);
@@ -51,9 +52,6 @@ export default function UserStoryDetails() {
         setDescriptionVal(response.data.description)
         setTitleVal(response.data.title)
         setInitialAssignee(response.data.assignee)
-        // setStatusVal(response.data.status)
-        setCreatedDate(response.data.createdAt)
-        setUpdatedDate(response.data.updatedAt)
         setProjectName(response.data.projectName)
         setInitialProj(allProjects.filter(i => i._id === response.data.projectID))
         setLabels(response.data.labels)
@@ -113,7 +111,7 @@ export default function UserStoryDetails() {
   };
 
   const handleLabelChange = (event, value) => {
-    setLabels(value);
+    setLabels(value.title);
   };
 
   useEffect(() => {
@@ -150,6 +148,10 @@ export default function UserStoryDetails() {
             onChange={handleReporteChange}
             label='Reporter'
             value={repoterVal} />
+          {/* {initialAssignee.length > 0 && <Dropdown align='center'
+            handleMembers={handleUserNameChange}
+            value={repoterVal}
+            selectedMembers={initialAssignee} />} */}
           <TextField
             placeholder='Enter Description'
             id="filled-basic"
