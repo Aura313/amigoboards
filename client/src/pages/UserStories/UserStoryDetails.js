@@ -48,6 +48,7 @@ export default function UserStoryDetails() {
         setStatusVal(response.data.status)
         setCreatedDate(response.data.createdAt)
         setUpdatedDate(response.data.updatedAt)
+        setLabels(response.data.labels)
       }
 
       );
@@ -78,6 +79,7 @@ export default function UserStoryDetails() {
 
   const [users, setUsers] = React.useState({});
   const [currentProject, setCurrentProject] = React.useState({});
+  const [currentLabel, setLabels] = React.useState({});
 
   const handleReporteChange = (event) => {
     setReporterVal(event.target.value)
@@ -107,6 +109,10 @@ export default function UserStoryDetails() {
     setCurrentProject(value);
   };
 
+  const handleLabelChange = (event, value) => {
+    setLabels(value);
+  };
+
   useEffect(() => {
     fetchWorkItems()
   }, [])
@@ -116,13 +122,16 @@ export default function UserStoryDetails() {
       reporter: repoterVal,
       description: descriptionVal,
       title: titleVal,
-      assignee: assigneeVal
+      assignee: assigneeVal,
+      labels: currentLabel,
+
     };
 
     await axios
       .put(`${Config.userStories_url}/${params.id}`, formData)
       .then((res) => {
         // props.handleClose();
+        console.log(formData,"edit")
       });
   };
 
@@ -163,6 +172,16 @@ export default function UserStoryDetails() {
             value={assigneeVal} /> */}
           {/* <TextField id="filled-basic" label="Labels" variant="filled" value={userStory.labels} /> */}
           <AppBox label="Status" onChange={handleStatusChange} value={statusVal} />
+
+          <Autocomplete
+            id="combo-box-demo"
+            options={labels}
+            getOptionLabel={(option) => option.title}
+            style={{ width: 300 }}
+            onChange={handleLabelChange}
+            renderInput={(params) => <TextField {...params} label="Label" variant="outlined" />}
+          />
+
           <Autocomplete
             id='combo-box-demo'
             options={allProjects}
@@ -189,7 +208,7 @@ export default function UserStoryDetails() {
               />
             )}
           />
-           {/* <Typography align='left' variant='overline' gutterBottom> 
+          {/* <Typography align='left' variant='overline' gutterBottom> 
             Created At: <b>{setCreatedDate(createdDateVal)}</b>
           </Typography>
           &nbsp;
@@ -208,4 +227,10 @@ export default function UserStoryDetails() {
     </div>
   );
 }
+
+const labels = [
+  { title: 'Issue' },
+  { title: 'Task' },
+  { title: 'Epic' },
+];
 
