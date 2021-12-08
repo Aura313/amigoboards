@@ -14,16 +14,9 @@ const setSuccessResponse = (data, response) => {
 export const get = async (request, response) => {
   try {
     const id = request.params.id;
-    const userStory = await userStoryService.search();
-    const newArray = userStory.filter((item) => item.projectID === id);
-
-    const resultArray = {
-      todo: newArray.filter((item) => item.status === "To do"),
-      inProgress: newArray.filter((item) => item.status === "In Progress"),
-      completed: newArray.filter((item) => item.status === "Completed"),
-    };
-
-    setSuccessResponse(resultArray, response);
+    const userStory = await userStoryService.get(id);
+ 
+    setSuccessResponse(userStory, response);
   } catch (e) {
     errorhandler(e.message, response);
   }
@@ -101,3 +94,23 @@ export const getstoriesbyName = async (request, response) => {
     errorhandler(e.message, response);
   }
 };
+
+
+export const getStatus = async (request, response) => {
+  try {
+    const id = request.body.projectID;
+    const userStory = await userStoryService.search();
+    const newArray = userStory.filter((item) => item.projectID === id);
+
+    const resultArray = {
+      todo: newArray.filter((item) => item.status === "To do"),
+      inProgress: newArray.filter((item) => item.status === "In Progress"),
+      completed: newArray.filter((item) => item.status === "Completed"),
+    };
+    
+    setSuccessResponse(resultArray, response);
+  } catch (e) {
+    errorhandler(e.message, response);
+  }
+};
+

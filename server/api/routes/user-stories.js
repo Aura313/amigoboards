@@ -15,6 +15,10 @@ router
   .delete(tokencheck, userStoryController.remove);
 
   router
+  .route("/:id/status")
+  .post(tokencheck, userStoryController.getStatus)
+
+  router
   .route("/username")
   .post(tokencheck, userStoryController.getstoriesbyName)
 
