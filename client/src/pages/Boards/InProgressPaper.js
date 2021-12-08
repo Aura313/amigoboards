@@ -32,10 +32,20 @@ const useStyles = makeStyles({
     },
 });
 
+    /**
+     * 
+     * Material UI Cards Implementation
+     */
+
 export default function SimpleCard(props) {
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
     const { item } = props
+
+    /**
+     * 
+     * Function to Update the Status Details
+     */
 
     const updateStatusDetails = (e, value) => {
         let bodyData = {
@@ -49,7 +59,19 @@ export default function SimpleCard(props) {
                 console.log(error)
             })
     }
-    console.log(item, "qwfkjfbkkjfe")
+
+    /**
+     * 
+     * Function to Delete
+     */
+
+    const deleteHandler = (x) => {
+        axios.delete(`${Config.userStories_url}/${x._id}`)
+          .then((res) => props.fetchStatusDetails(x.projectID))
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      }
     return item && (<div>
         <Card className={classes.root}>
             <CardContent >
@@ -59,7 +81,7 @@ export default function SimpleCard(props) {
                         <Button component={RouterLink} to={`/workItems/${item._id}`} >
                             <EditIcon align="right"></EditIcon>
                         </Button>
-                        <Button >
+                        <Button onClick={() => deleteHandler(item)}>
                             <DeleteForeverIcon align="right" ></DeleteForeverIcon>
                         </Button></div>
                 </Typography>

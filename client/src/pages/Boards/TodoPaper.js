@@ -32,10 +32,20 @@ const useStyles = makeStyles({
   },
 });
 
+    /**
+     * 
+     * Material UI Cards Implementation
+     */
+
 export default function SimpleCard(props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
   const { item } = props
+
+    /**
+     * 
+     * Function to Update the Status Details
+     */
 
   const updateStatusDetails = (e, value) => {
     let bodyData = {
@@ -49,6 +59,12 @@ export default function SimpleCard(props) {
         console.log(error)
       })
   }
+
+
+    /**
+     * 
+     * Function to Delete
+     */
 
   const deleteHandler = (x) => {
     axios.delete(`${Config.userStories_url}/${x._id}`)

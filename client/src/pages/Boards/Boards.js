@@ -9,7 +9,6 @@ import Config from '../../Configuration/Config.json';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Typography from '@material-ui/core/Typography';
-import { blueGrey, grey } from "@material-ui/core/colors";
 import DeveloperBoardIcon from '@material-ui/icons/DeveloperBoard';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+    /**
+     * 
+     * Material UI Implementation of Paper
+     */
 
 export default function SimplePaper() {
     const classes = useStyles();
@@ -37,11 +40,21 @@ export default function SimplePaper() {
     const [statusItems, setStatusItems] = useState([]);
     const [currentProject, setCurrentProject] = useState({});
 
+    /**
+     * 
+     * Project Change Handler
+     */
+
     const handleProjectChange = async (e, val) => {
         setCurrentProject(val);
         fetchStatusDetails(val._id);
 
     };
+
+    /**
+     * 
+     * Function to fetch the Status Details
+     */
 
     const fetchStatusDetails = async (id) => {
         let bodyData = {
@@ -54,6 +67,10 @@ export default function SimplePaper() {
             });
     }
 
+    /**
+     * 
+     * Function to fetch the Projects
+     */
     useEffect(() => {
         const fetchProjects = async () => {
             await axios.get(Config.projects_url).then(response => setProjects(response.data))
@@ -65,6 +82,11 @@ export default function SimplePaper() {
     return (
         <div>
             <div style={{ display: "flex", justifyContent: "space-evenly", paddingTop:30,paddingBottom:30 }}>
+
+    {/* 
+     * 
+     * Autocomplete textBoxes
+     */}
                 <Autocomplete
                     id="combo-box-demo"
                     options={projects}
