@@ -98,8 +98,8 @@ export default function NewProjectForm(props) {
     <div className='centerAlign'>
       <div className='inputContainer'>
         <form className={classes.root} noValidate autoComplete='off'>
-          <h4>Please enter Project Details:</h4>
-          <Divider />
+         { !props.updateMode && <h4>Please enter Project Details:</h4>}
+         { !props.updateMode && <Divider />}
           <TextField
             required
             placeholder='Enter Title'
@@ -124,14 +124,13 @@ export default function NewProjectForm(props) {
           />
           <Divider />
           <Dropdown
+            align='center'
             handleMembers={handleMembers}
             members={members}
             selectedMembers={props.selectedMembers}
           />
-
-          <Dropdown align='center' handleMembers={handleMembers} />
         </form>
-        <div className='buttonAlign'>
+        <div className='centerAlign'>
           <Button
             variant='contained'
             color='primary'

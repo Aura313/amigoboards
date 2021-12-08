@@ -13,35 +13,26 @@ import AuthService from '../../Services/AuthenticationService';
 import { getUser } from '../../store/Actions/user.actions';
 
 export const NewProject = () => {
-
   const appState = useSelector((state) => state);
   const dispatch = useDispatch();
   const setUserDetails = () => {
-    console.log(AuthService.getCurrentUser(), 'AuthService.getCurrentuser();');
     dispatch(getUser(AuthService.getCurrentUser() || []));
-
   };
-
-
 
   useEffect(() => {
     setUserDetails();
   }, []);
 
   const {
-    user: {
-      user
-    },
+    user: { user },
   } = appState;
 
   return (
-    <body className="backgroundColor">
-      <div >
-        <Paper className='paper' elevation={3}>
-          <Typography color='textSecondary'>Owner: {user.userName}</Typography>
-          <NewProjectForm owner={user._id} ownerName={user.userName} />
-        </Paper>
-      </div>
-    </body>
+    <div className='backgroundColor'>
+      <Paper className='paper' elevation={1}>
+        <Typography color='textSecondary'>Owner: {user.userName}</Typography>
+        <NewProjectForm owner={user._id} ownerName={user.userName} />
+      </Paper>
+    </div>
   );
 };

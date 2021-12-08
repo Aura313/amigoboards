@@ -7,7 +7,10 @@ import axios from "../../middleware/axios";
 import { AddBox } from '@material-ui/icons/';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Container } from '@material-ui/core';
+import { Box, Chip, Container, Divider } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
+import Config from '../../Configuration/Config.json'
+import { Link as RouterLink } from 'react-router-dom';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import AuthService from '../../Services/AuthenticationService';
 
@@ -53,16 +56,20 @@ export class UserStories extends React.Component {
     }
 
     createLabels(e, z) {
-        //console.log(z.title,"hggv")
-        this.setState({ labels: z.title});
+    //     //console.log(z.title,"hggv")
+        this.setState({ labels: z.title });
+    // this.setState({ labels: z.target.value });
     }
 
+
+
     createNewForm() {
+
         this.setState({ searchBars: this.state.searchBars ? false : true });
     }
 
 
-    createNewUserStory(event) {
+    createNewUserStory() {
         const newItem = {
             "reporter": this.state.reporter, "description": this.state.description, "title": this.state.title,
             "assignee": this.state.assignee, "status": this.state.status, "labels": this.state.labels
@@ -70,10 +77,17 @@ export class UserStories extends React.Component {
         this.props.createitem(newItem);
     }
 
-    componentDidMount() {
-        axios.get('http://localhost:4000/userStories', 
-        {headers: {
-            'Authorization':AuthService.authHeader()} })
+    deleteHandler(x) {
+        axios.delete(`${Config.userStories_url}/${x._id}`)
+            .then((res) => this.fetchWorkItems())
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
+
+    fetchWorkItems() {
+        axios.get(Config.userStories_url)
             .then(response => {
                 this.setState({
                     userStories: response.data
@@ -85,6 +99,10 @@ export class UserStories extends React.Component {
             })
     }
 
+    componentDidMount() {
+        this.fetchWorkItems();
+    }
+
     render() {
         const { userStories } = this.state
 
@@ -92,8 +110,12 @@ export class UserStories extends React.Component {
             <body className="backgroundColor">
                 <div className="heading"><b>Work Items</b></div>
                 <span className="create" onClick={this.createNewForm.bind(this)}>
-                    <Typography variant='p'><Button startIcon={<AddBox/>} variant="outlined" color="primary">
-                     New Work Item
+                    {/* <Typography variant='p' component={RouterLink} to='/workItems/new-workItem'><Button startIcon={<AddBox />} variant="outlined" color="primary">
+                        New Work Item
+                    </Button></Typography> */}
+
+                    <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
+                        New Work Item
                     </Button></Typography>
                 </span>
                 {this.state.searchBars ? (<div className="container">
@@ -105,17 +127,19 @@ export class UserStories extends React.Component {
                             <input placeholder="Title" className="textBox" type="text" name="title" value={this.state.title} onChange={this.createTitle.bind(this)}></input><br />
                             <input placeholder="Assignee" className="textBox" type="text" name="assignee" value={this.state.assignee} onChange={this.createAssignee.bind(this)}></input><br />
                             <label> <AppBox createStatus={this.createStatus.bind(this)} /></label>
+                            {/* <input placeholder="Labels" className="textBox" type="text" name="labels" value={this.state.labels} onChange={this.createLabels.bind(this)}></input><br /> */}
+
                             <Autocomplete
-                            id="combo-box-demo"
-                            options={labels}
-                            getOptionLabel={(option) => option.title}
-                            style={{ width: 300 }}
-                            onChange={this.createLabels.bind(this)}
-                            renderInput={(params) => <TextField {...params} label="Label" variant="outlined" />}
-                        />
+                                id="combo-box-demo"
+                                options={labels}
+                                getOptionLabel={(option) => option.title}
+                                style={{ width: 300 }}
+                                onChange={this.createLabels.bind(this)}
+                                renderInput={(params) => <TextField {...params} label="Label" variant="outlined" />}
+                            />
                             <button className="submit" onClick={this.createNewUserStory.bind(this)}> Submit </button></form></fieldset>
                 </div>) : <div></div>}
-                <Container><AppTable userStories={userStories} /></Container>
+                <Container><AppTable userStories={userStories} deleteHandler={this.deleteHandler.bind(this)} /></Container>
             </body>
         )
     }

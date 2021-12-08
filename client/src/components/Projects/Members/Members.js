@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 
-
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
@@ -11,6 +10,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     alignItems: 'center',
     justifyContent: 'flex-end',
+  },
+  root2: {
+    alignItems: 'center',
+    display: 'flex',
+  },
+  spaces: {
+    marginRight: '10px',
   },
   bullet: {
     display: 'inline-block',
@@ -42,17 +48,32 @@ export default function Members(props) {
 
   return (
     <div>
-      <AvatarGroup className={classes.root}>
-        {members.map((i, idx) => (
-          <Avatar
-            key={idx}
-            alt={i.userName}
-            className={idx % 2 ? classes.evenBg : classes.oddBg}
-          >
-            {getInitials(i.userName)}
-          </Avatar>
-        ))}
-      </AvatarGroup>
+      {!props.leftAlign ? (
+        <AvatarGroup className={classes.root}>
+          {members.map((i, idx) => (
+            <Avatar
+              key={idx}
+              alt={i.userName}
+              className={idx % 2 ? classes.evenBg : classes.oddBg}
+            >
+              {getInitials(i.userName)}
+            </Avatar>
+          ))}
+        </AvatarGroup>
+      ) : (
+        <div className={classes.root2}>
+          {members.map((i, idx) => (
+            <Avatar
+              
+              key={idx}
+              alt={i.userName}
+              className={idx % 2 ? `${classes.evenBg} ${classes.spaces}`  : `${classes.oddBg} ${classes.spaces}`}
+            >
+              {getInitials(i.userName)}
+            </Avatar>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

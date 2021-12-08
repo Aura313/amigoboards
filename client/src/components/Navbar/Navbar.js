@@ -34,7 +34,6 @@ export default function Navbar() {
   useEffect(() => {
     const fetchProjects = async () => {
       await axios.get(Config.projects_url).then((res) => {
-        console.log(res.data, 'jdaowjdowdj');
         setProjects(res.data);
       });
     };
@@ -170,6 +169,7 @@ export default function Navbar() {
                   setValue(newValue);
                   newValue &&
                     navigate(`/projects/${newValue.slug}/${newValue._id}`);
+                    window.location.reload();
                 }}
                 renderInput={(params) => (
                   <TextField

@@ -11,12 +11,6 @@ const { Schema, model } = Mongoose;
  */
 const ProjectsSchema = new Schema(
   {
-    // _id: {
-    //   type: Mongoose.Schema.Types.ObjectId,
-    //   index: true,
-    //   required: true,
-    //   auto: true,
-    // },
     title: {
       type: String,
       required: 'Title is a required field!',
@@ -27,7 +21,7 @@ const ProjectsSchema = new Schema(
     members: { type: Array, default: [] },
     slug: { type: String, slug: 'title' },
     owner: { type: Schema.Types.ObjectId, ref: Users },
-    ownerName: { type: String , required: 'Owner is a required field!',},
+    ownerName: { type: String, required: 'Owner is a required field!' },
     // { type: String, required: 'Owner is a required field!' },
   },
   {
