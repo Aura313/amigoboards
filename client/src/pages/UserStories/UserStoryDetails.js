@@ -10,14 +10,14 @@ import './UserStories.scss';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Typography from '@material-ui/core/Typography';
 import Dropdown from '../../components/Projects/Dropdown'
+import { Link as RouterLink } from 'react-router-dom';
 
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
-      margin: theme.spacing(1),
-      padding: '40px'
+      margin: theme.spacing(4),
     },
   },
 }));
@@ -141,31 +141,43 @@ export default function UserStoryDetails() {
     <div className='centerAlign'>
       <div className='inputContainer'>
         <form className={classes.root} noValidate autoComplete="off">
-          <TextField
-            id="filled-basic"
-            placeholder='Enter Reporter'
-            variant='outlined'
-            onChange={handleReporteChange}
-            label='Reporter'
+          <div style={{}}>
+            <TextField
+              id="filled-basic"
+              placeholder='Enter Reporter'
+              variant='outlined'
+              style={{ width: '90%' }}
+              onChange={handleReporteChange}
+              label='Reporter'
+              disabled={true}
+              value={repoterVal} /><br /><br /><br />
+            {/* {initialAssignee.length > 0 && <Dropdown align='center'
+            handleMembers={handleUserNameChange}
             value={repoterVal}
-            disabled=  { true }/>
-          <TextField
-            placeholder='Enter Description'
-            id="filled-basic"
-            label="Description"
-            variant='outlined'
-            onChange={handleDescriptionChange}
-            value={descriptionVal} />
-          <TextField
-            placeholder='Enter Title'
-            id="filled-basic"
-            label="Title"
-            variant='outlined'
-            onChange={handleTitleChange}
-            value={titleVal} />
-          Current project : {projectName}
-          <br />
-          To change the project , select from below list
+            disabled=  { true }/>} <br/><br/><br/> */}
+            <TextField
+              placeholder='Enter Description'
+              id="filled-basic"
+              label="Description"
+              variant='outlined'
+              style={{ width: '90%' }}
+              onChange={handleDescriptionChange}
+              value={descriptionVal} /><br /><br /><br />
+            <TextField
+              placeholder='Enter Title'
+              id="filled-basic"
+              label="Title"
+              variant='outlined'
+              style={{ width: '90%' }}
+              onChange={handleTitleChange}
+              value={titleVal} /><br /><br /><br />
+          </div>
+          {/* <AppBox label="Status" onChange={handleStatusChange} value={statusVal} /> */}
+          <div style={{ paddingLeft: '10px' }}>
+            Current project : <b>{projectName}</b>
+            <br />
+            To change the project,Select from below list
+          </div>
           {currentStatus ? <Autocomplete
             id="combo-box-demo"
             options={statusses}
@@ -200,13 +212,16 @@ export default function UserStoryDetails() {
             handleMembers={handleUserNameChange}
             members={memberList}
             selectedMembers={initialAssignee} />}
-          <Button
-            className="buttonAlign"
-            variant='contained'
-            color='primary'
-            onClick={editUserStory} >
-            Submit
-          </Button>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Button
+              className="buttonAlign"
+              variant='contained'
+              color='primary'
+              component= {RouterLink} to= {`/workItems`}
+              onClick={editUserStory} >
+              Submit
+            </Button>
+          </div>
         </form>
       </div>
     </div>

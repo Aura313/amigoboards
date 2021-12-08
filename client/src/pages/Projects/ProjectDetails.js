@@ -11,7 +11,6 @@ import Button from '@material-ui/core/Button';
 import { useParams } from 'react-router-dom';
 import ProjectForm from '../../components/Projects/Form';
 import { useNavigate } from 'react-router-dom';
-import './Projects.scss';
 import { useDispatch } from 'react-redux';
 import AuthService from '../../Services/AuthenticationService';
 import { getUser } from '../../store/Actions/user.actions';
@@ -60,6 +59,12 @@ const useStyles = makeStyles((theme) => ({
   },
   headWrapper: {
     display: 'flex',
+  },
+  headerWrap: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
   },
   iconWrapper: {
     display: 'flex',
@@ -316,10 +321,16 @@ export const ProjectDetails = () => {
             aria-describedby='alert-dialog-slide-description'
           >
             <DialogTitle className={classes.statsWrapper}>
-              Project Details:
-              <Button onClick={handleClose}>
-                <CloseIcon />
-              </Button>
+              <Typography
+                className={classes.headerWrap}
+                align='left'
+                variant='h6'
+              >
+                <Button onClick={handleClose}>
+                  <CloseIcon />
+                </Button>
+                <b> Project Details: </b>
+              </Typography>
             </DialogTitle>
             <DialogContent>
               <ProjectForm

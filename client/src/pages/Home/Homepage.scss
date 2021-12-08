@@ -2,8 +2,7 @@
     color: rgb(9, 4, 88);
     font-size: 32px;
     // font-family: 'Times New Roman', Times, serif;
-    padding-bottom: 20px;
-
+    padding-bottom: 20px; 
 }
 
 .mainStyle {
@@ -15,8 +14,7 @@
 }
 
 .banner {
-    padding-left: 70px;
-    width: 650px;
+    width: 200px;
     
 }
 
@@ -24,5 +22,11 @@
     background-color: #9599E2;
     background-image: linear-gradient(0deg, #9599E2 0%, #8BC6EC 27%, #ffffff 100%);
     background-attachment: fixed;
+    padding-left: 100px;
+    padding-right: 100px;
+}
 
+.alignmentStyle{
+    display: flex;
+    justify-content: space-evenly;
 }

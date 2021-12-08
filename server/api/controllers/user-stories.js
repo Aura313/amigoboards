@@ -75,6 +75,12 @@ export const remove = async (request, response) => {
   }
 };
 
+/**
+ * To get user specific workitems
+ * @param {*} request 
+ * @param {*} response 
+ */
+
 export const getstoriesbyName = async (request, response) => {
   try {
     const name = request.body.username;
