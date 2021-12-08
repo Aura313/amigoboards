@@ -18,6 +18,7 @@ router
   .put(tokencheck, projectsController.update)
   .delete(tokencheck, projectsController.remove);
 
+// Define router to get username specific data
 router.route('/:userName').post(tokencheck, projectsController.getbyUserName);
 
 export default router;

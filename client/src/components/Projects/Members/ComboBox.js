@@ -13,6 +13,8 @@ import Config from '../../../Configuration/Config.json';
 
 import axios from '../../../middleware/axios';
 
+
+/* Display List of users to assign to a project */
 export default function ComboBox() {
   const [memberList, setMembers] = useState([]);
   const [allProjects, setAllProjects] = useState([]);
