@@ -1,0 +1,32 @@
+.fontStyle {
+    color: rgb(9, 4, 88);
+    font-size: 32px;
+    // font-family: 'Times New Roman', Times, serif;
+    padding-bottom: 20px; 
+}
+
+.mainStyle {
+    color: rgb(9, 4, 88);
+    font-size: 60px;
+    padding-bottom: 20px;
+    // font-family: 'Times New Roman', Times, serif;
+    padding-top: 20px;
+}
+
+.banner {
+    width: 200px;
+    
+}
+
+.bgHome {
+    background-color: #9599E2;
+    background-image: linear-gradient(0deg, #9599E2 0%, #8BC6EC 27%, #ffffff 100%);
+    background-attachment: fixed;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.alignmentStyle{
+    display: flex;
+    justify-content: space-evenly;
+}

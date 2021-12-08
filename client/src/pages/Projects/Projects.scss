@@ -1,0 +1,76 @@
+.project-container {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.proj-heading {
+  display: flex;
+  padding: 20px 78px;
+}
+
+.paper {
+  margin: 40px 40px;
+  padding: 20px 20px 20px 20px;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 5px;
+  margin: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #fff;
+  &:hover {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+}
+
+.backgroundColor {
+  background-color: #9599e2;
+  background-image: linear-gradient(
+    0deg,
+    #9599e2 0%,
+    #8bc6ec 27%,
+    #ffffff 100%
+  );
+  height: 100%;
+  background-attachment: fixed;
+}
+
+.create {
+  display: flex;
+  button {
+    margin-left: 20px;
+  }
+}
+
+.card-right {
+  margin: 30px;
+  width: 30%;
+}
+
+.mem-len {
+  font-size: 14px;
+  padding: 0px 10px;
+  background: #ccc;
+  width: 11px;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+
+.mem-wrapper {
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.header-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
