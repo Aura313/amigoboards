@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Avatar,
   Button,
@@ -10,69 +10,115 @@ import {
 import { Grid } from "@material-ui/core";
 import "./Analytics.scss";
 import analyticservices from "../../Services/AnalyticsServices.js";
+import authservice from "../../Services/AuthenticationService.js";
 import PieChart from "highcharts-react-official";
 import Highcharts from "highcharts";
+import axios from "../../middleware/axios";
+// import axios from "../middleware/axios";
+import Config from "../../Configuration/Config.json";
 
-const options = {
-  chart: {
-    plotBackgroundColor: null,
-    plotBorderWidth: null,
-    plotShadow: false,
-    type: "pie",
-  },
-  title: {
-    text: "WORKITEMS ANALYSIS",
-  },
-  tooltip: {
-    pointFormat: "{series.name}: <b>{point.percentage:.1f}</b>",
-  },
-  accessibility: {
-    point: {
-      valueSuffix: " ",
-    },
-  },
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: "pointer",
-      dataLabels: {
-        enabled: true,
-        format: "<b>{point.name}</b>: {point.percentage:.1f} ",
+export class UserAnalytics extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      stats: [],
+    };
+  }
+
+  componentDidMount() {
+    const username = authservice.getCurrentUser().userName;
+    console.log(username);
+    axios
+      .post(
+        Config.userStories_url + "/username",
+        { username },
+        { headers: authservice.authHeader() }
+      )
+      .then((response) => {
+        this.setState({
+          stats: response.data,
+        });
+
+        console.log(
+          this.state.stats.filter((item) => item.status === "In Progress")
+            .length
+        );
+      })
+
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  getstats() {
+    const options = {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: "pie",
       },
-    },
-  },
-  series: [
-    {
-      name: "WORKITEMS",
-      colorByPoint: true,
-      data: [
-        {
-          name: "TO DO",
-          y: 61.41,
-          sliced: true,
-          selected: true,
+      title: {
+        text: "WORKITEM ANALYSIS",
+      },
+      tooltip: {
+        pointFormat: "{series.name}: <b>{point.y}</b>",
+      },
+      accessibility: {
+        point: {
+          valueSuffix: " ",
         },
-        {
-          name: "IN PROGRESS",
-          y: 11.84,
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: "pointer",
+          dataLabels: {
+            enabled: true,
+            format: "<b>{point.name}</b>: {point.y} ",
+          },
+          colors: ["#ff9504", "#3f51b5", "mediumseagreen"],
         },
+      },
+      series: [
         {
-          name: "COMPLETED",
-          y: 11.84,
+          name: "WORKITEMS",
+          colorByPoint: true,
+          data: [
+            {
+              name: "TO DO",
+              y: this.state.stats.filter((item) => item.status === "To do")
+                .length,
+              sliced: true,
+              selected: true,
+            },
+            {
+              name: "IN PROGRESS",
+              y: this.state.stats.filter(
+                (item) => item.status === "In Progress"
+              ).length,
+            },
+            {
+              name: "COMPLETED",
+              y: this.state.stats.filter((item) => item.status === "Completed")
+                .length,
+            },
+          ],
         },
       ],
-    },
-  ],
-};
+    };
+    return options;
+  }
 
-export function UserAnalytics() {
-  return (
-    <Grid>
-      <Paper elevation={20} className="userstatspaperStyle">
-        <PieChart highcharts={Highcharts} options={options} />
-      </Paper>
-    </Grid>
-  );
+  render() {
+    return (
+      <Grid>
+        <Paper elevation={20} className="userstatspaperStyle">
+          <PieChart highcharts={Highcharts} options={this.getstats()} />
+        </Paper>
+      </Grid>
+    );
+  }
 }
 
 export default UserAnalytics;

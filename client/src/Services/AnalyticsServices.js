@@ -17,7 +17,7 @@ class AuthenticationService {
       inProgress: data.filter((item) => item.status === "In Progress").length,
       completed: data.filter((item) => item.status === "Completed").length,
     };
-    console.log(resultArray);
+    
     return resultArray;
   };
 }

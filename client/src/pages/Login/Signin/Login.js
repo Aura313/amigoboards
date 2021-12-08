@@ -63,7 +63,6 @@ export function Login({ handleChange, props }) {
           navigate("/home");
           setUsername("");
           setPassword("");
-          AnalyticService.getuseranalysis() ;
         },
         (error) => {
           const message = error.message;
@@ -154,10 +153,10 @@ export function Login({ handleChange, props }) {
           SIGN IN
         </Button>
 
-        <Typography className="LoginspacingStyle" align="center">
-          or
+        {/* <Typography className="LoginspacingStyle" align="center">
+          
         </Typography>
-        <GLogin />
+        <GLogin /> */}
         <Typography className="newaccountStyle">
           Don't have an account yet?
           <Link to="#" onClick={() => handleChange("event", 1)}>
