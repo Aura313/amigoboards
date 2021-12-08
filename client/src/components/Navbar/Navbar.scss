@@ -2,3 +2,13 @@
     max-width: 60px;
 }
 
+
+
+.textStyles {
+    color: 'white';
+}
+
+.MuiAppBar-root  .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child {
+    color: #fff !important;
+    padding-left: 20px !important;
+}

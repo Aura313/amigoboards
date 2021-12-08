@@ -26,7 +26,7 @@ export function Homepage() {
   return (
     <div className="bgHome">
       <Container align="center">
-        <div className="mainStyle">Hola {userName}, it's us !</div>
+        <div className="mainStyle" >{AuthService.getCurrentUser() ? `Hola ${userName}, it's us !` : 'Hola!' }</div>
         <div className="fontStyle">
           One Stop for all your projects and team collaborations
         </div>
