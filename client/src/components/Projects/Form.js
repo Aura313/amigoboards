@@ -98,8 +98,8 @@ export default function NewProjectForm(props) {
     <div className='centerAlign'>
       <div className='inputContainer'>
         <form className={classes.root} noValidate autoComplete='off'>
-         { !props.updateMode && <h4>Please enter Project Details:</h4>}
-         { !props.updateMode && <Divider />}
+          {!props.updateMode && <h4>Please enter Project Details:</h4>}
+          {!props.updateMode && <Divider />}
           <TextField
             required
             placeholder='Enter Title'
@@ -129,16 +129,19 @@ export default function NewProjectForm(props) {
             members={members}
             selectedMembers={props.selectedMembers}
           />
+          <br />
+          <div className='centerAlign'>
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={handleSubmitProject}
+              fullWidth
+            >
+              Submit
+            </Button>
+          </div>
         </form>
-        <div className='centerAlign'>
-          <Button
-            variant='contained'
-            color='primary'
-            onClick={handleSubmitProject}
-          >
-            Submit
-          </Button>
-        </div>
+        <br />
       </div>
     </div>
   );
