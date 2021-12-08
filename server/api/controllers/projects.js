@@ -1,4 +1,5 @@
 import * as projectService from '../services/projects.js';
+import * as userStoryService from '../services/user-stories.js';
 /**
  * Define Controllers for the application
  * @param {*} message
@@ -96,8 +97,18 @@ export const get = async (request, response) => {
     const id = request.params.id;
 
     const item = await projectService.get(id);
+    const userStory = await userStoryService.search();
+    const usObj = userStory.filter((item) => item.projectID === id);
+
+    const resObj = {
+      todo: usObj.filter((item) => item.status === "To do").length,
+      inProgress: usObj.filter((item) => item.status === "In Progress").length,
+      completed: usObj.filter((item) => item.status === "Completed").length,
+    };
+
+    let finalObj = { item, ...resObj}
     setSuccessResponse(
-      item ? item : `No item found, please check the requested id.`,
+      finalObj ? finalObj : `No item found, please check the requested id.`,
       response
     );
   } catch (e) {
