@@ -9,9 +9,7 @@ import Button from '@material-ui/core/Button';
 import './UserStories.scss';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Typography from '@material-ui/core/Typography';
-
-
-
+import Dropdown from '../../components/Projects/Dropdown'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,10 +31,18 @@ export default function UserStoryDetails() {
   const [repoterVal, setReporterVal] = useState('');
   const [descriptionVal, setDescriptionVal] = useState('');
   const [titleVal, setTitleVal] = useState('');
-  const [assigneeVal, setAssigneeVal] = useState('')
+  const [assigneeVal, setAssigneeVal] = useState([])
   const [statusVal, setStatusVal] = useState('')
   const [createdDateVal, setCreatedDate] = useState('')
   const [updatedDateVal, setUpdatedDate] = useState('')
+  const [users, setUsers] = React.useState({});
+  const [currentProject, setCurrentProject] = React.useState({});
+
+  const [initialAssignee, setInitialAssignee] = React.useState([]);
+  const [initialProj, setInitialProj] = React.useState([]);
+
+  const [projectName, setProjectName] = useState('')
+  const [currentLabel, setLabels] = React.useState({});
 
   const fetchWorkItems = async () => {
     axios.get(`${Config.userStories_url}/${params.id}`)
@@ -44,10 +50,12 @@ export default function UserStoryDetails() {
         setReporterVal(response.data.reporter)
         setDescriptionVal(response.data.description)
         setTitleVal(response.data.title)
-        setAssigneeVal(response.data.assignee)
+        setInitialAssignee(response.data.assignee)
         setStatusVal(response.data.status)
         setCreatedDate(response.data.createdAt)
         setUpdatedDate(response.data.updatedAt)
+        setProjectName(response.data.projectName)
+        setInitialProj(allProjects.filter(i => i._id === response.data.projectID))
         setLabels(response.data.labels)
       }
 
@@ -77,9 +85,6 @@ export default function UserStoryDetails() {
     fetchUsers();
   }, []);
 
-  const [users, setUsers] = React.useState({});
-  const [currentProject, setCurrentProject] = React.useState({});
-  const [currentLabel, setLabels] = React.useState({});
 
   const handleReporteChange = (event) => {
     setReporterVal(event.target.value)
@@ -101,7 +106,8 @@ export default function UserStoryDetails() {
     setStatusVal(event.target.value)
   }
 
-  const handleUserNameChange = (event, value) => {
+  const handleUserNameChange = (value) => {
+    console.log(value, "handleUserNameChange")
     setUsers(value);
   };
 
@@ -118,12 +124,15 @@ export default function UserStoryDetails() {
   }, [])
 
   const editUserStory = async () => {
+    console.log(users, "assigneeVal")
     let formData = {
       reporter: repoterVal,
       description: descriptionVal,
       title: titleVal,
-      assignee: assigneeVal,
+      assignee: users,
       labels: currentLabel,
+      projectName: currentProject.title,
+      projectID: currentProject._id
 
     };
 
@@ -136,6 +145,10 @@ export default function UserStoryDetails() {
   };
 
 
+  console.log(initialProj, allProjects, "initialProj")
+
+  // let x =
+  // console.log(x,"hioqwfhuowefuh")
 
 
   return (
@@ -173,6 +186,9 @@ export default function UserStoryDetails() {
           {/* <TextField id="filled-basic" label="Labels" variant="filled" value={userStory.labels} /> */}
           <AppBox label="Status" onChange={handleStatusChange} value={statusVal} />
 
+          Current project : {projectName} 
+            <br/>
+          To change the project , select from below list
           <Autocomplete
             id="combo-box-demo"
             options={labels}
@@ -192,13 +208,22 @@ export default function UserStoryDetails() {
               <TextField {...params} label='Project' variant='outlined' />
             )}
           />
-          <Autocomplete
+
+          {initialAssignee.length > 0 && <Dropdown align='center'
+            handleMembers={handleUserNameChange}
+            members={memberList}
+            selectedMembers={initialAssignee} />}
+          {/* <Autocomplete
+
+
             multiple
             id='combo-box-demo'
             options={memberList}
             getOptionLabel={(option) => option.userName}
             style={{ width: 300 }}
             filterSelectedOptions
+
+            defaultValue={initialAssignee}
             onChange={handleUserNameChange}
             renderInput={(params) => (
               <TextField
@@ -207,7 +232,7 @@ export default function UserStoryDetails() {
                 variant='outlined'
               />
             )}
-          />
+          /> */}
           {/* <Typography align='left' variant='overline' gutterBottom> 
             Created At: <b>{setCreatedDate(createdDateVal)}</b>
           </Typography>

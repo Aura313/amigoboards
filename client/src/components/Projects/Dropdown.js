@@ -7,6 +7,8 @@ export default function ComboBox(props) {
   const handleChange = (e, value) => {
     props.handleMembers(value);
   };
+
+  console.log(props.selectedMembers, "props.selectedMembers")
   return (
     <Autocomplete
       multiple
