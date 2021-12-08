@@ -147,11 +147,8 @@ export default function UserStoryDetails() {
             variant='outlined'
             onChange={handleReporteChange}
             label='Reporter'
-            value={repoterVal} />
-          {/* {initialAssignee.length > 0 && <Dropdown align='center'
-            handleMembers={handleUserNameChange}
             value={repoterVal}
-            selectedMembers={initialAssignee} />} */}
+            disabled=  { true }/>
           <TextField
             placeholder='Enter Description'
             id="filled-basic"
@@ -166,8 +163,6 @@ export default function UserStoryDetails() {
             variant='outlined'
             onChange={handleTitleChange}
             value={titleVal} />
-          {/* <AppBox label="Status" onChange={handleStatusChange} value={statusVal} /> */}
-
           Current project : {projectName}
           <br />
           To change the project , select from below list

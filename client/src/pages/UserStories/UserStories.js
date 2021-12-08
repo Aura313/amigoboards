@@ -13,6 +13,12 @@ import Config from '../../Configuration/Config.json'
 import { Link as RouterLink } from 'react-router-dom';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import AuthService from '../../Services/AuthenticationService';
+import Avatar from '@material-ui/core/Avatar';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import RefreshIcon from '@material-ui/icons/Refresh';
+
 
 
 export class UserStories extends React.Component {
@@ -41,8 +47,8 @@ export class UserStories extends React.Component {
         this.props.createHandler();
     }
 
-    createReporter(x) {
-        this.setState({ reporter: x.target.value });
+    createReporter(evt, x) {
+        this.setState({ reporter: x.userName });
     }
 
     createDescription(y) {
@@ -86,8 +92,8 @@ export class UserStories extends React.Component {
             "assignee": this.state.assignee, "status": this.state.status, "labels": this.state.labels, "projectName": this.state.project.title, "projectID": this.state.project.id
         };
 
-        console.log(newItem, "fwehfoheowehf")
         this.props.createitem(newItem);
+        this.createNewForm();
     }
 
     deleteHandler(x) {
@@ -126,17 +132,17 @@ export class UserStories extends React.Component {
 
     fetchMyWorkItems() {
         axios
-          .post(`${Config.userStories_url}/username`, {
-            username: AuthService.getCurrentUser().userName,
-          })
-          .then((res) => {
-              console.log(res.data, "sksk")
-            this.setState({
-              userStories: res.data,
+            .post(`${Config.userStories_url}/username`, {
+                username: AuthService.getCurrentUser().userName,
+            })
+            .then((res) => {
+                console.log(res.data, "sksk")
+                this.setState({
+                    userStories: res.data,
+                });
             });
-          });
-      }
-    
+    }
+
     componentDidMount() {
         this.fetchUsers();
         this.fetchWorkItems();
@@ -148,42 +154,45 @@ export class UserStories extends React.Component {
         return (
 
             <body className="backgroundColor">
-                <Typography className='proj-heading' variant='subtitle1'>
-                    Below is a collection of all the Work Items for your reference -
+                <Typography className='proj-heading' variant='h4'>
+                    <b>Work Items</b>
                 </Typography>
-                <Divider />
-                <div className="heading"><b>Work Items</b></div>
+                <Typography className='proj-heading' variant='subtitle1'>
+                    Please find below complete list of WorkItems:    
+                 </Typography>
+                <Button align="right" onClick={this.fetchWorkItems.bind(this)}><RefreshIcon/></Button>
+                        <br/>
+                <Card className="cardSize">
+                    <CardContent>
+                        <span onClick={this.fetchMyWorkItems.bind(this)}>
+                            <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
+                                My Work Items
+                            </Button> <i>&nbsp;&nbsp;&nbsp;Click to get your WorkItems</i></Typography></span><br/>
+                        {/* <span onClick={this.fetchWorkItems.bind(this)}> */}
+                            
+                        <span onClick={this.createNewForm.bind(this)}>
+                            <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
+                                New Work Item
+                            </Button><i>&nbsp;&nbsp;&nbsp;Click to create a new WorkItems</i></Typography>
+                        </span>
+                    </CardContent>
+                </Card>
+                <Divider /><br/>
 
-                <span onClick={this.fetchMyWorkItems.bind(this)}>
-                    {/* <Typography variant='p' component={RouterLink} to='/workItems/new-workItem'><Button startIcon={<AddBox />} variant="outlined" color="primary">
-                        New Work Item
-                    </Button></Typography> */}
-
-                    <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
-                       My Work Items
-                    </Button></Typography>
-                </span>
-
-                <span onClick={this.fetchWorkItems.bind(this)}>
-                    {/* <Typography variant='p' component={RouterLink} to='/workItems/new-workItem'><Button startIcon={<AddBox />} variant="outlined" color="primary">
-                        New Work Item
-                    </Button></Typography> */}
-
-                    <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
-                       All Work Items
-                    </Button></Typography>
-                </span>
-                <span className="create" onClick={this.createNewForm.bind(this)}>
-                    
-                    <Typography variant='p'><Button startIcon={<AddBox />} variant="outlined" color="primary">
-                        New Work Item
-                    </Button></Typography>
-                </span>
                 {this.state.searchBars ? (<div className="container">
                     <fieldset className="inputField">
                         <form className="formBackground">
                             <h4>Add New User Story</h4>
-                            <input placeholder="Reporter" className="textBox" type="text" name="reporter" value={this.state.reporter} onChange={this.createReporter.bind(this)}></input><br />
+                            {/* <input placeholder="Reporter" className="textBox" type="text" name="reporter" value={this.state.reporter} onChange={this.createReporter.bind(this)}></input><br /> */}
+                            <Autocomplete
+                                id="combo-box-demo"
+                                options={users}
+                                getOptionLabel={(option) => option.userName}
+                                style={{ width: 300 }}
+                                onChange={this.createReporter.bind(this)}
+                                renderInput={(params) => <TextField {...params} label="Reporter" variant="outlined" />}
+                            />
+
                             <input placeholder="Description" className="textBox" type="text" name="description" value={this.state.description} onChange={this.createDescription.bind(this)}></input><br />
                             <input placeholder="Title" className="textBox" type="text" name="title" value={this.state.title} onChange={this.createTitle.bind(this)}></input><br />
                             <label>
@@ -218,17 +227,17 @@ export class UserStories extends React.Component {
                                 variant='outlined'
                                 color='primary'
                                 onClick={this.createNewUserStory.bind(this)}
+                                
                             >
-                                Invite
+                                Create
                             </Button>
                             {/* <button className="submit" type="submit" onClick={this.createNewUserStory.bind(this)}> Submit </button> */}
                         </form></fieldset>
                 </div>) : <div></div>}
                 <Container><AppTable userStories={userStories} deleteHandler={this.deleteHandler.bind(this)} /></Container>
                 <Typography className='proj-heading' variant='subtitle1'>
-                    To find list of your Work Items, please click here -
-                 </Typography>
-                 <Divider />
+                </Typography>
+                <Divider />
             </body>
         )
     }
@@ -242,7 +251,7 @@ const labels = [
 ];
 
 const status = [
-    { title: 'To do'},
-    { title: 'In Progress'},
-    { title: 'Completed'},
+    { title: 'To do' },
+    { title: 'In Progress' },
+    { title: 'Completed' },
 ];

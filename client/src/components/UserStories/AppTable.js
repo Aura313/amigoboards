@@ -15,8 +15,10 @@ import { Link as RouterLink } from 'react-router-dom';
 
 
 const useStyles = makeStyles({
-    table: {
+    root: {
         minWidth: 80,
+        maxWidth: 1350,
+        width: '100%'
     },
 });
 
@@ -31,12 +33,12 @@ export default function AppTable(props) {
 
     const getFormattedDate = (dateTime) => {
         const formattedDate = new Date(dateTime);
-        return `${formattedDate.toDateString()} | ${formattedDate.toLocaleTimeString()} `;
+        return `${formattedDate.toLocaleDateString()} | ${formattedDate.toLocaleTimeString()} `;
       };
 
     return (
         <TableContainer component={Paper}>
-            <Table classReporter={classes.table} aria-label="simple table">
+            <Table classReporter={classes.root} aria-label="simple table">
                 <TableHead>
                     <TableRow>
                         <TableCell align="centre"><b>S.No</b></TableCell>
@@ -66,6 +68,7 @@ export default function AppTable(props) {
                             <TableCell align="centre">{row.status}</TableCell>
                             <TableCell align="centre">{row.labels}</TableCell>
                             <TableCell align="centre">{row.projectName}</TableCell>
+                            <TableCell align="centre" padding='none'>
                             <Button component={RouterLink} to={`/workItems/${row._id}`} >
                                 <EditIcon align="right"></EditIcon>
                             </Button>
@@ -73,6 +76,7 @@ export default function AppTable(props) {
 
                                 <DeleteForeverIcon align="right" ></DeleteForeverIcon>
                             </Button>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
