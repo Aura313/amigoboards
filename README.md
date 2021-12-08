@@ -1,20 +1,15 @@
 # FINAL PROJECT
 
 ## Assignment Requirements
-TBA
+This Project is designed to collaborate and design a project management service.
 
-#### User Requirements:
-TBA
-
-
-#### Technical Requirements:
-TBA
+Amigo Boards provides you with a set of predefined work item types to support tracking features, user stories, bugs, and tasks.
 
 ## Project Requirements
 * ReactJS, NPM, node, MongoDB, Postman
 
 ## Team Details
-TBA
+TANYA, ROOPA, SRAVYA, VYSHNAVI
 
 ## Command to Install Axios
 npm install axios
