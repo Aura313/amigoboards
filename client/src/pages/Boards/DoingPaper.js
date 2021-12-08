@@ -11,6 +11,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 const useStyles = makeStyles({
   root: {
     minWidth: 75,
+    width: '80%'
   },
   bullet: {
     display: 'inline-block',

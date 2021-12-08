@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexWrap: "wrap",
         "& > *": {
-            margin: theme.spacing(3),
-            width: theme.spacing(45),
+            margin: theme.spacing(1),
+            width: theme.spacing(40),
             height: theme.spacing(100)
         }
     }
@@ -49,13 +49,13 @@ export default function SimplePaper() {
                 onChange={fetchStatusDetails}
                 renderInput={(params) => <TextField {...params} label="Choose Project" variant="outlined" />}
             />
-            <Paper elevation={3}>
+            <Paper elevation={0}>
                 <TodoPaper items={statusItems.todo ? statusItems.todo : []}/>
             </Paper>
-            <Paper elevation={3} >
+            <Paper elevation={0} >
                 <DoingPaper items={statusItems.inProgress ? statusItems.inProgress : []}/>
             </Paper>
-            <Paper elevation={3} >
+            <Paper elevation={0} >
                 <DonePaper  items={statusItems.completed ? statusItems.completed : []}/>
             </Paper>
         </div>
